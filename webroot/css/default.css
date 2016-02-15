@@ -1,0 +1,36 @@
+/*
+ * Arquivo CSS 
+ */
+
+/* Importa fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700');
+
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Roboto Condensed'; }
+h2 {color:#1D71B8; border-bottom: 2px dotted #efefef;}
+
+body { background: url('http://cssj-webdev/sonicwall/images/bg/bg.gif') -50px center; font-family: 'Roboto Condensed'; }
+
+#loginWraper {
+	background: #fff url('http://cssj-webdev/sonicwall/images/cores.gif') no-repeat; 
+	border: 1px solid #efefef; 
+ 	border-top: 0px;
+ 	margin-top: 50px;
+}
+
+#loginWraper img {
+ 	margin-bottom: 10px;
+ 	max-width: 250px;
+}
+
+#loginWraper img.sistema {
+ 	margin: 30px;
+}
+
+#loginWraper form {
+ 	max-width: 600px;	
+ 	margin-top: 20px; 
+ }
+
+
+ .panel {margin-top: 20px;}
