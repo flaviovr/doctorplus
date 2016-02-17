@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
+
 /**
  * Application Controller
  *
@@ -40,9 +41,21 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-
-        $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        
+        
+        $this->loadComponent('Auth', [
+        'authenticate' => [
+            'Form' => [
+                'passwordHasher' => [
+                    'className' => 'Legacy',
+                ]
+            ]
+        ]
+    ]);
+        //$this->setHash('teste');
+      //  debug ($this->Auth);
+       
     }
 
     /**
@@ -58,5 +71,9 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+    public function beforeFilter(Event $event)
+    {
+        //$this->Auth->allow();
     }
 }
