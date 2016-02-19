@@ -39,16 +39,16 @@ $cakeDescription = 'Doctor Plus';
 					<?= $this->Html->image('logodell.png',['class'=>'sistema']);?>
 				</div>
 				
-				<h2>Acessar Internet</h2>
-				<p>Digite seu usuário e senha e clique em entrar para liberar o acesso a Internet.</p>
+				<h2>Acessar sua conta</h2>
+				<p>Digite seu nome de usuário e senha para acessar o sistema e agendar sua cirurgia com total segurança.</p>
 				<p class='bg-warning'><?= $this->Flash->render() ;?></p>
-				<?= $this->Form->create($user,['class'=>'form clear-fix']);?>
+				<?= $this->Form->create($user,['class'=>'form clear-fix']);?> 
 							
 					<div class="form-group">
 						<?= $this->Form->label('username', 'Nome de Usuário', ['class'=>'sr-only'])?>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-							<?= $this->Form->input('username',['class'=>'form-control', 'placeholder'=> 'Nome de Usuário']) ?>
+							<?= $this->Form->input('username',['class'=>'form-control', 'placeholder'=> 'Nome de Usuário','label'=>false,'onkeyup' => 'this.value = this.value.toUpperCase();']) ?>
 							<!-- <input type="text" class="form-control" id="username" name="username" value="" maxlength="32" autocomplete="off" placeholder="Nome de Usuário"> -->
 						</div>
 					</div>

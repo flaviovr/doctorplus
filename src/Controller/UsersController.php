@@ -35,6 +35,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id);
         if ($this->request->is(['post', 'put'])) {
+
             $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Usuário atualizado.'));
@@ -78,7 +79,8 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         $this->set('user', $user);
         if ($this->request->is('post')) {
-            
+            $this->set('user', $user);
+       
             $user = $this->Auth->identify();
 
             if ($user) {
