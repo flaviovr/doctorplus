@@ -36,7 +36,7 @@ $cakeDescription = 'Doctor Plus';
 				
 				<div class="row centered text-center">
 					<?= $this->Html->image('logo.png',['width'=>'100%']);?>				
-					<?= $this->Html->image('logodell.png',['class'=>'sistema']);?>
+					<?= $this->Html->image('doctorplus.png',['class'=>'sistema']);?>
 				</div>
 				
 				<h2>Acessar sua conta</h2>
