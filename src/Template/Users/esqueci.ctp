@@ -43,7 +43,7 @@ $this->assign('title', 'Esqueceu sua senha?');
 				<div class="form-group">
 					<?= $this->Form->label('email', 'Digite seu e-mail', ['class'=>'sr-only'])?>
 					<div class="input-group">
-						<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+						<div class="input-group-addon"><span class="fa fa-envelope-o"></span></div>
 						<?= $this->Form->input('email',['class'=>'form-control', 'placeholder'=> 'Digite seu e-mail','value'=>$emailUser, 'label'=>false]) ?>
 						<!-- <input type="text" class="form-control" id="username" name="username" value="" maxlength="32" autocomplete="off" placeholder="Nome de Usuário"> -->
 					</div>

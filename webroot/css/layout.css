@@ -22,7 +22,7 @@ h2 {color:#aaa;}
 
 /* Home */
 
-.wraper {position: relative; display: block; margin-bottom: 30px; background: #f8f8f8; 
+.wraper {position: relative; display: block; margin-bottom: 30px; background: #f8f8f8;
     -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
@@ -39,7 +39,7 @@ h2 {color:#aaa;}
   -moz-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;}
 
-.innerItem > .titleMenuItem { font-weight: 300; margin: 10px 0; line-height: 1.6; font-size: 26px; text-align: center; color: #1D71B8; 
+.innerItem > .titleMenuItem { font-weight: 300; margin: 10px 0; line-height: 1.6; font-size: 26px; text-align: center; color: #1D71B8;
   -webkit-transition: color .4s ease-in-out;
   -moz-transition: color .4s ease-in-out;
   transition: color .4s ease-in-out;
@@ -60,7 +60,7 @@ h2 {color:#aaa;}
  }
 .wraper:hover .innerItem > .iconMenuItem {transform:scale(1.25) ; color: #FFD562; }
 .wraper:hover .innerItem > .titleMenuItem { color: #FFD562;}
-.wraper:hover .innerItem > ul {border-top: 1px solid #fff;} 
+.wraper:hover .innerItem > ul {border-top: 1px solid #fff;}
 .wraper:hover .innerItem > ul li  {color:#fff;}
 
 
@@ -77,12 +77,12 @@ h2 {color:#aaa;}
         padding: 15px 0px;
         -webkit-transition: all .5s ease-in-out;-moz-transition: all .5s ease-in-out;transition: all .5s ease-in-out;
     }
-    
+
     .top-nav-collapse {
         padding: 0;
         height: 50px;
     }
-    
+
 }
 /* Menor que 767 */
 @media(max-width:768px) {
@@ -104,15 +104,13 @@ h2 {color:#aaa;}
 .breadcrumb {margin-bottom: 30px;background: #d9edf7;}
 
 
+/* BLOCO DE BUSCA */
+.well-busca .title { color:#aaa; margin:0px 0px 5px 0px;}
+.well-busca .coluna { margin-bottom: 3px;}
+
 /* AGENDAMENTO */
-
-#buscaAgendamento h3 { color:#aaa; margin:0px 0px 10px 0px;}
-.coluna { margin-bottom: 3px;}
 .media-left.agendamentoIcone { color: #3AAA35;}
-
-
 .marcacao{ border-bottom: 1px dotted #efefef; margin: 10px 0px; max-height: 100px;}
-
 .statuses { font-size: 16px; font-weight: normal; line-height: 30px;}
 .statuses .badge { background: #fff; color: #aaa;}
 .legenda { display: block; margin-bottom: 20px;}

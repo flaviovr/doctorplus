@@ -28,11 +28,11 @@
 
 		<div class='col-lg-12'>
 
-			<div id='buscaAgendamento' class="well">
+			<div class=" well-busca well">
 
 				<?= $this->Form->create('agendamentos');?>
 
-					<h3>Buscar Agendamentos</h3>
+					<p class='lead title'>Buscar Agendamentos</p>
 
 					<div class="row">
 
@@ -50,20 +50,20 @@
 
 						<div class='coluna col-lg-3  col-sm-6'>
 							<div class="input-group ">
-								<div class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></div>
+								<div class='input-group-addon'><span class='fa fa-calendar-o'></span></div>
 								<input type="text" class="form-control datepicker" name="dataAtual" value='<?= $dataAtual;?>' placeholder="Selecione a data">
 							</div>
 						</div>
 
 						<div class='coluna col-lg-4 col-sm-10'>
 							<div class="input-group">
-								<div class='input-group-addon'><span class='glyphicon glyphicon-user'></span></div>
+								<div class='input-group-addon'><span class='fa fa-user'></span></div>
 							  	<input type="text" class="form-control" name="nomePaciente" value='<?= $nomePaciente;?>' placeholder="Nome do paciente">
 							</div>
 						</div>
 
 						<div class='coluna col-lg-2 col-sm-2'>
-							<button type="submit" class="btn btn-default btn-block">Buscar</button>
+							<button type="submit" class="btn btn-default btn-block">Buscar <i class='fa fa-flip-horizontal fa-search'></i></button>
 						</div>
 
 				    </div>

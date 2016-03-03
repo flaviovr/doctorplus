@@ -19,7 +19,7 @@ $cakeDescription = 'Doctor Plus';
 <!DOCTYPE html>
 <html>
 <head>
-   
+
     <?= $this->Html->charset() ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,7 @@ $cakeDescription = 'Doctor Plus';
 
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-    
+
      <!-- Includes do CSS Bootstrap-->
     <?= $this->Html->css('bootstrap.min')?>
     <?= $this->Html->css('bootstrap-theme.min')?>
@@ -35,10 +35,10 @@ $cakeDescription = 'Doctor Plus';
     <?= $this->Html->css('font-awesome.min') ?>
     <!-- Includes do CSS do Bootstrap Datepicker https://github.com/Eonasdan/bootstrap-datetimepicker-->
     <?= $this->Html->css('bootstrap-datetimepicker.min') ?>
-    
+
     <!-- Includes do CSS da página de login-->
     <?= $this->Html->css('layout') ?>
-    
+
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 
@@ -51,12 +51,12 @@ $cakeDescription = 'Doctor Plus';
 </head>
 
 <body>
-    
+
     <nav class="navbar navbar-default navbar-fixed-top clearfix">
-    
+
         <div class="container ">
-            
-            <!-- 
+
+            <!--
             Branding e Colapse
             -->
 
@@ -66,83 +66,83 @@ $cakeDescription = 'Doctor Plus';
                     ['controller'=>'Pages', 'action'=>'display', 'home'],
                     ['class'=>'navbar-brand text-center', 'escape'=>false]
                     )
-                ?>  
+                ?>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="glyphicon glyphicon-menu-hamburger"> </span>
+                    <span class="fa fa-menu-hamburger"> </span>
                 </button>
 
             </div>
-            
+
             <div class="collapse navbar-collapse" id="menu">
-                
+
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user"></span> <?= $userAuth['username']?> <span class='label label-info label-as-badge'>3</span>
+                            <span class="fa fa-user"></span> <?= $userAuth['username']?> <span class='label label-info label-as-badge'>3</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class='dropMsg'>
                                 <a href="">
                                     <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
                                     <p class='tituloMsg'>
-                                        <span class="glyphicon glyphicon-envelope"></span> Cirurgia cancelada <br>
-                                        <span class="glyphicon glyphicon-time"></span> 23 Nov, 08:55
+                                        <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
+                                        <span class="fa fa-time"></span> 23 Nov, 08:55
                                     </p>
-                                </a>    
+                                </a>
                             </li>
                             <li class='dropMsg'>
                                 <a href="">
                                     <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
                                     <p class='tituloMsg'>
-                                        <span class="glyphicon glyphicon-envelope"></span> Cirurgia cancelada <br>
-                                        <span class="glyphicon glyphicon-time"></span> 23 Nov, 08:55
+                                        <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
+                                        <span class="fa fa-time"></span> 23 Nov, 08:55
                                     </p>
-                                </a>    
+                                </a>
                             </li>
                             <li class='dropMsg'>
                                 <a href="">
                                     <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
                                     <p class='tituloMsg'>
-                                        <span class="glyphicon glyphicon-envelope"></span> Cirurgia cancelada <br>
-                                        <span class="glyphicon glyphicon-time"></span> 23 Nov, 08:55
+                                        <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
+                                        <span class="fa fa-time"></span> 23 Nov, 08:55
                                     </p>
-                                </a>    
+                                </a>
                             </li>
                             <li role='navigation' class="divider"></li>
-                            <li class='hidden-xs'><?= $this->Html->link('<span class="glyphicon glyphicon-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
                             </li>
-                            <li class='hidden-xs'><?= $this->Html->link('<span class="glyphicon glyphicon-log-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-log-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
                             </li>
                         </ul>
-                    </li>   
-                    <li class='visible-xs'><?= $this->Html->link('<span class="glyphicon glyphicon-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
                     </li>
-                    <li class='visible-xs'><?= $this->Html->link('<span class="glyphicon glyphicon-log-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
                     </li>
-                </ul>   
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-log-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <?= $this->fetch('content') ?>
-    
+
     <!-- Inclui jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?= $this->Html->script("jquery-1.12.1.min")?>
-    
+
     <!-- Include script de easing para suavizar animações -->
     <?= $this->Html->script('jquery.easing.min');?>
-    
+
     <!-- Biblioteca JS Moment necessaria para o boostrap datepicker http://momentjs.com/ -->
     <?= $this->Html->script('moment-with-locales.min');?>
-    
+
     <!-- Include Bootstrap JS -->
     <?= $this->Html->script("bootstrap.min")?>
-    
+
     <!-- Include Bootstrap datepicker https://github.com/Eonasdan/bootstrap-datetimepicker -->
     <?= $this->Html->script("bootstrap-datetimepicker")?>
-    
+
     <!-- Include Bootstrap datepicker localizacao para portugues -->
     <?= $this->Html->script("pt-br")?>
 
