@@ -9,6 +9,10 @@ use Cake\Validation\Validator;
 class UsersTable extends Table
 {
 
+    public function initialize(array $config) 
+    {
+        $this->displayField('username');
+    }
     public function validationDefault(Validator $validator)
     {
         return $validator
@@ -19,6 +23,12 @@ class UsersTable extends Table
                 'rule' => ['inList', ['admin', 'author']],
                 'message' => 'Please enter a valid role'
             ]);
+    }
+    public function localizaUser($email){
+        $query = $this->find('all')->where(['email'=> $email])->toArray();
+        //pr($query);
+        //echo  count($query);
+        return $query;
     }
 
 }

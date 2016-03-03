@@ -1,0 +1,118 @@
+
+/* Importa fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700');
+
+html, body{height: 100%;min-height: 100%;}
+
+body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center -30px;; font-family: 'Roboto Condensed'; padding-top: 80px;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0px);
+    webkit-font-smoothing: antialiased;
+    -webkit-transform-style: preserve-3d;
+}
+
+body > .container {background:#fff; padding-top: 30px; position:relative;min-height:100%;height:auto !important;height:100%; padding-bottom: 50px;}
+
+
+h1 {color:#1D71B8; border-bottom: 2px dotted #efefef; margin-bottom: 30px;}
+h2 {color:#aaa;}
+
+
+
+
+/* Home */
+
+.wraper {position: relative; display: block; margin-bottom: 30px; background: #f8f8f8; 
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.wraper:before {display: block;content: "";width: 100%;padding-top: 100%;}
+.wraper > .menuItem {position: absolute;top: 0;left: 0;right: 0;bottom: 0; }
+
+.menuItem > .innerItem {  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width:90%;}
+
+
+.innerItem > .iconMenuItem { font-size: 42px;  color: #26B3E8; text-align: center; display: block; margin: 10px auto 0px auto;
+  -webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;}
+
+.innerItem > .titleMenuItem { font-weight: 300; margin: 10px 0; line-height: 1.6; font-size: 26px; text-align: center; color: #1D71B8; 
+  -webkit-transition: color .4s ease-in-out;
+  -moz-transition: color .4s ease-in-out;
+  transition: color .4s ease-in-out;
+  }
+
+.innerItem > ul {border-top: 1px solid #ddd; padding-top:10px; margin-top: 10px;
+-webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  }
+.innerItem > ul li {color: #aaa;}
+
+.wraper:hover {transform:scale(1.1);background: #26B3E8; z-index: 1;
+    box-shadow: 1px 1px 1px #ccc;
+    -webkit-box-shadow: 0px 16px 54px -5px rgba(82,82,82,1);
+    -moz-box-shadow: 0px 16px 54px -5px rgba(82,82,82,1);
+    box-shadow: 0px 16px 54px -5px rgba(82,82,82,1);
+ }
+.wraper:hover .innerItem > .iconMenuItem {transform:scale(1.25) ; color: #FFD562; }
+.wraper:hover .innerItem > .titleMenuItem { color: #FFD562;}
+.wraper:hover .innerItem > ul {border-top: 1px solid #fff;} 
+.wraper:hover .innerItem > ul li  {color:#fff;}
+
+
+
+
+
+/* Correção na altura do NavBar */
+.navbar-brand { padding:3px 15px;height: 30px;}
+
+
+/* Maior que 767 */
+@media(min-width:767px) {
+    .navbar {
+        padding: 15px 0px;
+        -webkit-transition: all .5s ease-in-out;-moz-transition: all .5s ease-in-out;transition: all .5s ease-in-out;
+    }
+    
+    .top-nav-collapse {
+        padding: 0;
+        height: 50px;
+    }
+    
+}
+/* Menor que 767 */
+@media(max-width:768px) {
+    .navbar-brand { padding:6px 15px;height: 30px;}
+    .navbar-brand>img {height: 45px; width: auto;}
+}
+
+/* Badge de mensagens no topo*/
+.label-as-badge {
+    border-radius: 1em;
+    margin-top: -3px;
+}
+
+.dropMsg p { margin: 0px;}
+.dropMsg a { border-bottom : 1px dotted #efefef;}
+
+
+/* Ajustes no breadcrumbs */
+.breadcrumb {margin-bottom: 30px;background: #d9edf7;}
+
+
+/* AGENDAMENTO */
+
+#buscaAgendamento h3 { color:#aaa; margin:0px 0px 10px 0px;}
+.coluna { margin-bottom: 3px;}
+.media-left.agendamentoIcone { color: #3AAA35;}
+
+
+.marcacao{ border-bottom: 1px dotted #efefef; margin: 10px 0px; max-height: 100px;}
+
+.statuses { font-size: 16px; font-weight: normal; line-height: 30px;}
+.statuses .badge { background: #fff; color: #aaa;}
+.legenda { display: block; margin-bottom: 20px;}

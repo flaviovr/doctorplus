@@ -12,14 +12,15 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         0.10.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ *
+ * use Cake\Cache\Cache;
+ * use Cake\Core\Configure;
+ * use Cake\Datasource\ConnectionManager;
+ * use Cake\Error\Debugger;
+ * use Cake\Network\Exception\NotFoundException;
  */
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
-use Cake\Error\Debugger;
-use Cake\Network\Exception\NotFoundException;
 
-$this->layout = 'default';
+$this->layout = 'login';
 
 $cakeDescription = 'Doctor Plus';
 ?>
@@ -28,11 +29,6 @@ $cakeDescription = 'Doctor Plus';
     	<div class="row">	
 
 			<div id='loginWraper' class='col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1'>
-
-				<!-- <div class="row centered">
-					<div class="col-sm-6 col-xs-12 text-center"><?= $this->Html->image('logo.png',['width'=>'100%']);?></div>
-					<div class="col-sm-5 col-sm-offset-1 col-xs-12 text-center"><?= $this->Html->image('logodell.png',['class'=>'sistema']);?></div>
-				</div> -->
 				
 				<div class="row centered text-center">
 					<?= $this->Html->image('logo.png',['width'=>'100%']);?>				
@@ -41,7 +37,7 @@ $cakeDescription = 'Doctor Plus';
 				
 				<h2>Acessar sua conta</h2>
 				<p>Digite seu nome de usuário e senha para acessar o sistema e agendar sua cirurgia com total segurança.</p>
-				<p class='bg-warning'><?= $this->Flash->render() ;?></p>
+				<?= $this->Flash->render() ;?></p>
 				<?= $this->Form->create($user,['class'=>'form clear-fix']);?> 
 							
 					<div class="form-group">
@@ -49,7 +45,6 @@ $cakeDescription = 'Doctor Plus';
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
 							<?= $this->Form->input('username',['class'=>'form-control', 'placeholder'=> 'Nome de Usuário','label'=>false,'onkeyup' => 'this.value = this.value.toUpperCase();']) ?>
-							<!-- <input type="text" class="form-control" id="username" name="username" value="" maxlength="32" autocomplete="off" placeholder="Nome de Usuário"> -->
 						</div>
 					</div>
 					
@@ -58,12 +53,24 @@ $cakeDescription = 'Doctor Plus';
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon glyphicon-asterisk"></span></div>
 							<?= $this->Form->password('password',['class'=>'form-control', 'placeholder'=> 'Senha do Usuário']) ?>
-							<!-- <input type="password" class="form-control" id="password" placeholder="Senha de Acesso"> -->
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<?= $this->Form->button('Acessar',['type'=>'submit', 'name'=>'submit', 'class'=>'btn btn-primary center-block'])?>
+						<?= $this->Form->button(
+								'Acessar',
+								['type'=>'submit', 'name'=>'submit', 'class'=>'btn btn-primary pull-right']
+						)?>
+						<?= $this->Html->tag(
+								'p',
+								$this->Html->link(
+									'Esqueceu sua senha ou não tem cadastro?',
+									['controller'=>'users', 'action'=>'esqueci']
+								),
+								['class'=>'form-control-static', 'escape'=>false])
+						?>
+						
+
 					</div>
 
 				<?= $this->Form->end();?>

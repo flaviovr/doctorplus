@@ -6,10 +6,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700');
 
 
-h1, h2, h3, h4, h5, h6 { font-family: 'Roboto Condensed'; }
 h2 {color:#1D71B8; border-bottom: 2px dotted #efefef;}
 
-body { background: url('../img/bg.gif') -50px center; font-family: 'Roboto Condensed'; }
+body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center -30px;padding-top: 80px; font-family: 'Roboto Condensed';}
 
 #loginWraper {
 	background: #fff url('../img/cores.gif') no-repeat; 
@@ -32,5 +31,7 @@ body { background: url('../img/bg.gif') -50px center; font-family: 'Roboto Conde
  	margin-top: 20px; 
  }
 
-
  .panel {margin-top: 20px;}
+
+
+#loginWraper hr { margin: 30px -15px; display: block; clear: both; }

@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+use Cake\I18n\Time;
 
 class UsersController extends AppController
 {
@@ -12,15 +14,13 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow('add');
+        $this->Auth->allow(['add','esqueci']);
     }
 
 
     public function index()
     {
         $this->set('users', $this->Users->find('all'));
-
-        
     }
 
 
@@ -76,11 +76,13 @@ class UsersController extends AppController
 
     public function login()
     {
+
+
+        if ($this->Auth->user()) return $this->redirect(['controller' => 'Pages', 'action' => 'display','home']) ;
         $user = $this->Users->newEntity();
         $this->set('user', $user);
         if ($this->request->is('post')) {
-            $this->set('user', $user);
-       
+            
             $user = $this->Auth->identify();
 
             if ($user) {
@@ -88,7 +90,7 @@ class UsersController extends AppController
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display','home']);
             }
 
-            $this->Flash->error(__('Invalid username or password, try again'));
+            $this->Flash->error(__('Usuário ou senha inválido, tente novamente.'));
         }
     }
 
@@ -96,5 +98,48 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+
+
+    public function esqueci()
+    {
+        $emailUser='';
+        if ($this->request->is('post')) {
+            
+            $emailUser = $this->request->data('email');
+            
+            if($user = $this->Users->localizaUser($emailUser)) {
+                
+
+                
+                $data = new Time();
+                
+                $email = new Email();
+                $email->transport('smtpMail')
+                    ->template('esqueci', 'default')
+                    ->emailFormat('html')
+                    ->from(['flavio.motta@cssj.com.br' => 'Flávio Motta'])
+                    ->to($emailUser)
+                    ->subject('Enviado Pelo Doctos')
+                    ->viewVars([
+                        'data'=> $data->nice(),
+                        'user' => $user[0],
+                        'texto'=> 'Menagem que eu passei pro email'
+                        ]);
+                    
+                if($email->send()) {
+                    $this->Flash->success(__('Sua solicitação foi enviada com sucesso, aguarde retorno.'));    
+                    //debug($email);
+                    $emailUser='';
+                } else {
+                    $this->Flash->error(__('Erro ao enviar sua solicitação, tente novamente.'));    
+                }
+            } else {
+                $this->Flash->error(__('E-mail não encontrado no sistema.'));
+            }   
+            
+        }
+        $this->set('emailUser',$emailUser);
+        
     }
 }

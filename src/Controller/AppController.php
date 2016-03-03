@@ -53,10 +53,10 @@ class AppController extends Controller
                     
                 ]
             ]
-        ]
+        ],
+        'authError' => 'Você precisa fazer login para acessar essa página',
     ]);
-        $this->Auth->config('username' , 'teste'); //$this->setHash('teste');
-      //  debug ($this->Auth);
+      
        
     }
 
@@ -68,10 +68,11 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        
+        $user = $this->Auth->user();
+        $this->set('userAuth', $user);
     }
     public function beforeFilter(Event $event)
     {
-        //$this->Auth->allow();
+        //$this->Auth->allow(['esqueci','add']);
     }
 }

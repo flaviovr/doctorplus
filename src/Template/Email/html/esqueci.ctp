@@ -14,9 +14,12 @@
  */
 ?>
 <?php
-$content = explode("\n", $texto);
+// $content = explode("\n", $texto);
 
-foreach ($content as $line):
-    echo '<p style="font-size: 14px;margin: 0px;line-height: 14px;font-family: Arial;text-align: left;margin-bottom: 10px;color: #585858;"> ' . $line . "</p>\n";
-endforeach;
+// foreach ($content as $line):
+//     echo '<p style="font-size: 14px;margin: 0px;line-height: 14px;font-family: Arial;text-align: left;margin-bottom: 10px;color: #585858;"> ' . $line . "</p>\n";
+// endforeach;
 ?>
+<h2>Olá, <?=$user['nome']?></h2>
+<p>Sua solicitação de alteração foi recebida com sucesso. Em breve entraremos em contato para resetar sua senha.</p>
+<p>Em caso de dúvidas entre em contato com nosso atendimento (21) 1234 4321</p>

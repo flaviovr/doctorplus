@@ -97,7 +97,7 @@ mb_internal_encoding(Configure::read('App.encoding'));
  * Set the default locale. This controls how dates, number and currency is
  * formatted and sets the default language to use for translations.
  */
-ini_set('intl.default_locale', 'en_US');
+ini_set('intl.default_locale', 'pt_BR');
 
 /**
  * Register application error and exception handlers.
@@ -169,6 +169,10 @@ Request::addDetector('tablet', function ($request) {
  * Inflector::rules('uninflected', ['dontinflectme']);
  * Inflector::rules('transliteration', ['/å/' => 'aa']);
  */
+
+Inflector::rules('irregular',['agendamento'=>'agendamentos']);
+Inflector::rules('irregular',['usuario'=>'usuarios']);
+Inflector::rules('irregular',['internados'=>'internado']);
 
 /**
  * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call
