@@ -102,6 +102,7 @@
 			</div>
 		</div>
 		<div class='col-lg-3'>
+			<?php echo $this->Paginator->numbers()?>
 		</div>
 	</div>
 

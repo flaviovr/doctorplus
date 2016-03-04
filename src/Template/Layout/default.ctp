@@ -88,7 +88,7 @@ $cakeDescription = 'Doctor Plus';
                                     <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
                                     <p class='tituloMsg'>
                                         <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
-                                        <span class="fa fa-time"></span> 23 Nov, 08:55
+                                        <span class="fa fa-clock-o"></span> 23 Nov, 08:55
                                     </p>
                                 </a>
                             </li>
@@ -97,7 +97,7 @@ $cakeDescription = 'Doctor Plus';
                                     <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
                                     <p class='tituloMsg'>
                                         <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
-                                        <span class="fa fa-time"></span> 23 Nov, 08:55
+                                        <span class="fa fa-clock-o"></span> 23 Nov, 08:55
                                     </p>
                                 </a>
                             </li>
@@ -106,20 +106,20 @@ $cakeDescription = 'Doctor Plus';
                                     <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
                                     <p class='tituloMsg'>
                                         <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
-                                        <span class="fa fa-time"></span> 23 Nov, 08:55
+                                        <span class="fa fa-clock-o"></span> 23 Nov, 08:55
                                     </p>
                                 </a>
                             </li>
                             <li role='navigation' class="divider"></li>
                             <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
                             </li>
-                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-log-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-sign-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
                             </li>
                         </ul>
                     </li>
                     <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
                     </li>
-                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-log-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-sign-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
                     </li>
                 </ul>
             </div>

@@ -19,15 +19,15 @@ $cakeDescription = 'Doctor Plus';
 <!DOCTYPE html>
 <html>
 <head>
-   
+
     <?= $this->Html->charset() ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $cakeDescription ?> : <?= $this->fetch('title') ?></title>
-    
+
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-    
+
     <!-- Includes do CSS Bootstrap-->
     <?= $this->Html->css('bootstrap.min')?>
     <?= $this->Html->css('bootstrap-theme.min')?>
@@ -35,7 +35,7 @@ $cakeDescription = 'Doctor Plus';
     <?= $this->Html->css('font-awesome.min') ?>
     <!-- Includes do CSS da página de login-->
     <?= $this->Html->css('login') ?>
-    
+
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 
@@ -48,9 +48,9 @@ $cakeDescription = 'Doctor Plus';
 </head>
 
 <body>
-  
+
     <?= $this->fetch('content') ?>
-    
+
     <!-- Inclui jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?= $this->Html->script("jquery-1.12.1.min")?>
     <!-- Include script de easing para suavizar animações -->
@@ -58,6 +58,6 @@ $cakeDescription = 'Doctor Plus';
     <!-- Include Bootstrap JS -->
     <?= $this->Html->script("bootstrap.min")?>
     <!-- Include com javascript do site -->
-    <?= $this->Html->script('default');?>
+    <?// $this->Html->script('default');?>
 </body>
 </html>
