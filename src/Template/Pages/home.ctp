@@ -1,5 +1,5 @@
 <?php
-$this->layout = 'default';
+$this->assign('title', 'Selecione a opção desejada');
 ?>
 <div class="container">
 

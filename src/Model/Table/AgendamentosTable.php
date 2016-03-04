@@ -1,6 +1,4 @@
 <?php
-// src/Model/Table/AgendamentosTable.php
-
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
@@ -9,12 +7,20 @@ use Cake\Datasource\ConnectionManager;
 
 class AgendamentosTable extends Table
 {
-    
-    var $primaryKey = 'LINHA';
 
-    public function initialize(array $config){}
+    public function initialize(array $config){
+        //Define o nomeda tabela do model
+        //$this->table('my_table');
+
+        //Define o campo utilizado para associações no model
+        //$this->displayField('username');
+
+        //Define a chave primária do model
+        $this->primaryKey('id');
+    }
+
     public function validationDefault(Validator $validator){}
-    
+
 
     /* Funçao que agregas informações sobre status de Agendamentos. quantidades, cor usada e ícone */
     public function contaStatus()
@@ -22,11 +28,11 @@ class AgendamentosTable extends Table
         /* Crio conexão e faco uma consulta que busca os totais de cata STATUS_CHR*/
         $connection = ConnectionManager::get('default');
         $result = $connection->execute("SELECT Count(STATUS_CHR) AS count, STATUS_CHR  FROM agendamentos GROUP BY STATUS_CHR ORDER BY STATUS_CHR asc")->fetchAll('assoc');
-        
+
         /* Crio variavel que receberá os dados tratados e adiciono as informações de ícone e de cor*/
-        $d = 
+        $d =
             [
-                'S'=> ['icon'=>'fa-calendar-o',         'cor'=> 'default'], 
+                'S'=> ['icon'=>'fa-calendar-o',         'cor'=> 'default'],
                 'A'=> ['icon'=>'fa-calendar-plus-o',    'cor'=> 'info'],
                 'P'=> ['icon'=>'fa-calendar-minus-o',   'cor'=> 'warning'],
                 'E'=> ['icon'=>'fa-calendar-times-o',   'cor'=> 'danger'],
@@ -40,7 +46,7 @@ class AgendamentosTable extends Table
         return $d;
     }
 
-    /* Função que converte data em formato  */
+    /* Função alterna formato da data se usado fdata('08/01/1983') retorna 1983-08-01 se usa fdata('1983-08-01') retorna 08/01/1983 */
     public function fdata( $data, $sep = '/' )
     {
         if(strripos($data,'/')) {

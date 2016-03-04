@@ -18,19 +18,25 @@ class InternadosController extends AppController
 	public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Flash'); // Include the FlashComponent
+        // Incluir the FlashComponent
+		$this->loadComponent('Flash');
     }
 
 	public function index()
 	{
-
+		//Defino variavel para o nome do paciente
 		$nomePaciente='';
+
+		// Crio o objeto de busca em todos os campos
 		$query = $this->Internados->find('all');
+
+		// Caso faca busca - POST -
 		if($this->request->is('post')) {
+			// Se usuario preencher o campo, jogo valor na variavel de busca e adiciono a condicao no objeto de busca
 			$nomePaciente = empty($this->request->data('nomePaciente')) ? $nomePaciente : h($this->request->data('nomePaciente')) ;
 			if (!empty($nomePaciente)) $query = $query->where(['NM_PACIENTE like'=> '%'.h($nomePaciente).'%']);
 		}
-		//pr($query);
+		// Passo as variaveis para a views
 		$this->set('internados',$query);
 		$this->set('nomePaciente', $nomePaciente);
 	}

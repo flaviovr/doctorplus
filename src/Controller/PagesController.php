@@ -28,17 +28,9 @@ use Cake\Event\Event;
  */
 class PagesController extends AppController
 {
-
-    /**
-     * Displays a view
-     *
-     * @return void|\Cake\Network\Response
-     * @throws \Cake\Network\Exception\NotFoundException When the view file could not
-     *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
-     */
     public function display()
     {
-        
+
         $path = func_get_args();
         $count = count($path);
         if (!$count) return $this->redirect('/');
@@ -56,7 +48,7 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
-     public function beforeFilter(Event $event)
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         $this->Auth->allow(['esqueci']);

@@ -28,49 +28,33 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
     public function initialize()
     {
         parent::initialize();
+        //Carrego Componente Flash
         $this->loadComponent('Flash');
-        
-       
+
+        // Carrego componente de autenticacao e passo o parametro do Hasher e os dados do request
         $this->loadComponent('Auth', [
         'authenticate' => [
             'Form' => [
                 'passwordHasher' => [
                     'className' => 'Legacy',
                      $this->request->data
-                    
+                    ]
                 ]
-            ]
-        ],
-        'authError' => 'Você precisa fazer login para acessar essa página',
-    ]);
-      
-       
+            ],
+            'authError' => 'Você precisa fazer login para acessar essa página',
+        ]);
     }
 
-    /**
-     * Before render callback.
-     *
-     * @param \Cake\Event\Event $event The beforeRender event.
-     * @return void
-     */
     public function beforeRender(Event $event)
     {
+        // Atribuo o usuario logado a variavel e adiciono a variavel a view
         $user = $this->Auth->user();
         $this->set('userAuth', $user);
     }
+
     public function beforeFilter(Event $event)
     {
         //$this->Auth->allow(['esqueci','add']);

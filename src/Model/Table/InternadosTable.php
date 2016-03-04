@@ -9,9 +9,16 @@ use Cake\Validation\Validator;
 class InternadosTable extends Table
 {
 
-    public function initialize(array $config) 
+    public function initialize(array $config)
     {
-     
+        //Define o nomeda tabela do model
+        //$this->table('my_table');
+
+        //Define o campo utilizado para associações no model
+        //$this->displayField('username');
+
+        //Define a chave primária do model
+        //$this->primaryKey('id');
     }
 
     // public function validationDefault(Validator $validator)

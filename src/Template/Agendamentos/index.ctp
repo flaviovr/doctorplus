@@ -1,6 +1,5 @@
 <?php
-//$this->assign('title', 'Agendamentos');
-//pr($query);
+$this->assign('title', 'Agendamentos');
 ?>
 <div class="container">
 
@@ -102,7 +101,7 @@
 			</div>
 		</div>
 		<div class='col-lg-3'>
-			<?php echo $this->Paginator->numbers()?>
+
 		</div>
 	</div>
 

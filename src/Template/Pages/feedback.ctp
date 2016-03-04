@@ -1,5 +1,5 @@
 <?php
-$this->layout = 'default';
+$this->assign('title', 'Enviar Feedback sobre o sistema');
 ?>
 
 <div class="container">
@@ -10,14 +10,14 @@ $this->layout = 'default';
 	  <li class="active">Feedback</li>
 	</ol>
 
-	<h1><i class='fa fa-calendar-o'></i> Enviar Feedback</h1>
+	<h1><i class='fa fa-cog'></i> Enviar Feedback</h1>
 
 	<div class="row">
 
 
 		<div class='col-lg-12'>
 
-		
+
 
 		</div>
 
