@@ -4,7 +4,7 @@
 
 html, body{height: 100%;min-height: 100%;}
 
-body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center -30px; font-family: 'Roboto Condensed'; padding-top: 70px;
+body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center -30px;; font-family: 'Roboto Condensed'; padding-top: 80px;
     -webkit-backface-visibility: hidden;
     -webkit-transform: translateZ(0px);
     webkit-font-smoothing: antialiased;
@@ -14,8 +14,7 @@ body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center 
 body > .container {background:#fff; padding-top: 30px; position:relative;min-height:100%;height:auto !important;height:100%; padding-bottom: 50px;}
 
 
-h1 {background: #1D71B8; color:#fff; padding: 10px 15px;  margin-bottom: 0px; border: 1px solid #165890; border-bottom: none; font-weight: 300;}
-h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
+h1 {color:#1D71B8; border-bottom: 2px dotted #efefef; margin-bottom: 30px;}
 h2 {color:#aaa;}
 
 
@@ -28,7 +27,6 @@ h2 {color:#aaa;}
 /* Home */
 
 .wraper {position: relative; display: block; margin-bottom: 30px; background: #f8f8f8;
-    border-radius: 4px;
     -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
@@ -75,10 +73,6 @@ h2 {color:#aaa;}
 
 /* Correção na altura do NavBar */
 .navbar-brand { padding:3px 15px;height: 30px;}
-.dropdown-menu>li>a { padding:6px 15px;}
-.dropdown-menu>li>a p { margin: 0px;}
-
-.row.data { margin-top: 20px;}
 
 
 /* Maior que 767 */
@@ -98,7 +92,6 @@ h2 {color:#aaa;}
 @media(max-width:768px) {
     .navbar-brand { padding:6px 15px;height: 30px;}
     .navbar-brand>img {height: 45px; width: auto;}
-    body{ padding-top: 30px;}
 }
 
 /* Badge de mensagens no topo*/
@@ -107,26 +100,27 @@ h2 {color:#aaa;}
     margin-top: -3px;
 }
 
+.dropMsg p { margin: 0px;}
+.dropMsg a { border-bottom : 1px dotted #efefef;}
+
+
 /* Ajustes no breadcrumbs */
-.breadcrumb {margin-bottom: 20px; background: #f8f8f8;}
+.breadcrumb {margin-bottom: 30px;background: #f8f8f8;}
 
 
 /* BLOCO DE BUSCA */
-.well-busca {padding: 10px 15px 15px 15px; background: #efefef; }
 .well-busca .title { color:#aaa; margin:0px 0px 5px 0px;}
 .well-busca .coluna { margin-bottom: 3px;}
-
-.well-status { display: block; margin-bottom: 20px;padding: 15px; background: #f8f8f8;}
 
 /* AGENDAMENTO */
 .media-left.agendamentoIcone { color: #3AAA35;}
 .marcacao{ border-bottom: 1px dotted #efefef; margin: 10px 0px; max-height: 100px;}
 .statuses { font-size: 16px; font-weight: normal; line-height: 30px;}
 .statuses .badge { background: #fff; color: #aaa;}
+.legenda { display: block; margin-bottom: 20px;}
 
-
-.text-default {color:#777;}
-.text-info {color:#5bc0de;}
-.text-warning {color:#f0ad4e;}
-.text-danger {color:#d9534f;}
-.text-success {color:#5cb85c;}
+.text-default {color: #777 ;}
+.text-info {color: #5bc0de ;}
+.text-warning {color: #f0ad4e ;}
+.text-danger {color: #d9534f ;}
+.text-success {color: #5cb85c ;}

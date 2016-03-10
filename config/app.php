@@ -182,6 +182,16 @@ return [
             'client' => null,
             'tls' => null,
         ],
+        'smtpMail' => [
+            'className' => 'Smtp',
+            // The following keys are used in SMTP transports
+            'host' => 'smtp.office365.com',
+            'port' => 587,
+            'timeout' => 30,
+            'username' => 'flavio.motta@cssj.com.br',
+            'password' => 'Ella24Fitzgerald',
+            'tls' => true,
+        ],
     ],
 
     /**
@@ -195,8 +205,8 @@ return [
      */
     'Email' => [
         'default' => [
-            'transport' => 'default',
-            'from' => 'you@localhost',
+            'transport' => 'smtpMail',
+            'from' => ['Doctor Plus'=>'doctorplus@cssj.com.br'],
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
@@ -252,22 +262,22 @@ return [
         /**
          * The test connection is used during the test suite.
          */
-        'test' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
-            'persistent' => false,
-            'host' => 'localhost',
-            //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'test_myapp',
-            'encoding' => 'utf8',
-            'timezone' => 'UTC',
-            'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
-            'log' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-        ],
+        // 'test' => [
+        //     'className' => 'Cake\Database\Connection',
+        //     'driver' => 'Cake\Database\Driver\Mysql',
+        //     'persistent' => false,
+        //     'host' => 'localhost',
+        //     //'port' => 'non_standard_port_number',
+        //     'username' => 'my_app',
+        //     'password' => 'secret',
+        //     'database' => 'test_myapp',
+        //     'encoding' => 'utf8',
+        //     'timezone' => 'UTC',
+        //     'cacheMetadata' => true,
+        //     'quoteIdentifiers' => false,
+        //     'log' => false,
+        //     //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        // ],
     ],
 
     /**

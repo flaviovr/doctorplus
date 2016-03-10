@@ -18,6 +18,8 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+use Cake\I18n\Time;
 
 /**
  * Static content controller
@@ -48,6 +50,51 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+
+    public function feedback(){
+        $msg=' ';
+        if ($this->request->is('post')) {
+
+            $msg =$this->request->data('mensagem');
+
+            if(!empty($msg)){
+
+                //debug($msg);
+
+                // Data a ser usada no email
+                $data = new Time();
+
+                // Crio objeto email
+                $email = new Email();
+
+                //Configuro o objeto de email e passo as variáveis para se renderizar no E-mail
+                $email->transport('smtpMail')
+                    ->template('feedback', 'default')
+                    ->emailFormat('html')
+                    ->from(['flavio.motta@cssj.com.br' => 'Flávio Motta'])
+                    ->to('flaviovr@gmail.com')
+                    ->subject('Feedback enviado pelo DoctorPlus')
+                    ->viewVars([
+                        'data'=> $data->nice(),
+                        'texto'=> $msg,
+                        'user' => $this->Auth->user('nome_usuario')
+                        ]);
+
+                // Caso envie o e-mail
+                if($email->send()) {
+                    // Exibe mensagem de sucesso
+                    $this->Flash->success(__('Sua sugestão foi enviada com sucesso.'));
+                    $msg = '';
+                } else {
+                    // Exibe mensagem de Erro ao enviar e-mail
+                    $this->Flash->error(__('Erro ao enviar sua solicitação, tente novamente.'));
+                }
+            }
+
+        }
+        $this->set('mensagem', $msg);
+    }
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);

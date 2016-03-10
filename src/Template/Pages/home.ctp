@@ -76,7 +76,7 @@ $this->assign('title', 'Selecione a opção desejada');
 		</div> -->
 
 		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-			<a class='wraper' href='<?=$this->Url->build(['controller' => 'pages', 'action' => 'display', 'feedback']);?>'>
+			<a class='wraper' href='<?=$this->Url->build(['controller' => 'pages', 'action' => 'feedback']);?>'>
 				<div class="menuItem">
 					<div class='innerItem'>
 						<i class='fa fa-cog iconMenuItem'></i>

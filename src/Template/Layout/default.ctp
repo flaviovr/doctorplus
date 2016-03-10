@@ -69,7 +69,7 @@ $cakeDescription = 'Doctor Plus';
                 ?>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="fa fa-menu-hamburger"> </span>
+                    <span class="fa fa-bars"> </span>
                 </button>
 
             </div>
@@ -83,41 +83,44 @@ $cakeDescription = 'Doctor Plus';
                             <span class="fa fa-user"></span> <?= $userAuth['username']?> <span class='label label-info label-as-badge'>3</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class='dropMsg'>
+                            <li>
                                 <a href="">
-                                    <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
+                                    <p class='text-danger tituloMsg'><b><span class="fa fa-fw fa-calendar-times-o"></span> Cirurgia cancelada </b></p>
                                     <p class='tituloMsg'>
-                                        <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
-                                        <span class="fa fa-clock-o"></span> 23 Nov, 08:55
+                                        <span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos<br>
+                                        <span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
                                     </p>
                                 </a>
                             </li>
-                            <li class='dropMsg'>
+
+                            <li>
                                 <a href="">
-                                    <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
+                                    <p class='text-danger tituloMsg'><b><span class="fa fa-fw fa-calendar-times-o"></span> Cirurgia cancelada </b></p>
                                     <p class='tituloMsg'>
-                                        <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
-                                        <span class="fa fa-clock-o"></span> 23 Nov, 08:55
+                                        <span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos<br>
+                                        <span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
                                     </p>
                                 </a>
                             </li>
-                            <li class='dropMsg'>
+
+                            <li>
                                 <a href="">
-                                    <p class='text-info tituloMsg'><b>ALBERTO LUIZ BATISTA SANTOS </b></p>
+                                    <p class='text-danger tituloMsg'><b><span class="fa fa-fw fa-calendar-times-o"></span> Cirurgia cancelada </b></p>
                                     <p class='tituloMsg'>
-                                        <span class="fa fa-envelope-o"></span> Cirurgia cancelada <br>
-                                        <span class="fa fa-clock-o"></span> 23 Nov, 08:55
+                                        <span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos<br>
+                                        <span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
                                     </p>
                                 </a>
                             </li>
+
                             <li role='navigation' class="divider"></li>
-                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'feedback'],['escape'=> false])?>
                             </li>
                             <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-sign-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
                             </li>
                         </ul>
                     </li>
-                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'display', 'feedback'],['escape'=> false])?>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'feedback'],['escape'=> false])?>
                     </li>
                     <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-sign-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
                     </li>
@@ -125,6 +128,7 @@ $cakeDescription = 'Doctor Plus';
             </div>
         </div>
     </nav>
+    <?= $this->Flash->render() ;?></p>
 
     <?= $this->fetch('content') ?>
 

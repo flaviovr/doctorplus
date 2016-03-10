@@ -7,21 +7,24 @@ $this->assign('title', 'Internações');
 	  <li class="active">Internações</li>
 	</ol>
 
-	<h1><i class='fa fa-bed '></i> Internações</h1>
+	<h1 class="roundTop">
+		<i class='fa fa-bed '></i>
+		Internações
+	</h1>
 
 	<div class="row">
 
 
 		<div class='col-lg-12'>
 
-			<div class="well-busca well">
-				<p class='lead title'>Buscar Internações</p>
-				<?= $this->Form->create('internados');?>
+			<div class="well-busca roundBottom">
+				<p class='title'> <i class='fa fa-filter'></i> Filtrar resultados</p>
+				<?= $this->Form->create('internados',['method'=>'get']);?>
 					<div class=" row">
 						<div class='coluna col-lg-10 '>
 							<div class="input-group">
 								<div class='input-group-addon'><span class='fa fa-user'></span></div>
-							  	<input type="text" class="form-control" name="nomePaciente" value='<?=$nomePaciente?>' placeholder="Nome do paciente">
+							  	<input type="text" class="form-control" name="buscar" value='<?=$buscar?>' placeholder="Nome do paciente">
 							</div>
 						</div>
 						<div class='coluna col-lg-2 '>
@@ -30,20 +33,23 @@ $this->assign('title', 'Internações');
 				  	</div>
 				<?= $this->Form->end();?>
 			</div>
+
 		</div>
+
 	</div>
-	<div class='row'>
+
+	<div class='row data'>
 		<div class='col-lg-12'>
 			<div class="row">
 				<?php foreach ($internados as $internado){ ?>
 				<div class="col-xs-6">
 					<div class="media marcacao">
 						<div class="media-left">
-							<i class="fa fa-bed fa-3x"></i>
+							<i class="fa fa-bed fa-3x text-default"></i>
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading"><?= ucwords(mb_strtolower(h($internado->NM_PACIENTE)));?></h4>
-							<p class='tituloMsg text-info'><?= h($internado->LEITO);?></p>
+							<p class='tituloMsg text-default'><?= h($internado->LEITO);?></p>
 						</div>
 					</div>
 				</div>
@@ -54,7 +60,7 @@ $this->assign('title', 'Internações');
 			</div>
 		</div>
 		<div class='col-lg-3'>
-			<?php echo $this->Paginator->numbers() ;?>
+
 		</div>
 	</div>
 </div>

@@ -22,13 +22,13 @@ class InternadosController extends AppController
 		$this->loadComponent('Flash');
     }
 
-	public function index()
+	public function index($busca = '')
 	{
 		//Defino variavel para o nome do paciente
 		$nomePaciente='';
 
 		// Crio o objeto de busca em todos os campos
-		$query = $this->Internados->find('all');
+		$query = $this->Internados->find();
 
 		// Caso faca busca - POST -
 		if($this->request->is('post')) {

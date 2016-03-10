@@ -100,7 +100,7 @@ class UsersController extends AppController
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display','home']);
             }
             // Caso não encontre o usuario dispara um alert
-            $this->Flash->error(__('Usuário ou senha inválido, tente novamente.'));
+            $this->Flash->error('Usuário ou senha inválido, tente novamente.');
         }
     }
 
@@ -142,7 +142,6 @@ class UsersController extends AppController
                     ->viewVars([
                         'data'=> $data->nice(),
                         'user' => $user[0],
-                        'texto'=> 'Menagem que eu passei pro email'
                         ]);
 
                 // Caso envie o e-mail

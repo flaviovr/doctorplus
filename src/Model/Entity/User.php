@@ -19,7 +19,7 @@ class User extends Entity
      protected function _setPassword($password)
     {
         //Crio instancia do Password Hasher e encripto a senha utilizando a funcao Hash - conferir se esta comentada antes de usar
-        (new DefaultPasswordHasher)->hash($password) ; //return 'teste'.$password
+        return $password; //(new DefaultPasswordHasher)->hash($password) ; //
     }
 
 

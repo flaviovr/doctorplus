@@ -9,29 +9,21 @@ $this->assign('title', 'Agendamentos');
 		<li class="active">Agendamentos</li>
 	</ol>
 
-	<h1><i class='fa fa-calendar-o'></i> Agendamentos</h1>
+	<h1 class="roundTop">
+		<i class='fa fa-calendar-o'></i>
+		Agendamentos
+		<a href="<?=$this->Url->build(["controller" => "Agendamentos","action" => "novo"]);?>" class='btn btn-default pull-right'> <i class='fa fa-plus-circle'></i> Adicionar</a>
+	</h1>
 
 	<div class="row">
-		<div class="legenda col-lg-12" style='display:table-cell, vertical-aligne:middle;'>
-			<a href="" class='btn btn-info pull-right'>Novo Agendamento</a>
-			<p class='label label-<?=$statusData['S']['cor']?> statuses'><i class="fa <?=$statusData['S']['icon']?>"></i>&nbsp;&nbsp;Solicitada&nbsp;&nbsp;<span class="badge"><?=$statusData['S']['count']?></span></p>
-
-			<p class='label label-<?=$statusData['A']['cor']?> statuses'><i class="fa <?=$statusData['A']['icon']?>"></i>&nbsp;&nbsp;Pré-agendada&nbsp;&nbsp;<span class="badge"><?=$statusData['A']['count']?></span></p>
-
-			<p class='label label-<?=$statusData['P']['cor']?> statuses'><i class="fa <?=$statusData['P']['icon']?>"></i>&nbsp;&nbsp;Pendência&nbsp;&nbsp;<span class="badge"><?=$statusData['P']['count']?></span></p>
-
-			<p class='label label-<?=$statusData['E']['cor']?> statuses'><i class="fa <?=$statusData['E']['icon']?>"></i>&nbsp;&nbsp;Cancelada&nbsp;&nbsp;<span class="badge"><?=$statusData['E']['count']?></span></p>
-
-			<p class='label label-<?=$statusData['C']['cor']?> statuses'><i class="fa <?=$statusData['C']['icon']?>"></i>&nbsp;&nbsp;Confirmada&nbsp;&nbsp;<span class="badge"><?=$statusData['C']['count']?></span></p>
-    	</div>
 
 		<div class='col-lg-12'>
 
-			<div class=" well-busca well">
+			<div class="well-busca ">
 
 				<?= $this->Form->create('agendamentos');?>
 
-					<p class='lead title'>Buscar Agendamentos</p>
+					<p class='title'> <i class='fa fa-filter'></i> Filtrar resultados</p>
 
 					<div class="row">
 
@@ -62,7 +54,7 @@ $this->assign('title', 'Agendamentos');
 						</div>
 
 						<div class='coluna col-lg-2 col-sm-2'>
-							<button type="submit" class="btn btn-default btn-block">Buscar <i class='fa fa-flip-horizontal fa-search'></i></button>
+							<button type="submit" class="btn btn-info btn-block">Buscar <i class='fa fa-flip-horizontal fa-search'></i></button>
 						</div>
 
 				    </div>
@@ -70,11 +62,20 @@ $this->assign('title', 'Agendamentos');
 				<?= $this->Form->end();?>
 			</div>
 
+			<div class=" well-status roundBottom legenda col-lg-12 text-center">
+				<p class='label label-<?=$statusData['S']['cor']?> statuses'><i class="fa <?=$statusData['S']['icon']?>"></i>&nbsp;&nbsp;Solicitada&nbsp;&nbsp;<span class="badge"><?=$statusData['S']['count']?></span></p>
+				<p class='label label-<?=$statusData['A']['cor']?> statuses'><i class="fa <?=$statusData['A']['icon']?>"></i>&nbsp;&nbsp;Pré-agendada&nbsp;&nbsp;<span class="badge"><?=$statusData['A']['count']?></span></p>
+				<p class='label label-<?=$statusData['P']['cor']?> statuses'><i class="fa <?=$statusData['P']['icon']?>"></i>&nbsp;&nbsp;Pendência&nbsp;&nbsp;<span class="badge"><?=$statusData['P']['count']?></span></p>
+				<p class='label label-<?=$statusData['E']['cor']?> statuses'><i class="fa <?=$statusData['E']['icon']?>"></i>&nbsp;&nbsp;Cancelada&nbsp;&nbsp;<span class="badge"><?=$statusData['E']['count']?></span></p>
+				<p class='label label-<?=$statusData['C']['cor']?> statuses'><i class="fa <?=$statusData['C']['icon']?>"></i>&nbsp;&nbsp;Confirmada&nbsp;&nbsp;<span class="badge"><?=$statusData['C']['count']?></span></p>
+	    	</div>
+
 		</div>
 
 	</div>
 
-	<div class='row'>
+	<div class='row data'>
+
 		<div class='col-lg-12'>
 			<div class="row">
 				<?php foreach ($agendamentos as $agendamento){ ?>
@@ -100,9 +101,7 @@ $this->assign('title', 'Agendamentos');
 
 			</div>
 		</div>
-		<div class='col-lg-3'>
 
-		</div>
 	</div>
 
 </div>

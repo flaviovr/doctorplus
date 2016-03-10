@@ -1,5 +1,5 @@
 /*
- * Arquivo CSS 
+ * Arquivo CSS
  */
 
 /* Importa fontes do Google Fonts */
@@ -10,9 +10,15 @@ h2 {color:#1D71B8; border-bottom: 2px dotted #efefef;}
 
 body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center -30px;padding-top: 80px; font-family: 'Roboto Condensed';}
 
+.round { border-radius: 4px;}
+.roundTop { border-radius: 4px 4px 0 0 ;}
+.roundBottom{ border-radius: 0 0 4px 4px ;}
+.roundLeft { border-radius: 4px 0 0 4px ;}
+.roundRight { border-radius: 0 4px 4px 0 ;}
+
 #loginWraper {
-	background: #fff url('../img/cores.gif') no-repeat; 
-	border: 1px solid #efefef; 
+	background: #fff url('../img/cores.gif') no-repeat;
+	border: 1px solid #efefef;
  	border-top: 0px;
  	margin-top: 50px;
 }
@@ -27,8 +33,8 @@ body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center 
 }
 
 #loginWraper form {
- 	max-width: 600px;	
- 	margin-top: 20px; 
+ 	max-width: 600px;
+ 	margin-top: 20px;
  }
 
  .panel {margin-top: 20px;}
