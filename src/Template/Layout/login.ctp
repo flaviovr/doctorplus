@@ -57,6 +57,6 @@ $cakeDescription = 'Doctor Plus';
     <?= $this->Html->script('jquery.easing.min');?>
     <!-- Include Bootstrap JS -->
     <?= $this->Html->script("bootstrap.min")?>
-    
+
 </body>
 </html>

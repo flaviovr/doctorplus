@@ -16,7 +16,6 @@ body > .container {background:#fff; padding-top: 30px; position:relative;min-hei
 
 h1 {background: #1D71B8; color:#fff; padding: 10px 15px;  margin-bottom: 0px; border: 1px solid #165890; border-bottom: none; font-weight: 300;}
 h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
-h2 {color:#aaa;}
 
 
 .round { border-radius: 4px;}
@@ -105,6 +104,8 @@ h2 {color:#aaa;}
 .label-as-badge {
     border-radius: 1em;
     margin-top: -3px;
+    vertical-align: middle;
+    display: inline-block;
 }
 
 /* Ajustes no breadcrumbs */
@@ -112,21 +113,58 @@ h2 {color:#aaa;}
 
 
 /* BLOCO DE BUSCA */
-.well-busca {padding: 10px 15px 15px 15px; background: #efefef; }
+.well-busca {padding: 15px; background: #efefef; }
 .well-busca .title { color:#aaa; margin:0px 0px 5px 0px;}
 .well-busca .coluna { margin-bottom: 3px;}
 
 .well-status { display: block; margin-bottom: 20px;padding: 15px; background: #f8f8f8;}
 
+.well-busca h2 { color:#666; font-size: 26px;font-weight: 300;}
+
 /* AGENDAMENTO */
 .media-left.agendamentoIcone { color: #3AAA35;}
-.marcacao{ border-bottom: 1px dotted #efefef; margin: 10px 0px; max-height: 100px;}
-.statuses { font-size: 16px; font-weight: normal; line-height: 30px;}
+.marcacao{ border-bottom: 1px dotted #efefef; margin: 10px 0px; max-height: 80px; height: 80px;}
+.internado{ border-bottom: 1px dotted #efefef; margin: 10px 0px; max-height: 55px; height: 55px;}
+
+.statuses { display: inline-block; font-size: 16px; font-weight: normal; line-height: 20px; padding: 5px 8px;}
 .statuses .badge { background: #fff; color: #aaa;}
 
 
-.text-default {color:#777;}
+/* ALERTAS */
+.alerta{ border-bottom: 1px dotted #efefef; padding: 10px 0px; max-height: 50px; height: 50px;}
+
+.text-default {color:#aaa;}
 .text-info {color:#5bc0de;}
 .text-warning {color:#f0ad4e;}
 .text-danger {color:#d9534f;}
 .text-success {color:#5cb85c;}
+.text-extra {color:#777;}
+
+.label-default { background: #aaa;}
+.label-extra { background: #777;}
+
+fieldset {
+    border-bottom: 1px solid #efefef; padding-bottom: 20px;
+}
+
+/* FORMAT FILE INPUT*/
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

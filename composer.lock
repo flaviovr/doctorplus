@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c1aa76b870b580a099da51e959de4f31",
-    "content-hash": "bd5ee04457ac6739418db97060a00a37",
+    "hash": "ae5b21d7a05081c60c6c3989873442d5",
+    "content-hash": "4e1e007a54708672cd13ff72ba3677d9",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -125,6 +125,60 @@
                 "localization"
             ],
             "time": "2014-08-24 00:00:00"
+        },
+        {
+            "name": "cakedc/cakephp-oracle-driver",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CakeDC/cakephp-oracle-driver.git",
+                "reference": "ccb99e27dd0233a8f082b38d638071bf1e151957"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CakeDC/cakephp-oracle-driver/zipball/ccb99e27dd0233a8f082b38d638071bf1e151957",
+                "reference": "ccb99e27dd0233a8f082b38d638071bf1e151957",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/chronos": "*",
+                "php": ">=5.4.16"
+            },
+            "require-dev": {
+                "cakephp/cakephp": "3.2.3",
+                "cakephp/cakephp-codesniffer": "dev-master",
+                "phpunit/phpunit": "*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "CakeDC\\OracleDriver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CakeDC",
+                    "homepage": "http://www.cakedc.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/cakedc/cakephp-oracle-driver/graphs/contributors"
+                }
+            ],
+            "description": "CakePHP 3 Driver for Oracle Database",
+            "homepage": "https://github.com/cakedc/cakephp-oracle-driver",
+            "keywords": [
+                "cakephp",
+                "database",
+                "driver",
+                "oracle"
+            ],
+            "time": "2016-03-10 18:59:20"
         },
         {
             "name": "cakephp/cakephp",
@@ -494,42 +548,6 @@
             "time": "2015-12-30 21:16:52"
         },
         {
-            "name": "snelg/cakephp-3-oracle",
-            "version": "1.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/snelg/cakephp-3-oracle.git",
-                "reference": "e918bcb546b0ac5af3759cdadbb0b794a41e4b36"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/snelg/cakephp-3-oracle/zipball/e918bcb546b0ac5af3759cdadbb0b794a41e4b36",
-                "reference": "e918bcb546b0ac5af3759cdadbb0b794a41e4b36",
-                "shasum": ""
-            },
-            "require": {
-                "ext-oci8": "*",
-                "yajra/laravel-pdo-via-oci8": "~1.0"
-            },
-            "require-dev": {
-                "cakephp/cakephp": "~3.0",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cake\\Oracle\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Oracle datasource for CakePHP 3",
-            "time": "2016-02-02 17:19:14"
-        },
-        {
             "name": "symfony/config",
             "version": "v3.0.2",
             "source": {
@@ -539,7 +557,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/8c83ff9a2ffbed1e606bc816db11ddc2385a16ee",
+                "url": "https://api.github.com/repos/symfony/config/zipball/38711092665edc06ef55e842942fb813932ff4ac",
                 "reference": "8c83ff9a2ffbed1e606bc816db11ddc2385a16ee",
                 "shasum": ""
             },
@@ -795,42 +813,6 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2016-02-02 13:44:19"
-        },
-        {
-            "name": "yajra/laravel-pdo-via-oci8",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/pdo-via-oci8.git",
-                "reference": "c01a3f80ab875304c86abafa0b512233c54f8990"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/pdo-via-oci8/zipball/c01a3f80ab875304c86abafa0b512233c54f8990",
-                "reference": "c01a3f80ab875304c86abafa0b512233c54f8990",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Yajra\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arjay Angeles",
-                    "email": "aqangeles@gmail.com"
-                }
-            ],
-            "description": "PDO userspace driver proxying calls to PHP OCI8 driver",
-            "time": "2016-02-02 01:02:41"
         }
     ],
     "packages-dev": [

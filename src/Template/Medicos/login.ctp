@@ -37,22 +37,22 @@ $cakeDescription = 'Doctor Plus';
 
 				<h2>Acessar sua conta</h2>
 				<p>Digite seu nome de usuário e senha para acessar o sistema e agendar sua cirurgia com total segurança.</p>
-				<?= $this->Flash->render() ;?></p>
-				<?= $this->Form->create($user,['class'=>'form clear-fix']);?>
+				<p><?= $this->Flash->render() ;?></p>
+				<?= $this->Form->create($medico,['class'=>'form clear-fix']);?>
 
 					<div class="form-group">
-						<?= $this->Form->label('username', 'Nome de Usuário', ['class'=>'sr-only'])?>
+						<?= $this->Form->label('USERNAME', 'Nome de Usuário', ['class'=>'sr-only'])?>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="fa fa-user"></span></div>
-							<?= $this->Form->input('username',['class'=>'form-control', 'placeholder'=> 'Nome de Usuário','label'=>false,'onkeyup' => 'this.value = this.value.toUpperCase();']) ?>
+							<?= $this->Form->input('USERNAME',['class'=>'form-control', 'placeholder'=> 'Nome de Usuário','label'=>false,'onkeyup' => 'this.value = this.value.toUpperCase();']) ?>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<?= $this->Form->label('password', 'Senha do Usuário', ['class'=>'sr-only'])?>
+						<?= $this->Form->label('PASSWORD', 'Senha do Usuário', ['class'=>'sr-only'])?>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="fa fa fa-asterisk"></span></div>
-							<?= $this->Form->password('password',['class'=>'form-control', 'placeholder'=> 'Senha do Usuário']) ?>
+							<?= $this->Form->password('PASSWORD',['class'=>'form-control', 'placeholder'=> 'Senha do Usuário']) ?>
 						</div>
 					</div>
 
@@ -65,7 +65,7 @@ $cakeDescription = 'Doctor Plus';
 								'p',
 								$this->Html->link(
 									'Esqueceu sua senha ou não tem cadastro?',
-									['controller'=>'users', 'action'=>'esqueci']
+									['controller'=>'Medicos', 'action'=>'esqueci']
 								),
 								['class'=>'form-control-static', 'escape'=>false])
 						?>

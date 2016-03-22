@@ -35,6 +35,10 @@ $cakeDescription = 'Doctor Plus';
     <?= $this->Html->css('font-awesome.min') ?>
     <!-- Includes do CSS do Bootstrap Datepicker https://github.com/Eonasdan/bootstrap-datetimepicker-->
     <?= $this->Html->css('bootstrap-datetimepicker.min') ?>
+    <!-- Includes do CSS do jQuery UI-->
+    <?= $this->Html->css('jquery-ui.min') ?>
+    <?= $this->Html->css('jquery-ui.theme.min') ?>
+
 
     <!-- Includes do CSS da página de login-->
     <?= $this->Html->css('layout') ?>
@@ -56,10 +60,6 @@ $cakeDescription = 'Doctor Plus';
 
         <div class="container ">
 
-            <!--
-            Branding e Colapse
-            -->
-
             <div class="navbar-header" >
                 <?= $this->Html->link(
                     $this->Html->image('logo_doctorplus_brand.png'),
@@ -80,7 +80,7 @@ $cakeDescription = 'Doctor Plus';
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-user"></span> <?= $userAuth['username']?> <span class='label label-info label-as-badge'>3</span>
+                            <span class="fa fa-fw fa-envelope"></span> <?= $userAuth['USERNAME']?> <span class='label label-info label-as-badge'>3</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -112,17 +112,22 @@ $cakeDescription = 'Doctor Plus';
                                     </p>
                                 </a>
                             </li>
-
                             <li role='navigation' class="divider"></li>
-                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'feedback'],['escape'=> false])?>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-fw fa-bell"></span> Ver Todos Alertas',['controller'=>'medicos', 'action'=>'alertas'],['class'=>'text-info','escape'=> false])?></li>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-fw fa-user-md"></span> Meu Perfil',['controller'=>'medicos', 'action'=>'perfil' ,$userAuth['ID']],['escape'=> false])?>
                             </li>
-                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-sign-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-fw fa-comment"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'feedback'],['escape'=> false])?>
+                            </li>
+                            <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-fw fa-sign-out"></span> Sair',['controller'=>'medicos', 'action'=>'logout'],['escape'=> false])?>
                             </li>
                         </ul>
                     </li>
-                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-cog"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'feedback'],['escape'=> false])?>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-fw fa-bell"></span> Ver Todos Alertas',['controller'=>'medicos', 'action'=>'alertas'],['class'=>'text-info','escape'=> false])?></li>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-fw fa-user-md"></span> Meu Perfil',['controller'=>'medicos', 'action'=>'perfil' ,$userAuth['ID']],['escape'=> false])?>
                     </li>
-                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-sign-out"></span> Sair',['controller'=>'users', 'action'=>'logout'],['escape'=> false])?>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-fw fa-comment"></span> Enviar Feedback',['controller'=>'pages', 'action'=>'feedback'],['escape'=> false])?>
+                    </li>
+                    <li class='visible-xs'><?= $this->Html->link('<span class="fa fa-fw fa-sign-out"></span> Sair',['controller'=>'medicos', 'action'=>'logout'],['escape'=> false])?>
                     </li>
                 </ul>
             </div>
@@ -143,6 +148,9 @@ $cakeDescription = 'Doctor Plus';
 
     <!-- Include Bootstrap JS -->
     <?= $this->Html->script("bootstrap.min")?>
+
+    <!-- Include Jquey UI  -->
+    <?= $this->Html->script("jquery-ui.min")?>
 
     <!-- Include Bootstrap datepicker https://github.com/Eonasdan/bootstrap-datetimepicker -->
     <?= $this->Html->script("bootstrap-datetimepicker")?>

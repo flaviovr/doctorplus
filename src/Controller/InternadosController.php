@@ -8,37 +8,46 @@ use Cake\I18n\Date;
 
 class InternadosController extends AppController
 {
-	// public $paginate = [
-    //     'limit' => 10,
-    //     'order' => [
-    //         'Internados.NM_PACIENTE' => 'asc'
-    //     ]
-    // ];
+
+
+	public $paginate = [
+        'limit' => 12,
+        'order' => [
+            'Agendamentos.DT_CIRURGIA' => 'desc'
+        ]
+    ];
 
 	public function initialize()
     {
         parent::initialize();
         // Incluir the FlashComponent
 		$this->loadComponent('Flash');
+
     }
 
-	public function index($busca = '')
+	public function index()
 	{
-		//Defino variavel para o nome do paciente
-		$nomePaciente='';
 
-		// Crio o objeto de busca em todos os campos
-		$query = $this->Internados->find();
+		// Caso valor do campo de busca for preenchido coloco na variável, ou coloco vazio
+		$buscar = !empty($this->request->query('buscar')) ? $this->request->query('buscar') : '';
+		$condicao = array();
 
+		$internados = $this->Internados->find('all');
 		// Caso faca busca - POST -
-		if($this->request->is('post')) {
+		if($this->request->is('get')) {
 			// Se usuario preencher o campo, jogo valor na variavel de busca e adiciono a condicao no objeto de busca
-			$nomePaciente = empty($this->request->data('nomePaciente')) ? $nomePaciente : h($this->request->data('nomePaciente')) ;
-			if (!empty($nomePaciente)) $query = $query->where(['NM_PACIENTE like'=> '%'.h($nomePaciente).'%']);
+			if (!empty($buscar)) {
+				$internados->where(['NM_PACIENTE like' => '%'.strtoupper($buscar).'%']) ;
+			}
 		}
+
+
+		//pr($options);
+		//$this->paginate = $options;
+
 		// Passo as variaveis para a views
-		$this->set('internados',$query);
-		$this->set('nomePaciente', $nomePaciente);
+		$this->set('internados', $this->paginate($internados));
+		$this->set('buscar', $buscar);
 	}
 
 	public function view($id = null) {}

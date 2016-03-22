@@ -1,11 +1,10 @@
 <?php
-// src/Model/Entity/User.php
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use App\Auth\LegacyPasswordHasher;
 
-class User extends Entity
+class Medico extends Entity
 {
 
     // Define os campos acessíveis

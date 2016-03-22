@@ -4,22 +4,28 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
 class InternadosTable extends Table
 {
 
+    
     public function initialize(array $config)
     {
+
+
         //Define o nomeda tabela do model
-        //$this->table('my_table');
+        $this->table('drplus_internados');
 
         //Define o campo utilizado para associações no model
-        //$this->displayField('username');
+        //$this->displayField('nm_paciente');
 
         //Define a chave primária do model
-        //$this->primaryKey('id');
+        $this->primaryKey('CD_PACIENTE');
     }
+
+
 
     // public function validationDefault(Validator $validator)
     // {

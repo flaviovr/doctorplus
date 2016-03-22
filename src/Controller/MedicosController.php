@@ -6,96 +6,59 @@ use Cake\Event\Event;
 use Cake\Mailer\Email;
 use Cake\I18n\Time;
 
-class UsersController extends AppController
+class MedicosController extends AppController
 {
 
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         // Permito acesso as actions
-        $this->Auth->allow(['add','esqueci']);
+        $this->Auth->allow(['login','esqueci']);
     }
-
 
     public function index()
     {
         //defino uma variavel na view com todos os usuarios
-        $this->set('users', $this->Users->find('all'));
+        $this->set('medicos', $this->Medicos->find('all'));
     }
 
-
-    public function view($id)
+    public function perfil($id)
     {
         //Passo os dados do usuario ($id) para uma variavel e defino na view
-        $user = $this->Users->get($id);
-        $this->set(compact('user'));
+        $medico = $this->Medicos->get($id);
+        $this->set(compact('medico'));
     }
 
+    public function alertas(){
+        $options = [
+            'limit' => 12,
 
-    public function edit($id)
-    {
-        $user = $this->Users->get($id);
-        if ($this->request->is(['post', 'put'])) {
-
-            $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('Usuário atualizado.'));
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('Unable to update your article.'));
-        }
-        $this->set('user', $user);
+        ];
+        $this->paginate = $options;
+        $alerta = $this->paginate($this->Medicos->find('all'));
+        $this->set(compact('alerta'));
     }
-
-
-    public function add()
-    {
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('Unable to add the user.'));
-        }
-        $this->set('user', $user);
-    }
-
-
-    public function delete($id)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The article with id: {0} has been deleted.', h($id)));
-            return $this->redirect(['action' => 'index']);
-        }
-    }
-
-
     public function login()
     {
         //Se usuário já estiver logado, redireciona para home.
         if ($this->Auth->user()) return $this->redirect(['controller' => 'Pages', 'action' => 'display','home']) ;
 
         // Define a variável como nova Entidade
-        $user = $this->Users->newEntity();
+        $medico = $this->Medicos->newEntity();
 
         // Defino a variável na view
-        $this->set('user', $user);
+        $this->set('medico', $medico);
 
         // Caso de POST - Login
         if ($this->request->is('post')) {
 
             // Tenta identificar o usuario com a funcao de autenticçao
-            $user = $this->Auth->identify();
-
+            $medico = $this->Auth->identify();
+            //debug($medico);
             //Caso encontre o usuário seja identificado
-            if ($user) {
+            if ($medico) {
                 // Define o usuario como o usuario autenticado
-                $this->Auth->setUser($user);
+                $this->Auth->setUser($medico);
                 // Redireciona para home
                 return $this->redirect(['controller' => 'Pages', 'action' => 'display','home']);
             }
@@ -104,13 +67,11 @@ class UsersController extends AppController
         }
     }
 
-
     public function logout()
     {
         // Redireciona o usuario para a action de logout do controler
         return $this->redirect($this->Auth->logout());
     }
-
 
     public function esqueci()
     {
@@ -124,7 +85,7 @@ class UsersController extends AppController
             $emailUser = $this->request->data('email');
 
             // Função retorna array com dados do usuário ou false caso não encontre e joga na variável
-            if($user = $this->Users->localizaUser($emailUser)) {
+            if($medico = $this->Medicos->localiza($emailUser)) {
 
                 // Data a ser usada no email
                 $data = new Time();
@@ -164,4 +125,5 @@ class UsersController extends AppController
         $this->set('emailUser',$emailUser);
 
     }
+
 }

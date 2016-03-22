@@ -1,24 +1,22 @@
 <?php
-// src/Model/Table/UsersTable.php
-
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class UsersTable extends Table
+class CirurgiasTable extends Table
 {
 
     public function initialize(array $config)
     {
         //Define o nomeda tabela do model
-        //$this->table('my_table');
+        $this->table('DP_CIRURGIAS');
 
         //Define o campo utilizado para associações no model
-        $this->displayField('username');
+        $this->displayField('DS_CIRURGIA');
 
         //Define a chave primária do model
-        $this->primaryKey('id');
+        $this->primaryKey('CD_PRO_FAT');
 
     }
     public function validationDefault(Validator $validator)
@@ -38,10 +36,10 @@ class UsersTable extends Table
      * Funcao que Localiza se o usuário existe/retorna seu registro, utilizado para recuperar a senha
      * $email = string -> E-mail do usuário que deseja localizar
      */
-    public function localizaUser($email){
+    public function localiza($email){
 
         //Cria a busca passando parametro da função para o WHERE
-        $query = $this->find('all')->where(['email'=> $email])->toArray();
+        $query = $this->find('all')->where(['EMAIL'=> $email])->toArray();
 
         //Retorna os dados do usuário caso encontre ou retorna vazio caso não encontro o usuário
         return $query;

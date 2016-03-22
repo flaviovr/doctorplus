@@ -76,10 +76,21 @@ $this->assign('title', 'Selecione a opção desejada');
 		</div> -->
 
 		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+			<a class='wraper' href="<?=$this->Url->build(['controller' => 'medicos', 'action' => 'perfil' , $userAuth['ID'] ]);?>">
+				<div class="menuItem">
+					<div class='innerItem'>
+						<i class='fa fa-user-md iconMenuItem'></i>
+						<p class='titleMenuItem text-center'>Meu Perfil<p>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 			<a class='wraper' href='<?=$this->Url->build(['controller' => 'pages', 'action' => 'feedback']);?>'>
 				<div class="menuItem">
 					<div class='innerItem'>
-						<i class='fa fa-cog iconMenuItem'></i>
+						<i class='fa fa-comment iconMenuItem'></i>
 						<p class='titleMenuItem text-center'>Dar Feedback<p>
 					</div>
 				</div>
@@ -87,7 +98,7 @@ $this->assign('title', 'Selecione a opção desejada');
 		</div>
 
 		<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-			<a class='wraper' href='<?=$this->Url->build(['controller' => 'users', 'action' => 'logout'])?>'>
+			<a class='wraper' href='<?=$this->Url->build(['controller' => 'medicos', 'action' => 'logout'])?>'>
 				<div class="menuItem">
 					<div class='innerItem'>
 						<i class='fa fa-sign-out iconMenuItem'></i>

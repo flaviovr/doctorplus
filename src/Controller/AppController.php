@@ -33,30 +33,38 @@ class AppController extends Controller
         parent::initialize();
         //Carrego Componente Flash
         $this->loadComponent('Flash');
+        $this->loadComponent('Paginator');
 
         // Carrego componente de autenticacao e passo o parametro do Hasher e os dados do request
         $this->loadComponent('Auth', [
-        'authenticate' => [
-            'Form' => [
-                'passwordHasher' => [
-                    'className' => 'Legacy',
-                     $this->request->data
-                    ]
-                ]
+            'loginAction' => [
+                'controller' => 'Medicos',
+                'action' => 'login',
             ],
+            'useModel' => 'Medicos',
             'authError' => 'Você precisa fazer login para acessar essa página',
+            'authenticate' => [
+                'Form' => [
+                    'passwordHasher' => [ 'className' => 'Legacy', $this->request->data ],
+                    'userModel' => 'Medicos',
+                    'fields' => ['username' => 'USERNAME', 'password' => 'PASSWORD']
+                ],
+            ],
+
         ]);
     }
 
     public function beforeRender(Event $event)
     {
         // Atribuo o usuario logado a variavel e adiciono a variavel a view
-        $user = $this->Auth->user();
-        $this->set('userAuth', $user);
+        $medico = $this->Auth->user();
+        $this->set('userAuth', $medico);
     }
 
     public function beforeFilter(Event $event)
     {
-        //$this->Auth->allow(['esqueci','add']);
+        $this->Auth->allow('feedback','getPlano');
+
+    //    debug($this->Auth->Config);
     }
 }
