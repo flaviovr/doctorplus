@@ -4,7 +4,7 @@
 
 html, body{height: 100%;min-height: 100%;}
 
-body { font-family: 'Roboto Condensed'; background: url('../img/bg.gif') center -30px; font-family: 'Roboto Condensed'; padding-top: 70px;
+body { font-family: 'Roboto Condensed'; background: url('../img/bgp.png') center -30px; font-family: 'Roboto Condensed'; padding-top: 70px;
     -webkit-backface-visibility: hidden;
     -webkit-transform: translateZ(0px);
     webkit-font-smoothing: antialiased;
@@ -38,13 +38,14 @@ h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
 
 .menuItem > .innerItem {  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width:90%;}
 
+.error > .form-control {border-color: rgb(248,153,129);}
 
-.innerItem > .iconMenuItem { font-size: 42px;  color: #26B3E8; text-align: center; display: block; margin: 10px auto 0px auto;
+.innerItem > .iconMenuItem { font-size: 38px;  color: #26B3E8; text-align: center; display: block; margin: 10px auto 0px auto;
   -webkit-transition: all .4s ease-in-out;
   -moz-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;}
 
-.innerItem > .titleMenuItem { font-weight: 300; margin: 10px 0; line-height: 1.6; font-size: 26px; text-align: center; color: #1D71B8;
+.innerItem > .titleMenuItem { font-weight: 300; margin: 10px 0; line-height: 1.6; font-size: 22px; text-align: center; color: #1D71B8;
   -webkit-transition: color .4s ease-in-out;
   -moz-transition: color .4s ease-in-out;
   transition: color .4s ease-in-out;
@@ -168,3 +169,5 @@ fieldset {
     cursor: inherit;
     display: block;
 }
+
+/*.navbar {background-image: linear-gradient(to bottom,#26B3E8 0, #1D71B8 100%); color: #fff;}*/

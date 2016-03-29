@@ -10,7 +10,7 @@ class MedicosTable extends Table
     public function initialize(array $config)
     {
         //Define o nomeda tabela do model
-        $this->table('dp_medicos');
+        $this->table('DP_MEDICOS');
 
         //Define o campo utilizado para associações no model
         $this->displayField('USERNAME');
@@ -23,9 +23,9 @@ class MedicosTable extends Table
     {
         // Validação padrão para o usuário
         return $validator
-            ->notEmpty('username', 'A username is required')
-            ->notEmpty('password', 'A password is required')
-            ->notEmpty('role', 'A role is required')
+            ->notEmpty('username', 'Preencha seu nome')
+            ->notEmpty('password', 'Preencha a senha')
+            ->notEmpty('role', 'Selecione o Perfil')
             ->add('role', 'inList', [
                 'rule' => ['inList', ['admin', 'author']],
                 'message' => 'Please enter a valid role'

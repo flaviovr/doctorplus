@@ -26,7 +26,7 @@ class LegacyPasswordHasher extends AbstractPasswordHasher
     {
         // Comparo as strings geradas
         $password = $this->hash($password);
-        //debug($hashedPassword);
+        //debug($password.'- '.$hashedPassword);
         // Retorno true se o $hashedPassword for igual a $password
         return $password === $hashedPassword;
     }

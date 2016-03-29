@@ -1,5 +1,6 @@
 <?php
 $this->assign('title', 'Agendamentos');
+//debug($agendamentos);
 ?>
 <div class="container">
 
@@ -43,7 +44,7 @@ $this->assign('title', 'Agendamentos');
 						<div class='coluna col-lg-3  col-sm-6'>
 							<div class="input-group ">
 								<div class='input-group-addon'><span class='fa fa-calendar-o'></span></div>
-								<input type="text" class="form-control datepicker" name="dataAtual" value='<?= $dataAtual;?>' placeholder="Selecione a data">
+								<input type="text" class="form-control dtp" name="dataAtual" value='<?= $dataAtual;?>' placeholder="Selecione a data">
 							</div>
 						</div>
 
@@ -105,14 +106,14 @@ $this->assign('title', 'Agendamentos');
 
 		<!-- PAGINAÇÃO -->
 		<div class='col-lg-12 text-center'>
-			<ul class="pagination" >
-			<?= $this->Paginator->first('<i class="fa fa-angle-double-left"></i>',['escape'=>false]);?>
-			<?= $this->Paginator->prev('<i class="fa fa-angle-left"></i>',['escape'=>false]);?>
-			<?= $this->Paginator->numbers();?>
-			<?= $this->Paginator->next('<i class="fa fa-angle-right"></i>',['escape'=>false]);?>
-			<?= $this->Paginator->last('<i class="fa fa-angle-double-right"></i>',['escape'=>false]);?><br><br>
-			<p class="small"><?= $this->Paginator->counter(' Página {{page}} de {{pages}} &nbsp;&nbsp;-&nbsp;&nbsp; {{current}} de {{count}} registros');?></p>
+			<ul class="pagination  pagination" >
+				<?= $this->Paginator->first('<i class="fa fa-angle-double-left"></i>',['escape'=>false]);?>
+				<?= $this->Paginator->prev('<i class="fa fa-angle-left"></i>',['escape'=>false]);?>
+				<?= $this->Paginator->numbers(['modulus'=>6]);?>
+				<?= $this->Paginator->next('<i class="fa fa-angle-right"></i>',['escape'=>false]);?>
+				<?= $this->Paginator->last('<i class="fa fa-angle-double-right"></i>',['escape'=>false]);?>
 			</ul>
+			<p class="small"><?= $this->Paginator->counter(' Página {{page}} de {{pages}} &nbsp;&nbsp;-&nbsp;&nbsp; {{current}} de {{count}} registros');?></p>
 		</div>
 
 	</div>

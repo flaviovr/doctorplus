@@ -23,9 +23,30 @@ $(document).ready(function(){
     });
 
    //plugin de data
-	$('.datepicker').datetimepicker({
+	$('.dtp').datetimepicker({
         locale: 'pt-br',
-        format: 'DD/MM/YYYY'
+        format: 'DD/MM/YYYY',
+        showClear: true,
+        defaultDate: 'now'
+    });
+
+    $('.dtp_year').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY',
+        viewMode: 'years',
+        showClear: true,
+        useCurrent: false
+    });
+
+    $('.dtp_diahora').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY HH:mm',
+        stepping: 30,
+        showClear: true,
+        minDate: moment().add(1, 'days'),
+        icons: {
+            time: 'fa fa-clock-o',
+        }
     });
 
     //Carrega os itens do Select em cascata

@@ -33,14 +33,14 @@ $this->assign('title', 'Alertas');
 		</div>
 		<!-- PAGINAÇÃO -->
 		<div class='col-lg-12 text-center'>
-			<ul class="pagination" >
+			<ul class="pagination pagination" >
 				<?= $this->Paginator->first('<i class="fa fa-angle-double-left"></i>',['escape'=>false]);?>
 				<?= $this->Paginator->prev('<i class="fa fa-angle-left"></i>',['escape'=>false]);?>
-				<?= $this->Paginator->numbers();?>
+				<?= $this->Paginator->numbers(['modulus'=>6]);?>
 				<?= $this->Paginator->next('<i class="fa fa-angle-right"></i>',['escape'=>false]);?>
-				<?= $this->Paginator->last('<i class="fa fa-angle-double-right"></i>',['escape'=>false]);?><br><br>
-				<p class="small"><?= $this->Paginator->counter(' Página {{page}} de {{pages}} &nbsp;&nbsp;-&nbsp;&nbsp; {{current}} de {{count}} registros');?></p>
+				<?= $this->Paginator->last('<i class="fa fa-angle-double-right"></i>',['escape'=>false]);?>
 			</ul>
+			<p class="small"><?= $this->Paginator->counter(' Página {{page}} de {{pages}} &nbsp;&nbsp;-&nbsp;&nbsp; {{current}} de {{count}} registros');?></p>
 		</div>
 	</div>
 </div>

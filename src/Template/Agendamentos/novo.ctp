@@ -1,5 +1,6 @@
 <?php
 $this->assign('title', 'Novo Agendamento');
+$this->Form->templates('agenda_form');
 
 ?>
 <div class="container">
@@ -37,6 +38,7 @@ $this->assign('title', 'Novo Agendamento');
 
 					<div class="col-lg-12">
 						<h3>Dados do Usuário</h3>
+
 					</div>
 
 					<div class="col-sm-4 form-group">
@@ -44,23 +46,21 @@ $this->assign('title', 'Novo Agendamento');
 					</div>
 
 					<div class="col-sm-8 form-group">
-						<?= $this->Form->input('NM_PACIENTE',['class'=>'form-control', 'label'=>'Nome do Paciente :' ]) ?>
+						<?= $this->Form->input('NM_PACIENTE', ['class'=>'form-control', 'label'=>'Nome do Paciente :' ]) ?>
 					</div>
 
 					<div class="col-md-4 col-sm-6 form-group">
-						<label>Sexo:</label>
 						<?php $options = ['M' => 'Masculino', 'F' => 'Feminino']; ?>
-						<?= $this->Form->select('TP_SEXO', $options, ['class'=>'form-control', 'label'=>'Sexo:' , 'empty'=>'Selecione']) ?>
+						<?= $this->Form->input('TP_SEXO',  [ 'options'=>$options , 'type'=>'select', 'class'=>'form-control', 'label' => 'Sexo:', 'empty'=>'Selecione' ]) ?>
 					</div>
 
 					<div class="col-md-4 col-sm-6 form-group">
 						<?php $options = ['A+' => 'A+', 'A-' => 'A-', 'AB+' => 'AB+', 'AB-' => 'AB-', 'B+' => 'B+', 'B-' => 'B-', 'O+' => 'O+','O-' => 'O-']; ?>
-						<label>Fator RH:</label>
-						<?= $this->Form->select('TP_SANGUINEO', $options, ['class'=>'form-control', 'empty'=>'Selecione' ]) ?>
+						<?= $this->Form->input('TP_SANGUINEO',  [ 'options'=>$options , 'type'=>'select', 'class'=>'form-control', 'label' => 'Fator RH:', 'empty'=>'Selecione' ]) ?>
 					</div>
 
-					<div class="col-md-4 col-sm-6 form-group">
-						<?= $this->Form->input('DT_NASCIMENTO',['class'=>'form-control',  'label'=>'Data de Nascimento:' ]) ?>
+					<div class="col-md-4 col-sm-6 form-group ">
+						<?= $this->Form->input('DT_NASCIMENTO',['class'=>'form-control dtp_year' , 'label'=>'Data de Nascimento:' ]) ?>
 					</div>
 
 					<div class="col-md-4 col-sm-6 form-group">
@@ -85,24 +85,15 @@ $this->assign('title', 'Novo Agendamento');
 					</div>
 
 					<div class="col-sm-4  form-group">
-						<?php $options = ['M' => 'Male', 'F' => 'Female']; ?>
-						<label for="ds-email-paciente">Convênio:</label>
-						<?= $this->Form->select('convenio_id', $convenios, [
-							'class'=>'form-control cascade',
-							'data-destino'=>'[name=plano_id]',
-							'data-url'=>'getPlano/' ,
-							'empty'=>'Selecione'
-							])
-							?>
+						<?= $this->Form->input('CONVENIO_ID', [ 'options' => $convenios, 'type' => 'select', 'label' => 'Convênio:', 'class'=>'form-control cascade', 'data-destino'=>'[name=PLANO_ID]', 'data-url'=>'getPlano/' , 'empty'=>'Selecione'])?>
 					</div>
 
 					<div class="col-sm-4 form-group">
-						<label for="ds-email-paciente">Plano:</label>
-						<?= $this->Form->select('plano_id', null , ['class'=>'form-control', 'disabled'=>'disabled' , 'empty'=>'Selecione o Convênio' ]) ?>
+						<?= $this->Form->input('PLANO_ID', [ 'options' => null, 'type' => 'select', 'label' => 'Plano:', 'class'=>'form-control', 'disabled'=>'disabled' , 'empty'=>'Selecione o Convênio' ]) ?>
 					</div>
 
 					<div class="col-sm-4  form-group">
-						<?= $this->Form->input('cd_matricula',['class'=>'form-control', 'label'=>'Matrícula' ]) ?>
+						<?= $this->Form->input('CD_MATRICULA',['class'=>'form-control', 'label'=>'Matrícula' ]) ?>
 					</div>
 
 				</fieldset>
@@ -113,16 +104,14 @@ $this->assign('title', 'Novo Agendamento');
 						<h3>Alergias</h3>
 					</div>
 
-					<div class="col-md-4 sol-sm-form-group ">
-						<label><?= $this->Form->checkbox('medicamentosa') ?>&nbsp;&nbsp;&nbsp;Medicamentosa</label>
-						<?= $this->Form->input('outras',['class'=>'form-control', 'label'=> false]) ?>
+					<div class="col-sm-4 form-group ">
+						<?= $this->Form->input('MEDICAMENTOSA',['class'=>'form-control', 'label'=> 'Medicamentosa']) ?>
 					</div>
-					<div class="col-md-4 form-group ">
-						<label><?= $this->Form->checkbox('alimentar') ?>&nbsp;&nbsp;&nbsp;Alimentar</label>
-						<?= $this->Form->input('outras',['class'=>'form-control', 'label'=> false]) ?>
+					<div class="col-sm-4 form-group ">
+						<?= $this->Form->input('ALIMENTAR',['class'=>'form-control', 'label'=> 'Alimentar']) ?>
 					</div>
-					<div class="col-md-4 form-group ">
-						<br><label><?= $this->Form->checkbox('alimentar') ?>&nbsp;&nbsp;&nbsp;Latex</label>
+					<div class="col-sm-4 form-group ">
+						<br><label><?= $this->Form->checkbox('LATEX') ?>&nbsp;&nbsp;&nbsp;Latex</label>
 					</div>
 				</fieldset>
 
@@ -134,22 +123,22 @@ $this->assign('title', 'Novo Agendamento');
 					</div>
 
 					<div class="col-sm-6  form-group">
-						<label>Especialidade:</label>
-						<?php
-						echo $this->Form->select('cd_plano', $esp, ['class'=>'form-control', 'empty'=>'Selecione'])
-						?>
+						<?= $this->Form->input('ESPECIALIDADE', ['class'=>'form-control', 'options'=> $esp, 'type'=>'select', 'label'=>'Especialidade:', 'empty'=>'Selecione'])?>
 					</div>
 
 					<div class="col-sm-6  form-group">
 						<label>Cirurgião:</label>
 						<p class="form-control-static"><?=$userAuth['USERNAME']?></p>
+						<input type="hidden" name="CD_PRESTADOR" value="<?=$userAuth['ID']?>">
+						<input type="hidden" name="USUARIO" value="<?=$userAuth['USERNAME']?>">
 					</div>
 
 				</fieldset>
 
-				<!-- DADOS DA CIRURGIA -->
+
 				<fieldset class="row">
 
+					<!-- DADOS DA CIRURGIA -->
 					<div class="col-lg-12">
 						<h3>Dados da Cirurgia</h3>
 					</div>
@@ -177,33 +166,35 @@ $this->assign('title', 'Novo Agendamento');
 					<div class="clearfix"></div>
 
 					<div class="col-sm-4 form-group">
-						<?php $options = ['Geral', 'Local', 'Regional Peridural ou Raquidiana', 'Sedação']; ?>
-						<label>Anestesia:</label>
-						<?= $this->Form->select('anestesia', $options, ['class'=>'form-control', 'empty'=>'Selecione' ]) ?>
+						<?php $options = [ '1'=>'Geral', '2'=>'Local', '3'=>'Regional Peridural ou Raquidiana', '4'=>'Sedação']; ?>
+						<?= $this->Form->input('ANESTESIA', [ 'options'=> $options, 'label'=>'Anestesia:', 'type' => 'select', 'class'=>'form-control', 'empty'=>'Selecione' ]) ?>
 					</div>
 
 					<div class="col-sm-4 form-group">
-						<?php $options = ['Direita', 'Esquerda', 'Bilateral', 'Não se aplica']; ?>
-						<label>Lateralidade:</label>
-						<?= $this->Form->select('lateralidade', $options, ['class'=>'form-control', 'empty'=>'Selecione' ]) ?>
+						<?php $options = ['1'=>'Direita', '2'=>'Esquerda', '3'=>'Bilateral', '4'=>'Não se aplica']; ?>
+						<?= $this->Form->input('LATERALIDADE', ['options'=> $options, 'label'=>'Lateralidade:', 'type' => 'select','class'=>'form-control', 'empty'=>'Selecione' ]) ?>
 					</div>
 
 					<div class="col-sm-4 form-group">
-						<?php $options = ['Não', 'UTI', 'Semi-Intensiva', 'UTO', 'UTI Neonatal']; ?>
-						<label>Necessita UTI:</label>
-						<?= $this->Form->select('anestesia', $options, ['class'=>'form-control', 'default'=>'Não' ]) ?>
+						<?php $options = ['Não'=>'Não', 'UTI'=>'UTI', 'Semi-Intensiva'=>'Semi-Intensiva', 'UTO'=>'UTO', 'UTI Neonatal'=>'UTI Neonatal']; ?>
+						<?= $this->Form->input('TIPO_UTI', [ 'options'=> $options, 'label'=>'Necessita UTI:', 'type' => 'select', 'class'=>'form-control', 'default'=>'Não' ]) ?>
 					</div>
 
 					<div class="col-md-4 col-sm-12 form-group">
-						<?= $this->Form->input('diagnostico',['class'=>'form-control', 'label'=>'Diagnóstico:', 'type' => 'textarea', 'rows' => '8' ]) ?>
-					</div>
-					<div class="col-md-4 col-sm-12 form-group">
-						<?= $this->Form->input('comorbidades',['class'=>'form-control', 'label'=>'Comorbidades:', 'type' => 'textarea', 'rows' => '8', ]) ?>
+						<?= $this->Form->input('DIAGNOSTICO',['class'=>'form-control', 'label'=>'Diagnóstico:', 'type' => 'textarea', 'rows' => '8' ]) ?>
 					</div>
 
 					<div class="col-md-4 col-sm-12 form-group">
-						<?= $this->Form->input('observacoes',['class'=>'form-control', 'label'=>'Observações:', 'type' => 'textarea', 'rows' => '8' ]) ?>
+						<?= $this->Form->input('COMORBIDADES',['class'=>'form-control', 'label'=>'Comorbidades:', 'type' => 'textarea', 'rows' => '8', ]) ?>
 					</div>
+
+					<div class="col-md-4 col-sm-12 form-group">
+						<?= $this->Form->input('OBSERVACOES',['class'=>'form-control', 'label'=>'Observações:', 'type' => 'textarea', 'rows' => '8' ]) ?>
+					</div>
+
+				</fieldset>
+
+				<fieldset class="row">
 
 					<!-- NECESSITA SANGUE -->
 					<div class="col-sm-12">
@@ -211,19 +202,19 @@ $this->assign('title', 'Novo Agendamento');
 					</div>
 
 					<div class="col-md-3 col-sm-6 form-group ">
-						<?= $this->Form->input('outras',['class'=>'form-control', 'label'=> 'Concentrado de Hemácias']) ?>
+						<?= $this->Form->input('HEMACIAS',['class'=>'form-control', 'label'=> 'Concentrado de Hemácias']) ?>
 					</div>
 
 					<div class="col-md-3 col-sm-6 form-group ">
-						<?= $this->Form->input('outras',['class'=>'form-control', 'label'=> 'Concentrado de Plaquetas']) ?>
+						<?= $this->Form->input('PLAQUETAS',['class'=>'form-control', 'label'=> 'Concentrado de Plaquetas']) ?>
 					</div>
 
 					<div class="col-md-3 col-sm-6 form-group ">
-						<?= $this->Form->input('outras',['class'=>'form-control', 'label'=> 'Plasma']) ?>
+						<?= $this->Form->input('PLASMA',['class'=>'form-control', 'label'=> 'Plasma']) ?>
 					</div>
 
 					<div class="col-md-3 col-sm-6 form-group ">
-						<?= $this->Form->input('outras',['class'=>'form-control', 'label'=> 'Crioprecipitado']) ?>
+						<?= $this->Form->input('CRIO',['class'=>'form-control', 'label'=> 'Crioprecipitado']) ?>
 					</div>
 
 					<!-- OUTRAS INFORMACOES -->
@@ -231,12 +222,12 @@ $this->assign('title', 'Novo Agendamento');
 						<h3>Outras Informações:</h3>
 					</div>
 					<div class="col-sm-6 form-group ">
-						<?= $this->Form->input('medicacao_especial',['class'=>'form-control', 'label'=> 'Medicação Especial?']) ?>
+						<?= $this->Form->input('MEDICACAO',['class'=>'form-control', 'label'=> 'Medicação Especial?']) ?>
 					</div>
 					<div class="col-sm-6 form-group ">
 						<br>
-						<label><?= $this->Form->checkbox('alimentar') ?>&nbsp;&nbsp;Necessita congelação&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('fixador_mayfield') ?>&nbsp;&nbsp;Não necessita OPME&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('CONGELACAO') ?>&nbsp;&nbsp;Necessita congelação&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('SEM_OPME') ?>&nbsp;&nbsp;Não necessita OPME&nbsp;&nbsp;&nbsp;</label>
 					</div>
 
 					<!-- EQUIPAMENTOS -->
@@ -245,33 +236,60 @@ $this->assign('title', 'Novo Agendamento');
 					</div>
 
 					<div class="col-sm-4 form-group">
-						<?php $options = ['Não', 'Próprio', 'Hospital', 'Empresa',]; ?>
-						<label>Vídeo cirúrgico:</label>
-						<?= $this->Form->select('video_cirurgico', $options, ['class'=>'form-control', 'default'=>'Não' ]) ?>
+						<?php $options = ['Não'=>'Não', 'Próprio'=>'Próprio', 'Hospital'=>'Hospital', 'Empresa'=>'Empresa']; ?>
+						<?= $this->Form->input('VIDEO', [ 'options'=> $options, 'label'=>'Vídeo Cirúrgico:', 'type' => 'select', 'class'=>'form-control', 'default'=>'Não' ]) ?>
 					</div>
+
 					<div class="col-sm-4 form-group">
-						<?php $options = ['Não', 'Penteiro', 'Zeiss']; ?>
-						<label>Microscópio:</label>
-						<?= $this->Form->select('microscopio', $options, ['class'=>'form-control', 'default'=>'Não' ]) ?>
+						<?php $options = ['Não'=>'Não', 'Penteiro'=>'Penteiro', 'Zeiss'=>'Zeiss']; ?>
+						<?= $this->Form->input('MICROSCOPIO', ['options'=> $options, 'label'=>'Microscópio:' , 'type' => 'select', 'class'=>'form-control', 'default'=>'Não' ]) ?>
 					</div>
+
 					<div class="col-sm-4 form-group">
-						<?php $options = ['Não', 'DMG', 'Extracor','Terumo']; ?>
-						<label>CEC:</label>
-						<?= $this->Form->select('cec', $options, ['class'=>'form-control', 'default'=>'Não' ]) ?>
+						<?php $options = ['Não'=>'Não', 'DMG'=>'DMG', 'Extracor'=>'Extracor','Terumo'=>'Terumo']; ?>
+						<?= $this->Form->input('CEC', ['options'=> $options, 'label'=>'CEC:', 'type' => 'select' , 'class'=>'form-control', 'default'=>'Não' ]) ?>
 					</div>
 
 					<div class="col-sm-12 form-group ">
-						<label><?= $this->Form->checkbox('alimentar') ?>&nbsp;&nbsp;Suporte de coluna&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('fixador_mayfield') ?>&nbsp;&nbsp;Fixador Mayfield&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('manguito_pneumático') ?>&nbsp;&nbsp;Manguito pneumático&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('mesa_ortopedica') ?>&nbsp;&nbsp;Mesa ortopédica&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('intensificador_imagem') ?>&nbsp;&nbsp;Intensificador de imagem&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('eco_transesofágico') ?>&nbsp;&nbsp;Eco-transesofágico&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('ligasure') ?>&nbsp;&nbsp;Ligasure&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('cell_saver') ?>&nbsp;&nbsp;Cell Saver&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('ultracission') ?>&nbsp;&nbsp;Ultracission&nbsp;&nbsp;&nbsp;</label>
-						<label><?= $this->Form->checkbox('ultrassom') ?>&nbsp;&nbsp;Ultrassom&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOS.Suporte_de_Coluna') ?>&nbsp;&nbsp;Suporte de coluna&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOS.Fixador_Mayfield') ?>&nbsp;&nbsp;Fixador Mayfield&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOS.Manguito_Pneumático') ?>&nbsp;&nbsp;Manguito pneumático&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOS.Mesa_Ortopédica') ?>&nbsp;&nbsp;Mesa ortopédica&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOSC.Intensificador_de_Imagem') ?>&nbsp;&nbsp;Intensificador de imagem&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOSC.Eco-transesofágico') ?>&nbsp;&nbsp;Eco-transesofágico&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOSC.Ligasure') ?>&nbsp;&nbsp;Ligasure&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOSC.Cell_Saver') ?>&nbsp;&nbsp;Cell Saver&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOSC.Ultracission') ?>&nbsp;&nbsp;Ultracission&nbsp;&nbsp;&nbsp;</label>
+						<label><?= $this->Form->checkbox('EQUIPAMENTOSC.Ultrassom') ?>&nbsp;&nbsp;Ultrassom&nbsp;&nbsp;&nbsp;</label>
 					</div>
+				</fieldset>
+
+				<!-- DATAS E HORA -->
+				<fieldset class="row">
+
+					<div class="col-lg-12">
+						<h3>Data & Hora</h3>
+					</div>
+
+					<div class="col-md-3 col-sm-6 form-group">
+						<?php $options = [];for ($i=1; $i<=30; $i++) $options[$i] = $i>1 ? $i.' horas' : $i.' hora';?>
+						<?= $this->Form->input('DT_DURACAO', [ 'options'=> $options, 'label'=>'Horas de Sala Cirúrgica:', 'type' => 'select', 'class'=>'form-control', 'empty'=>'Selecione' ]) ?>
+					</div>
+
+					<div class="col-md-3 col-sm-6 form-group">
+						<?php $options = ['Day Clinic'=>'Day Clinic'];for ($i=1; $i<=30; $i++) $options[$i] = $i>1 ? $i.' dias' : $i.' dia';?>
+						<?= $this->Form->input('DT_INT_HOSP', ['options'=> $options, 'label'=>'Dias de Internação Hospitalar:' , 'type' => 'select', 'class'=>'form-control', 'empty'=>'Selecione' ]) ?>
+					</div>
+
+					<div class="col-md-3 col-sm-6 form-group">
+						<?php $options = [];for ($i=1; $i<=30; $i++) $options[$i] = $i>1 ? $i.' dias' : $i.' dia';?>
+						<?= $this->Form->input('DT_INT_UTI', ['options'=> $options, 'label'=>'Dias de Internação em UTI:', 'type' => 'select' , 'class'=>'form-control', 'empty'=>'Selecione' ]) ?>
+					</div>
+
+					<div class="col-md-3 col-sm-6 form-group">
+						<?= $this->Form->input('DT_CIRURGIA',['class'=>'form-control dtp_diahora' , 'label'=>'Data/Hora Preferencial' ]) ?>
+					</div>
+
 
 				</fieldset>
 
@@ -283,12 +301,12 @@ $this->assign('title', 'Novo Agendamento');
 					</div>
 
 					<div class="col-lg-4 col-sm-6 form-group">
-					   <label for="laudo">Laudos:</label>
+					   <label for="LAUDO">Laudos:</label>
 					   <div class="input-group">
 						   <span class="input-group-btn">
 
 							   <span class="btn btn-primary btn-file">
-								   Procurar&hellip; <?= $this->Form->input('laudo', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+								   Procurar&hellip; <?= $this->Form->input('LAUDO[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 							   </span>
 						   </span>
 						   <input type="text" class="form-control" readonly>
@@ -302,7 +320,7 @@ $this->assign('title', 'Novo Agendamento');
 						   <span class="input-group-btn">
 
 							   <span class="btn btn-primary btn-file">
-								   Procurar&hellip; <?= $this->Form->input('opme[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+								   Procurar&hellip; <?= $this->Form->input('OPME[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 							   </span>
 						   </span>
 						   <input type="text" class="form-control" readonly>
@@ -316,24 +334,24 @@ $this->assign('title', 'Novo Agendamento');
 						   <span class="input-group-btn">
 
 							   <span class="btn btn-primary btn-file">
-								   Procurar&hellip; <?= $this->Form->input('pedido', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+								   Procurar&hellip; <?= $this->Form->input('PEDIDO[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 							   </span>
 						   </span>
 						   <input type="text" class="form-control" readonly>
 					   </div>
 					   <span class="help-block">Selecione os arquivos de Pedidos</span>
 					</div>
+
 					<div class="col-md-12 form-group ">
-						<label><?= $this->Form->checkbox('alimentar') ?>&nbsp;&nbsp;&nbsp;Procedimento sem laudo</label>
+						<label><?= $this->Form->checkbox('SEM_LAUDO') ?>&nbsp;&nbsp;&nbsp;Procedimento sem laudo</label>
 					</div>
+
 				</fieldset>
 
-
-					<?= $this->Form->button(
-							'Salvar',
-							['type'=>'submit', 'name'=>'submit', 'class'=>'sr-only btn btn-primary center-block']
-					)?>
-
+				<?= $this->Form->button(
+						'Salvar',
+						['type'=>'submit', 'name'=>'submit', 'class'=>'sr-only btn btn-primary center-block']
+				)?>
 
 				<?= $this->Form->end(); ?>
 

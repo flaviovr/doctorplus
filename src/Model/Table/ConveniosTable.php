@@ -10,7 +10,7 @@ class ConveniosTable extends Table
     public function initialize(array $config)
     {
         //Define o nomeda tabela do model
-        $this->table('drplus_convenios');
+        $this->table('DP_CONVENIOS');
 
         //Define o campo utilizado para associações no model
         $this->displayField('NOME');
@@ -20,16 +20,14 @@ class ConveniosTable extends Table
 
         //Relacionamentos
         $this->hasMany('Agendamentos', [
-            'foreignKey' => 'convenio_id',
-            'bindingKey' => 'id',
+            'foreignKey' => 'CONVENIO_ID',
+            'bindingKey' => 'ID',
             'className' => 'Agendamentos'
         ]);
         $this->hasMany('Planos', [
-            'foreignKey' => 'plano_id',
-            'bindingKey' => 'id',
+            'foreignKey' => 'PLANO_ID',
+            'bindingKey' => 'ID',
         ]);
-
-
     }
 
 }

@@ -11,7 +11,7 @@ class InternadosController extends AppController
 
 
 	public $paginate = [
-        'limit' => 12,
+        'limit' => 18,
         'order' => [
             'Agendamentos.DT_CIRURGIA' => 'desc'
         ]

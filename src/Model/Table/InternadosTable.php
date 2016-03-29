@@ -10,16 +10,16 @@ use Cake\Validation\Validator;
 class InternadosTable extends Table
 {
 
-    
+
     public function initialize(array $config)
     {
 
 
         //Define o nomeda tabela do model
-        $this->table('drplus_internados');
+        $this->table('DP_INTERNADOS');
 
         //Define o campo utilizado para associações no model
-        //$this->displayField('nm_paciente');
+        $this->displayField('NM_PACIENTE');
 
         //Define a chave primária do model
         $this->primaryKey('CD_PACIENTE');

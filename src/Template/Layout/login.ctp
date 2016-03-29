@@ -49,7 +49,13 @@ $cakeDescription = 'Doctor Plus';
 
 <body>
 
-    <?= $this->fetch('content') ?>
+    <div class="container">
+        <div class="row">
+    		<div id='loginWraper' class='col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1 round'>
+                <?= $this->fetch('content') ?>
+            </div>
+        </div>
+    </div>
 
     <!-- Inclui jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?= $this->Html->script("jquery-1.12.1.min")?>
