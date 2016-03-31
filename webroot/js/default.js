@@ -44,6 +44,7 @@ $(document).ready(function(){
         stepping: 30,
         showClear: true,
         minDate: moment().add(1, 'days'),
+        useCurrent: false,
         icons: {
             time: 'fa fa-clock-o',
         }

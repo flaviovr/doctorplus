@@ -133,9 +133,11 @@ $cakeDescription = 'Doctor Plus';
             </div>
         </div>
     </nav>
-    <?= $this->Flash->render() ;?></p>
 
-    <?= $this->fetch('content') ?>
+    <div class="container">
+        <?= $this->Flash->render() ;?></p>
+        <?= $this->fetch('content') ?>
+    </div>
 
     <!-- Inclui jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?= $this->Html->script("jquery-1.12.1.min")?>

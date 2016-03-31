@@ -16,7 +16,13 @@ class CirurgiasTable extends Table
         $this->displayField('DS_CIRURGIA');
 
         //Define a chave primária do model
-        $this->primaryKey('CD_PRO_FAT');
+        $this->primaryKey('CD_CIRURGIA');
+
+        $this->hasMany('Agendamentos', [
+            'foreignKey' => 'CD_CIRURGIA',
+            'bindingKey' => 'CD_CIRURGIA',
+            'className' => 'Cirurgias'
+        ]);
 
     }
     public function validationDefault(Validator $validator)

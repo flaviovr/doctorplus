@@ -1,5 +1,5 @@
 <?php
-$this->assign('title', 'Novo Agendamento');
+$this->assign('title', 'Detalhes do Agendamento');
 $this->Form->templates('agenda_form');
 
 ?>
@@ -42,21 +42,23 @@ $this->Form->templates('agenda_form');
 				</div>
 
 				<div class="col-sm-4 form-group">
-					<?= $this->Form->input('cpf',['class'=>'form-control getCPF', 'label'=>'CPF :' ]) ?>
+					<label>CPF:</label>
+					<p class="form-control-static"><?php echo h($agendamento['CPF']);?></p>
 				</div>
 
 				<div class="col-sm-8 form-group">
-					<?= $this->Form->input('NM_PACIENTE', ['class'=>'form-control', 'label'=>'Nome do Paciente :' ]) ?>
+					<label>Nome do Paciente:</label>
+					<p class="form-control-static"><?php echo h($agendamento['NM_PACIENTE']);?></p>
 				</div>
 
 				<div class="col-md-4 col-sm-6 form-group">
-					<?php $options = ['M' => 'Masculino', 'F' => 'Feminino']; ?>
-					<?= $this->Form->input('TP_SEXO',  [ 'options'=>$options , 'type'=>'select', 'class'=>'form-control', 'label' => 'Sexo:', 'empty'=>'Selecione' ]) ?>
+					<label>Sexo:</label>
+					<p class="form-control-static"><?php echo h($agendamento['TP_SEXO']);?></p>
 				</div>
 
 				<div class="col-md-4 col-sm-6 form-group">
-					<?php $options = ['A+' => 'A+', 'A-' => 'A-', 'AB+' => 'AB+', 'AB-' => 'AB-', 'B+' => 'B+', 'B-' => 'B-', 'O+' => 'O+','O-' => 'O-']; ?>
-					<?= $this->Form->input('TP_SANGUINEO',  [ 'options'=>$options , 'type'=>'select', 'class'=>'form-control', 'label' => 'Fator RH:', 'empty'=>'Selecione' ]) ?>
+					<label>Fator RH:</label>
+					<p class="form-control-static"><?php echo h($agendamento['TP_SANGUINEO']);?></p>
 				</div>
 
 				<div class="col-md-4 col-sm-6 form-group ">
