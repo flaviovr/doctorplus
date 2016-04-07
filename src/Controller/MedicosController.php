@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Mailer\Email;
 use Cake\I18n\Time;
+use Cake\ORM\Table;
 
 class MedicosController extends AppController
 {
@@ -29,14 +30,54 @@ class MedicosController extends AppController
         $this->set(compact('medico'));
     }
 
-    public function alertas(){
-        $options = [
-            'limit' => 12,
+    /*
+     * Action que marca Alertas Como lido
+     * $id = Id do alerta a ser marcado como lido
+     */
+    public function marcarLido( $id =0 ){
+        // se ID for maior que zero
+        if(intval($id)>0){
+            // Localizo o Alerta com o ID especificado e salvo seu valor na variavel $item
+            if($item = $this->Medicos->Alertas->find('All', ['conditions' => ['CD_MENSAGEM ='=>$id], 'fields'=>['CD_MENSAGEM']])->first()) {
+                //Altero Valor do campo para lido = 'S'
+                $item->SN_LIDO = 'S';
+                // Salvo Entity
+                $this->Medicos->Alertas->save($item);
+                // Exibo Alerta
+                $this->Flash->success('Alerta marcado como lido.');
+            }
+        }
+        // Redireciono para a página de Alertas
+        $this->redirect(['action'=>'alertas' , NULL]);
+    }
 
+    // Action da Pagina de Alertas
+    public function alertas(){
+
+        // Defino as variavis com lergendas e icones para os status
+        $status =[
+            'S'=> ['icon'=>'fa-calendar-o',         'cor'=> 'default'   ,'count'=>0, 'texto'=> 'Agendamento Solicitado' ],
+            'A'=> ['icon'=>'fa-calendar-plus-o',    'cor'=> 'info'      ,'count'=>0, 'texto'=> 'Cirurgia Pré-agendada' ],
+            'P'=> ['icon'=>'fa-calendar-minus-o',   'cor'=> 'warning'   ,'count'=>0, 'texto'=> 'Agendamento com Pendência' ],
+            'N'=> ['icon'=>'fa-calendar-times-o',   'cor'=> 'danger'    ,'count'=>0, 'texto'=> 'Cirurgia Cancelada'],
+            'C'=> ['icon'=>'fa-calendar-check-o',   'cor'=> 'success'   ,'count'=>0, 'texto'=> 'Cirurgia Confirmada'],
+            'R'=> ['icon'=>'fa-calendar-check-o',   'cor'=> 'extra'     ,'count'=>0, 'texto'=> 'Cirurgia Realizada']
         ];
-        $this->paginate = $options;
-        $alerta = $this->paginate($this->Medicos->find('all'));
-        $this->set(compact('alerta'));
+
+        /* definições da paginação */
+        $this->paginate = [ 'limit' => 12 ];
+
+        // Carrego informações de Alertas
+        $alertas = $this->Medicos->Alertas->find( 'all', [
+            'fields' => ['Alertas.CD_PRESTADOR', 'Alertas.CD_PRE_AGENDAMENTO', 'Alertas.CD_MENSAGEM',  'Alertas.SN_LIDO' , 'Alertas.STATUS', 'Alertas.DT_MENSAGEM', 'Agendamentos.NM_PACIENTE', 'Agendamentos.ID'],
+            'contain' => ['Agendamentos'],
+            'conditions' => ['SN_LIDO'=>'N' , 'CD_PRESTADOR' => $this->Auth->user('ID')],
+            'order' =>['DT_MENSAGEM'=>'DESC']
+        ]);
+
+        //Defino paginação nos alerta e passo a variavel pra view
+        $alertas = $this->paginate( $alertas );
+        $this->set(compact(['alertas','status']));
     }
     public function login()
     {
@@ -54,7 +95,7 @@ class MedicosController extends AppController
 
             // Tenta identificar o usuario com a funcao de autenticçao
             $medico = $this->Auth->identify();
-            //debug($medico);
+            
             //Caso encontre o usuário seja identificado
             if ($medico) {
                 // Define o usuario como o usuario autenticado

@@ -9,7 +9,7 @@ use Cake\I18n\Date;
 class InternadosController extends AppController
 {
 
-
+	/* definições da paginação */
 	public $paginate = [
         'limit' => 18,
         'order' => [
@@ -25,25 +25,22 @@ class InternadosController extends AppController
 
     }
 
+	// Action de Listagem de Internados
 	public function index()
 	{
 
 		// Caso valor do campo de busca for preenchido coloco na variável, ou coloco vazio
 		$buscar = !empty($this->request->query('buscar')) ? $this->request->query('buscar') : '';
-		$condicao = array();
 
+		// Carrego listagem de agendamentos
 		$internados = $this->Internados->find('all');
-		// Caso faca busca - POST -
+		// Caso faca busca - GET -
 		if($this->request->is('get')) {
 			// Se usuario preencher o campo, jogo valor na variavel de busca e adiciono a condicao no objeto de busca
 			if (!empty($buscar)) {
 				$internados->where(['NM_PACIENTE like' => '%'.strtoupper($buscar).'%']) ;
 			}
 		}
-
-
-		//pr($options);
-		//$this->paginate = $options;
 
 		// Passo as variaveis para a views
 		$this->set('internados', $this->paginate($internados));

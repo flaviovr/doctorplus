@@ -14,7 +14,14 @@
  */
 
 $cakeDescription = 'Doctor Plus';
-
+$s =[
+    'S'=> ['icon'=>'fa-calendar-o',         'cor'=> 'default'   ,'count'=>0, 'texto'=> 'Agendamento Solicitado' ],
+    'A'=> ['icon'=>'fa-calendar-plus-o',    'cor'=> 'info'      ,'count'=>0, 'texto'=> 'Cirurgia Pré-agendada' ],
+    'P'=> ['icon'=>'fa-calendar-minus-o',   'cor'=> 'warning'   ,'count'=>0, 'texto'=> 'Agendamento com Pendência' ],
+    'N'=> ['icon'=>'fa-calendar-times-o',   'cor'=> 'danger'    ,'count'=>0, 'texto'=> 'Cirurgia Cancelada'],
+    'C'=> ['icon'=>'fa-calendar-check-o',   'cor'=> 'success'   ,'count'=>0, 'texto'=> 'Cirurgia Confirmada'],
+    'R'=> ['icon'=>'fa-calendar-check-o',   'cor'=> 'extra'     ,'count'=>0, 'texto'=> 'Cirurgia Realizada']
+];
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,38 +87,30 @@ $cakeDescription = 'Doctor Plus';
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-fw fa-envelope"></span> <?= $userAuth['USERNAME']?> <span class='label label-info label-as-badge'>3</span>
+                            <span class="fa fa-fw fa-envelope"></span> <?= $userAuth['USERNAME']?> <span class='label label-info label-as-badge'><?php echo count($notify);?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="">
-                                    <p class='text-danger tituloMsg'><b><span class="fa fa-fw fa-calendar-times-o"></span> Cirurgia cancelada </b></p>
-                                    <p class='tituloMsg'>
-                                        <span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos<br>
-                                        <span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
-                                    </p>
-                                </a>
-                            </li>
+                            <?php
 
+                            if(!empty($notify)){
+                                foreach ($notify as $item) {
+                            ?>
                             <li>
-                                <a href="">
-                                    <p class='text-danger tituloMsg'><b><span class="fa fa-fw fa-calendar-times-o"></span> Cirurgia cancelada </b></p>
+                                <a href="<?php echo $this->Url->build(['controller' => 'medicos','action' => 'alertas']);?>">
+                                    <p class='text-<?php echo $s[$item['STATUS']]['cor']?> tituloMsg'><b><span class="fa fa-fw <?php echo $s[$item['STATUS']]['icon']?>"></span> <?php echo $s[$item['STATUS']]['texto']?></b></p>
                                     <p class='tituloMsg'>
-                                        <span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos<br>
-                                        <span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
+                                        <span class="fa fa-fw fa-user"></span> <?php echo $item['agendamento']['NM_PACIENTE'];?><br>
+                                        <span class="fa fa-fw fa-clock-o"></span> <?php echo $item['DT_MENSAGEM'];?>
                                     </p>
                                 </a>
                             </li>
-
+                            <?php }} else { ?>
                             <li>
                                 <a href="">
-                                    <p class='text-danger tituloMsg'><b><span class="fa fa-fw fa-calendar-times-o"></span> Cirurgia cancelada </b></p>
-                                    <p class='tituloMsg'>
-                                        <span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos<br>
-                                        <span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
-                                    </p>
+                                    <p class='text-default tituloMsg'><b><span class="fa fa-exclamation-circle "></span> Nenhum Alerta!</b></p>
                                 </a>
                             </li>
+                            <?php }?>
                             <li role='navigation' class="divider"></li>
                             <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-fw fa-bell"></span> Ver Todos Alertas',['controller'=>'medicos', 'action'=>'alertas'],['class'=>'text-info','escape'=> false])?></li>
                             <li class='hidden-xs'><?= $this->Html->link('<span class="fa fa-fw fa-user-md"></span> Meu Perfil',['controller'=>'medicos', 'action'=>'perfil' ,$userAuth['ID']],['escape'=> false])?>

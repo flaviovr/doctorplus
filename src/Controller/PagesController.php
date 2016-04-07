@@ -51,15 +51,19 @@ class PagesController extends AppController
         }
     }
 
+    //Action da pagina de envio de feedback do sistema
     public function feedback(){
-        $msg=' ';
+
+        $msg='';
+
+        // Caso Poste o Formulári
         if ($this->request->is('post')) {
 
+            // pego o valor da MSG no request
             $msg =$this->request->data('mensagem');
 
+            // Se nao estiver vazia
             if(!empty($msg)){
-
-                //debug($msg);
 
                 // Data a ser usada no email
                 $data = new Time();
@@ -84,6 +88,7 @@ class PagesController extends AppController
                 if($email->send()) {
                     // Exibe mensagem de sucesso
                     $this->Flash->success(__('Sua sugestão foi enviada com sucesso.'));
+                    // Esvazio o campo de Mensagem
                     $msg = '';
                 } else {
                     // Exibe mensagem de Erro ao enviar e-mail
@@ -92,12 +97,14 @@ class PagesController extends AppController
             }
 
         }
+        //Defino variável na view
         $this->set('mensagem', $msg);
     }
 
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
+        // Defino acoes permitidas na autenticação
         $this->Auth->allow(['esqueci']);
     }
 

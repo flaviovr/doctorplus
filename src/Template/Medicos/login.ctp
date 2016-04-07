@@ -21,8 +21,6 @@
  */
 
 $this->layout = 'login';
-
-$cakeDescription = 'Doctor Plus';
 ?>
 
 <div class="row centered text-center">

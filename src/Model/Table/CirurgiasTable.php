@@ -18,6 +18,7 @@ class CirurgiasTable extends Table
         //Define a chave primária do model
         $this->primaryKey('CD_CIRURGIA');
 
+        //Relacionamentos
         $this->hasMany('Agendamentos', [
             'foreignKey' => 'CD_CIRURGIA',
             'bindingKey' => 'CD_CIRURGIA',
@@ -25,6 +26,8 @@ class CirurgiasTable extends Table
         ]);
 
     }
+
+    // Funcao de validação
     public function validationDefault(Validator $validator)
     {
         // Validação padrão para o usuário

@@ -18,7 +18,15 @@ class MedicosTable extends Table
         //Define a chave primária do model
         $this->primaryKey('ID');
 
+        $this->hasMany('Alertas', [
+            'foreignKey' => 'CD_PRESTADOR',
+            'bindingKey' => 'CD_PRESTADOR',
+            'className' => 'Alertas'
+        ]);
+
     }
+
+    // Funcao de validação
     public function validationDefault(Validator $validator)
     {
         // Validação padrão para o usuário

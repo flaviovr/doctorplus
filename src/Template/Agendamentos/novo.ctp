@@ -1,10 +1,7 @@
 <?php
 $this->assign('title', 'Novo Agendamento');
-$this->Form->templates('agenda_form');
-
+$this->Form->templates(['error' => '<div class="help-block" style="display:none" >{{content}}</div>']);
 ?>
-
-
 
 <ol class="breadcrumb bg-info">
 	<li><a href="<?=$this->Url->build(["controller" => "Pages","action" => "display","home"]);?>"><span class='fa fa-home'></span> Início</a></li>
@@ -38,11 +35,10 @@ $this->Form->templates('agenda_form');
 
 				<div class="col-lg-12">
 					<h3>Dados do Usuário</h3>
-
 				</div>
 
 				<div class="col-sm-4 form-group">
-					<?= $this->Form->input('cpf',['class'=>'form-control getCPF', 'label'=>'CPF :' ]) ?>
+					<?= $this->Form->input('CPF',['class'=>'form-control getCPF', 'label'=>'CPF :' ]) ?>
 				</div>
 
 				<div class="col-sm-8 form-group">
@@ -189,8 +185,8 @@ $this->Form->templates('agenda_form');
 				</div>
 
 				<div class="col-sm-4 form-group">
-					<?php $options = ['Não'=>'Não', 'UTI'=>'UTI', 'Semi-Intensiva'=>'Semi-Intensiva', 'UTO'=>'UTO', 'UTI Neonatal'=>'UTI Neonatal']; ?>
-					<?= $this->Form->input('TIPO_UTI', [ 'options'=> $options, 'label'=>'Necessita UTI:', 'type' => 'select', 'class'=>'form-control', 'default'=>'Não' ]) ?>
+					<?php $options = [ 'UTI'=>'UTI', 'Semi-Intensiva'=>'Semi-Intensiva', 'UTO'=>'UTO', 'UTI Neonatal'=>'UTI Neonatal']; ?>
+					<?= $this->Form->input('TIPO_UTI', [ 'options'=> $options, 'label'=>'Necessita UTI:', 'type' => 'select', 'class'=>'form-control', 'empty'=>'Selecione' ]) ?>
 				</div>
 
 				<div class="col-md-4 col-sm-12 form-group">
@@ -317,7 +313,6 @@ $this->Form->templates('agenda_form');
 				   <label for="LAUDO">Laudos:</label>
 				   <div class="input-group">
 					   <span class="input-group-btn">
-
 						   <span class="btn btn-primary btn-file">
 							   Procurar&hellip; <?= $this->Form->input('LAUDO[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 						   </span>
@@ -331,9 +326,8 @@ $this->Form->templates('agenda_form');
 				   <label>OPME:</label>
 				   <div class="input-group">
 					   <span class="input-group-btn">
-
 						   <span class="btn btn-primary btn-file">
-							   Procurar&hellip; <?= $this->Form->input('OPME[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+							   Procurar&hellip; <?= $this->Form->input('OPME', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 						   </span>
 					   </span>
 					   <input type="text" class="form-control" readonly>
@@ -347,7 +341,7 @@ $this->Form->templates('agenda_form');
 					   <span class="input-group-btn">
 
 						   <span class="btn btn-primary btn-file">
-							   Procurar&hellip; <?= $this->Form->input('PEDIDO[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+							   Procurar&hellip; <?= $this->Form->input('PEDIDO', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 						   </span>
 					   </span>
 					   <input type="text" class="form-control" readonly>

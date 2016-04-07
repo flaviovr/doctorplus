@@ -16,17 +16,17 @@ $this->assign('title', 'Alertas');
 <div class='row data'>
 	<div class='col-lg-12'>
 		<div class="row">
-			<?php foreach ($alerta as $item){ ;?>
+			<?php foreach ($alertas as $item){ ?>
 			<div class="col-xs-12">
 				<div class="alerta">
-					<b class="lead"><span class="fa fa-fw fa-bell"></span> Cirurgia cancelada </b>
-					<span class="fa fa-fw fa-user"></span> Alberto Luiz Batista Santos
-					<span class="fa fa-fw fa-clock-o"></span> 23 Nov, 08:55
-					<a href="<?=$this->Url->build(["action" => "index"]);?>" class='btn btn-sm btn-danger pull-right'> <i class='fa fa-ban'></i> Excluir</a>
+					<b class="lead"><span class="fa fa-fw <?php echo $status[$item['STATUS']]['icon'];?>"></span> <?php echo $status[$item['STATUS']]['texto'];?> </b>
+					<span class="fa fa-fw fa-user"></span> <?= $item['agendamento']['NM_PACIENTE']; ?>
+					<span class="fa fa-fw fa-clock-o"></span> <?= $item['DT_MENSAGEM']; ?>
+					<a href="<?=$this->Url->build([ 'action'=>'marcarLido', $item['CD_MENSAGEM']]);?>" class='btn btn-sm btn-danger pull-right'> <i class='fa fa-ban'></i> Marcar como lido</a>
 				</div>
 			</div>
 			<?php }?>
-			<?php if($alerta->isEmpty()){
+			<?php if($alertas->isEmpty()){
 				echo "<div class='col-lg-12 text-muted text-center'><h3><i class='fa-exclamation-circle fa '></i> Nenhum registro encontrado!</h3</div>";
 			}?>
 		</div>

@@ -1,10 +1,7 @@
 <?php
 $this->assign('title', 'Detalhes do Agendamento');
 $this->Form->templates('agenda_form');
-
 ?>
-
-
 
 <ol class="breadcrumb bg-info">
 	<li><a href="<?=$this->Url->build(["controller" => "Pages","action" => "display","home"]);?>"><span class='fa fa-home'></span> Início</a></li>

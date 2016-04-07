@@ -5,6 +5,8 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
+use Cake\Filesystem\Folder;
+use Cake\Utility\Inflector;
 
 class AgendamentosTable extends Table
 {
@@ -19,6 +21,8 @@ class AgendamentosTable extends Table
         //Define a chave primária do model
         $this->primaryKey('ID');
 
+
+        // Definições de relacionamento da tabela
         $this->belongsTo('Convenios', [
             'foreignKey' => 'CONVENIO_ID',
             'bindingKey' => 'ID'
@@ -31,9 +35,16 @@ class AgendamentosTable extends Table
             'foreignKey' => 'CD_CIRURGIA',
             'bindingKey' => 'CD_CIRURGIA'
         ]);
+        $this->hasMany('Alertas', [
+            'foreignKey' => 'CD_PRE_AGENDAMENTO',
+            'bindingKey' => 'ID',
+            'className' => 'Alertas'
+        ]);
 
     }
 
+
+    // Função com as validações
     public function validationDefault(Validator $validator){
 
         //Validações do Nome do Paciente
@@ -99,29 +110,30 @@ class AgendamentosTable extends Table
         ]);
 
         //Validações do SANGUE
-        $validator->add('CRIO',
+
+        $validator->allowEmpty('HEMACIAS')->add('HEMACIAS',
         [
             'tamanho' => [ 'rule' =>  [ 'range' , 1, 90] ,'message' => 'Preencha um numero de 0 a 10.'],
             'numero' => ['rule'=> 'naturalNumber', 'message' => 'Somente números são aceitos.']
         ]);
-        $validator->add('PLASMA',
+        $validator->allowEmpty('PLAQUETAS')->add('PLAQUETAS',
         [
             'tamanho' => [ 'rule' =>  [ 'range' , 1, 90] ,'message' => 'Preencha um numero de 0 a 10.'],
             'numero' => ['rule'=> 'naturalNumber', 'message' => 'Somente números são aceitos.']
         ]);
-        $validator->add('HEMACIAS',
+        $validator->allowEmpty('PLASMA')->add('PLASMA',
         [
             'tamanho' => [ 'rule' =>  [ 'range' , 1, 90] ,'message' => 'Preencha um numero de 0 a 10.'],
             'numero' => ['rule'=> 'naturalNumber', 'message' => 'Somente números são aceitos.']
         ]);
-        $validator->add('PLAQUETAS',
+        $validator->allowEmpty('CRIO')->add('CRIO',
         [
             'tamanho' => [ 'rule' =>  [ 'range' , 1, 90] ,'message' => 'Preencha um numero de 0 a 10.'],
             'numero' => ['rule'=> 'naturalNumber', 'message' => 'Somente números são aceitos.']
         ]);
 
         //Validações de CIRURGIA
-        $validator->requirePresence('CD_CIRURGIA', 'Selecione a Cirurgia Principal.')->add('CD_CIRURGIA',
+        $validator->add('CD_CIRURGIA',
         [
             'notBlank' => [ 'rule' => 'notBlank', 'message' => 'Selecione a Cirurgia Principal.']
         ]);
@@ -148,26 +160,94 @@ class AgendamentosTable extends Table
 
         $validator->add('LAUDO',
         [
-            'upload' => [ 'rule' =>  'uploadError' , 'last' => true, 'message' => 'Erro ao fazer upload do Arquivo'],
-            'extension' => [ 'rule' => ['extension', ['pdf', 'doc' , 'docx', 'txt']] , 'message' => 'Formato de Arquivo Inválido'],
-            'size' => ['rule'=> ['fileSize','<=', '10MB'] , 'message'=> 'Tamanho limite de 10Mb Excedido.']
+            'extension' => [ 'rule' => ['extension', ['pdf']] , 'message' => 'Arquivo precisa estar no formato PDF'],
         ]);
 
         return $validator;
     }
 
-    public function geraOBS(&$d){
+    /**
+     *  Prepara/Formata variáveis do request para uso
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     */
+    public function preparaDados(&$d){
 
-        // $data = new Time('now', 'America/Sao_Paulo');
-        // $hora = substr($d['DT_CIRURGIA'], -5,5);
-        // $fone = '('.substr($d['FONE'], 0,2) . ') ' .substr($d['FONE'], 2);
-        // $cel = '('.substr($d['CELULAR'], 0,2) . ') ' .substr($d['CELULAR'], 2);
-        // $anestesia = [ '1'=>'Geral', '2'=>'Local', '3'=>'Regional Peridural ou Raquidiana', '4'=>'Sedação'];
-        // $lateralidade = ['1'=>'Direita', '2'=>'Esquerda', '3'=>'Bilateral', '4'=>'Não se aplica'];
+        //Arrays para importar txts
+        $anestesia = [ '1'=>'Geral', '2'=>'Local', '3'=>'Regional Peridural ou Raquidiana', '4'=>'Sedação'];
+        $lateralidade = ['1'=>'Direita', '2'=>'Esquerda', '3'=>'Bilateral', '4'=>'Não se aplica'];
+
+        $d['DT_HOJE'] = Time::now('America/Sao_Paulo'); // new Time('now', 'America/Sao_Paulo');
+        $d['DT_CIRURGIA_TXT'] =  $this->fdata($d['DT_CIRURGIA'], '/', true) ;
+
+        $d['DT_DURACAO_TXT'] = $d['DT_HOJE']->format('Y-m-d').' '. $d['DT_DURACAO'] . ':00' ;
+
+
+        $d['DT_NASCIMENTO'] = new Time( $this->fdata($d['DT_NASCIMENTO'], '/', true) );
+        $d['IDADE'] = intval($d['DT_NASCIMENTO']->timeAgoInWords(['accuracy'=>'year', 'end' => '200 years']));
+        $d['DT_NASCIMENTO'] = $d['DT_NASCIMENTO']->format('d/m/Y');
+
+
+
+        $d['SANGUE'] = ( !empty($d['HEMACIAS']) || !empty($d['PLAQUETAS']) || !empty($d['PLASMA']) || !empty($d['CRIO']) ) ? 'S' : 'N';
+        $d['TIPO_UTI_TXT'] = $d['TIPO_UTI']== 'Não' ? 'N' : 'S' ;
+
+        $d['FONE_TXT'] = '('.substr($d['FONE'], 0,2) . ') ' .substr($d['FONE'], 2);
+        $d['CELULAR_TXT'] = '('.substr($d['CELULAR'], 0,2) . ') ' .substr($d['CELULAR'], 2);
+
+        $d['ANESTESIA_TXT'] = !empty($d['ANESTESIA']) ? $anestesia[$d['ANESTESIA']] : NULL;
+        $d['LATERALIDADE_TXT'] = !empty($d['LATERALIDADE']) ? $lateralidade[$d['LATERALIDADE']] : NULL;
+
+        $d['NM_PACIENTE_TXT'] = ucwords(strtolower($d['NM_PACIENTE']));
+
+        $d['LATEX_TXT'] = $d['LATEX'] == 1 ? 'Alergia a Latex' : NULL ;
+        $d['CONGELACAO_TXT'] = $d['CONGELACAO'] == 1  ? 'Necessita Congelação.' : NULL;
+        $d['SEM_OPME_TXT'] = $d['SEM_OPME'] == 1  ? 'Não Necessita OPME.' : NULL;
+        $d['SEM_LAUDO_TXT'] = $d['SEM_LAUDO'] == 1  ? "Procedimento sem Laudo." : NULL;
+
+        $d['MEDICACAO_TXT'] = !empty($d['MEDICACAO'])  ? 'Medicação Especial: ' . $d['MEDICACAO'] : NULL;
+
+        $d['MEDICAMENTOSA_TXT'] = !empty($d['MEDICAMENTOSA'])  ? 'Alergia Medicamentosa: ' . $d['MEDICAMENTOSA'] : NULL;
+        $d['ALIMENTAR_TXT'] = !empty($d['ALIMENTAR'])  ? 'Alergia Alimentar: ' . $d['ALIMENTAR'] : NULL;
+
+        $d['HEMACIAS_TXT'] = !empty($d['HEMACIAS']) ? "Sangue - Concentrado de Hemácias: " . $d['HEMACIAS'].'L'   : NULL;
+        $d['PLAQUETAS_TXT'] = !empty($d['PLAQUETAS']) ? "Sangue - Concentrado de Plaquetas: " . $d['PLAQUETAS'].'L' : NULL;
+        $d['PLASMA_TXT'] = !empty($d['PLASMA'])  ? "Sangue - Plasma: " . $d['PLASMA'].'L'  : NULL;
+        $d['CRIO_TXT'] = !empty($d['CRIO'])  ? "Sangue - Crioprecipitado: " . $d['CRIO'].'L'  : NULL;
+
+        //ADICIONO LISTA DE EQUIPAMENTOS -  Se algum equipamento foi Selecionado Imprimo o título
+        $d['EQUIPAMENTOS_TXT'] = '';
+        $d['EQUIPAMENTOS_TXT'] .= $d['VIDEO']!== 'Não' ? (empty($a) ? '' : " - ") . "Vídeo Cirúrgico: " . $d['VIDEO'] : '';
+        $d['EQUIPAMENTOS_TXT'] .= $d['MICROSCOPIO']!== 'Não' ? (empty($a) ? '' : " - ") . "Microscópio: " . $d['MICROSCOPIO'] : '';
+        $d['EQUIPAMENTOS_TXT'] .= $d['CEC']!== 'Não' ? (empty($a) ? '' : " - ") . "CEC: ". $d['CEC'] : '';
+
+        // lista de equipamentos no checkbox
+        if( in_array(1, $d['EQUIPAMENTOS']) || !empty($a) ) {
+            // Loop nos Valores e gero string
+            foreach ($d['EQUIPAMENTOS'] as $key => $value) $d['EQUIPAMENTOS_TXT'] .= $value == 1 ? (empty($a) ? '' : " - ") .str_replace('_', ' ', $key) : '';
+            $d['EQUIPAMENTOS_TXT'] =  'Equipamentos: ' . $d['EQUIPAMENTOS_TXT'] ;
+        }
+
+        //ADICIONO LISTA DE EQUIPAMENTOS CRÍTICOS -  Se algum equipamento foi Selecionado Imprimo o título
+        if(in_array(1, $d['EQUIPAMENTOSC'])) {
+            // Loop nos Valores e gero string
+            $d['EQUIPAMENTOSC_TXT'] ='';
+            foreach ($d['EQUIPAMENTOSC'] as $key => $value) $d['EQUIPAMENTOSC_TXT'] .= $value == 1 ? (empty($a) ? '' : " - ") .str_replace('_', ' ', $key) : '';
+            $d['EQUIPAMENTOSC_TXT'] =  'Equipamentos Críticos: ' . $d['EQUIPAMENTOSC_TXT'] ;
+        }
+
+        // Chamo função que gera campo de OBSERVACOES
+        $this->geraOBS($d);
+    }
+
+    /**
+     *  Função que gera Observacoes a partir do request
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     */
+    public function geraOBS(&$d){
 
         $obs = "Doctor+ - Agendado as " . $d['DT_HOJE']->format('d/m/Y H:m') . PHP_EOL;
         $obs .= ucwords(strtolower($d['NM_PACIENTE'])) . " | Data de Nascimento: " . $d['DT_NASCIMENTO'] .PHP_EOL;
-
+        $obs .= "Horário Preferencial: " . $d['DT_DURACAO_TXT'] . PHP_EOL;
         $obs .= "Telefone: " . $d['FONE_TXT'] . PHP_EOL;
         $obs .= "Celular: " . $d['CELULAR_TXT'] . PHP_EOL;
         $obs .= "Matrícula do Convênio: " . $d['CD_MATRICULA'] . PHP_EOL;
@@ -179,10 +259,9 @@ class AgendamentosTable extends Table
 
         $obs .= "Anestesia: " . $d['ANESTESIA_TXT'] . PHP_EOL;
         $obs .= "Lateralidade: " . $d['LATERALIDADE_TXT'] . PHP_EOL;
-        $obs .= "Tipo Sanguíneo: " . $d['TP_SANGUINEO'] . PHP_EOL;
+        $obs .= "Tipo de UTI: " . $d['TIPO_UTI'] . PHP_EOL;
         $obs .= "Diagnóstico: " . $d['DIAGNOSTICO'] . PHP_EOL;
         $obs .= "Comorbidades: " . $d['COMORBIDADES'] . PHP_EOL;
-        $obs .= "Tipo de UTI: " . $d['TIPO_UTI'] . PHP_EOL;
 
         $obs .= !empty($d['HEMACIAS_TXT']) ? $d['HEMACIAS_TXT'] . PHP_EOL : '';
         $obs .= !empty($d['PLAQUETAS_TXT']) ? $d['PLAQUETAS_TXT'] . PHP_EOL : '';
@@ -209,99 +288,45 @@ class AgendamentosTable extends Table
 
     }
 
-    public function upload(&$d, $tipo = 'FILE'){
-        if(!empty($d)) {
-            $i=0;
-            foreach ($d as $item) {
+    /**
+     *  Funcao que faz upload dos arquivos
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     *  $tipo = Nome do campo file que será usado para fazer o Upload
+     */
+    public function upload(&$d, $tipo = 'LAUDO'){
 
-                $ext = substr(strtolower(strrchr($item['name'], '.')), 1); //get the extension
-                $nome = $tipo'_'.$i.'_'.$d['cpf'].'.'.$ext;
-                echo $nome;
-                if($item['error']==0){
-                    if(move_uploaded_file($item['tmp_name'], WWW_ROOT . 'img' . DS . 'temp' . DS . $nome)) {
-                        $d[$i]['image'] = $nome;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-                $i++;
-            }
-        } else {
-            return false;
+        // Defino a Pasta onde os uploads vao ser salvos
+        $destiny = WWW_ROOT . 'img' . DS . 'temp'  ;
+        // Contador de numero de uploads
+        $i=1;
+
+        // Se campo estiver vazio/erro no upload retorna falso
+        if(empty($d[$tipo])) return false;
+
+        // Dou loop na variavel de Upload
+        foreach ($d[$tipo] as $item) {
+            // Crio a pasta para o Upload no formato "G" + Código de Internaçao ex:  G01987
+            $folder = new Folder( $destiny. DS . 'G' . $d['CD_PRE_INTERNACAO'] , true, 0777);
+            // Defino o nome do arquivo a ser salvo. Formato: tipo + # + Contador de upload + nome original minusculo e sem espaços
+            $nome = $tipo.'#'.$i.'_'. str_replace( ' ', '_',mb_strtolower($item['name'])) ;
+            // Em caso de erro no upload retorna falso
+            if($item['error']!=0) return false;
+            // Se não copiar arquivo para pasta, retorna falso
+            if(!move_uploaded_file($item['tmp_name'], $folder->path . DS . $nome)) return false;
+            // Defino a variavel com o novo nome do arquivo
+            $item['image'] = $nome;
+            // Incremento o contador
+            $i++;
         }
+        // Caso nao haja erros, funcao retorna verdadeiro
         return true;
     }
 
-    // Prepara/Formata variáveis do request para uso
-    public function preparaDados(&$d){
 
-        //Arrays para importar txts
-        $anestesia = [ '1'=>'Geral', '2'=>'Local', '3'=>'Regional Peridural ou Raquidiana', '4'=>'Sedação'];
-        $lateralidade = ['1'=>'Direita', '2'=>'Esquerda', '3'=>'Bilateral', '4'=>'Não se aplica'];
-
-        $d['DT_HOJE'] = new Time('now', 'America/Sao_Paulo');
-        $d['DT_CIRURGIA_TXT'] =  $this->fdata($d['DT_CIRURGIA'], '/', true) ;
-
-        $d['DT_DURACAO_TXT'] = $d['DT_HOJE']->format('Y-m-d').' '. $d['DT_DURACAO'] . ':00' ;
-
-
-        $d['DT_NASCIMENTO'] = new Time( $this->fdata($d['DT_NASCIMENTO'], '/', true) );
-        $d['IDADE'] = intval($d['DT_NASCIMENTO']->timeAgoInWords(['accuracy'=>'year', 'end' => '200 years']));
-        $d['DT_NASCIMENTO'] = $d['DT_NASCIMENTO']->format('d/m/Y');
-
-
-
-        $d['SANGUE'] = ( !empty($d['HEMACIAS']) || !empty($d['PLAQUETAS']) || !empty($d['PLASMA']) || !empty($d['CRIO']) ) ? 'S' : 'N';
-        $d['TIPO_UTI_TXT'] = $d['TIPO_UTI']== 'Não' ? 'N' : 'S' ;
-
-        $d['FONE_TXT'] = '('.substr($d['FONE'], 0,2) . ') ' .substr($d['FONE'], 2);
-        $d['CELULAR_TXT'] = '('.substr($d['CELULAR'], 0,2) . ') ' .substr($d['CELULAR'], 2);
-
-        $d['ANESTESIA_TXT'] = $anestesia[$d['ANESTESIA']] ;
-        $d['LATERALIDADE_TXT'] = $lateralidade[$d['LATERALIDADE']] ;
-
-        $d['NM_PACIENTE_TXT'] = ucwords(strtolower($d['NM_PACIENTE']));
-
-        $d['LATEX_TXT'] = $d['LATEX'] == 1 ? 'Alergia a Latex' : NULL ;
-        $d['CONGELACAO_TXT'] = $d['CONGELACAO'] == 1  ? 'Necessita Congelação.' : NULL;
-        $d['SEM_OPME_TXT'] = $d['SEM_OPME'] == 1  ? 'Não Necessita OPME.' : NULL;
-        $d['SEM_LAUDO_TXT'] = $d['SEM_LAUDO'] == 1  ? "Procedimento sem Laudo." : NULL;
-
-        $d['MEDICACAO_TXT'] = !empty($d['MEDICACAO'])  ? 'Medicação Especial: ' . $d['MEDICACAO'] : NULL;
-
-        $d['MEDICAMENTOSA_TXT'] = !empty($d['MEDICAMENTOSA'])  ? 'Alergia Medicamentosa: ' . $d['MEDICAMENTOSA'] : NULL;
-        $d['ALIMENTAR_TXT'] = !empty($d['ALIMENTAR'])  ? 'Alergia Alimentar: ' . $d['ALIMENTAR'] : NULL;
-
-        $d['HEMACIAS_TXT'] = !empty($d['HEMACIAS']) ? "Sangue - Concentrado de Hemácias: " . $d['HEMACIAS'].'L'   : NULL;
-        $d['PLAQUETAS_TXT'] = !empty($d['PLAQUETAS']) ? "Sangue - Concentrado de Plaquetas: " . $d['PLAQUETAS'].'L' : NULL;
-        $d['PLASMA_TXT'] = !empty($d['PLASMA'])  ? "Sangue - Plasma: " . $d['PLASMA'].'L'  : NULL;
-        $d['CRIO_TXT'] = !empty($d['CRIO'])  ? "Sangue - Crioprecipitado: " . $d['CRIO'].'L'  : NULL;
-
-        //ADICIONO LISTA DE EQUIPAMENTOS -  Se algum equipamento foi Selecionado Imprimo o título
-        $d['EQUIPAMENTOS_TXT'] = '';
-        $d['EQUIPAMENTOS_TXT'] .= $d['VIDEO']!== 'Não' ? (empty($a) ? '' : " &bull; ") . "Vídeo Cirúrgico: " . $d['VIDEO'] : '';
-        $d['EQUIPAMENTOS_TXT'] .= $d['MICROSCOPIO']!== 'Não' ? (empty($a) ? '' : " &bull; ") . "Microscópio: " . $d['MICROSCOPIO'] : '';
-        $d['EQUIPAMENTOS_TXT'] .= $d['CEC']!== 'Não' ? (empty($a) ? '' : " &bull; ") . "CEC: ". $d['CEC'] : '';
-
-        // lista de equipamentos no checkbox
-        if( in_array(1, $d['EQUIPAMENTOS']) || !empty($a) ) {
-            // Loop nos Valores e gero string
-            foreach ($d['EQUIPAMENTOS'] as $key => $value) $d['EQUIPAMENTOS_TXT'] .= $value == 1 ? (empty($a) ? '' : " &bull; ") .str_replace('_', ' ', $key) : '';
-            $d['EQUIPAMENTOS_TXT'] =  'Equipamentos: ' . $d['EQUIPAMENTOS_TXT'] ;
-        }
-
-        //ADICIONO LISTA DE EQUIPAMENTOS CRÍTICOS -  Se algum equipamento foi Selecionado Imprimo o título
-        if(in_array(1, $d['EQUIPAMENTOSC'])) {
-            // Loop nos Valores e gero string
-            $d['EQUIPAMENTOSC_TXT'] ='';
-            foreach ($d['EQUIPAMENTOSC'] as $key => $value) $d['EQUIPAMENTOSC_TXT'] .= $value == 1 ? (empty($a) ? '' : " &bull; ") .str_replace('_', ' ', $key) : '';
-            $d['EQUIPAMENTOSC_TXT'] =  'Equipamentos Críticos: ' . $d['EQUIPAMENTOSC_TXT'] ;
-        }
-        $this->geraOBS($d);
-    }
-
+    /**
+     *  Salva os dados do Agendamento
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     */
     public function salvaDados(&$d){
 
         // Pego umas instancia do banco
@@ -311,11 +336,13 @@ class AgendamentosTable extends Table
         $a = $db->query('select dbamv.seq_pre_internacao.nextval@DBLINK_SOULPRD from dual')->fetch('assoc');
         $d['CD_PRE_INTERNACAO'] = $a['NEXTVAL'];
 
+        // Preparo o SQL de Insert
         $insert = $db->prepare("INSERT INTO PRE_INTERNACAO@DBLINK_SOULPRD
         ( CD_PRESTADOR, CD_PRE_INTERNACAO, DT_PEDIDO, NM_PACIENTE, NR_FONE_MOVEL_PACIENTE, NR_FONE_FIXO_PACIENTE, NR_FONE_COMERCIAL_PACIENTE, DT_CIRURGIA, DT_TEMPO_PREVISTO, SN_SANGUE_PARA_PACIENTE, DS_GRUPO_SANGUINEO, SN_CTI_APOS_CIRURGIA, CD_ANESTESISTA, CD_AUXILIAR_UM , CD_AUXILIAR_DOIS, CD_AUXILIAR_TRES , CD_INSTRUMENTADOR, CD_PEDIATRA, CD_TIP_ANEST, CD_CON_PLA, CD_CONVENIO, STATUS, DS_EMAIL_PACIENTE, DS_OBS, IDADE_PACIENTE, TP_IDADE, TP_SEXO, CD_AVISO_INTERNACAO, TP_INTERNACAO, DT_SUGESTAO_CIRURGIA , CD_PACIENTE, SN_CONGELACAO, CD_ESPECIALID, NM_USUARIO_PRE_INTERNACAO, NM_USUARIO_LIBERA_ANESTESIA, DT_LIBERA_ANESTESIA, NM_USUARIO_CANCELA_AGENDA, DT_CANCELA_AGENDA, DS_CANCELAMENTO, CD_PRE_INTERNACAO_INTEGRA, CD_SEQ_INTEGRA, DT_INTEGRA )
         VALUES (:cd_prestador, :cd_pre_internacao, :dt_pedido, :nm_paciente, :nr_fone_movel_paciente, :nr_fone_fixo_paciente, :nr_fone_comercial_paciente, :dt_cirurgia, :dt_tempo_previsto, :sn_sangue_para_paciente, :ds_grupo_sanguineo, :sn_cti_apos_cirurgia, :cd_anestesista, :cd_auxiliar_um , :cd_auxiliar_dois, :cd_auxiliar_tres , :cd_instrumentador, :cd_pediatra, :cd_tip_anest, :cd_con_pla, :cd_convenio, :status, :ds_email_paciente, :ds_obs, :idade_paciente, :tp_idade, :tp_sexo, :cd_aviso_internacao, :tp_internacao, :dt_sugestao_cirurgia, :cd_paciente, :sn_congelacao, :cd_especialid, :nm_usuario_pre_internacao, :nm_usuario_libera_anestesia, :dt_libera_anestesia, :nm_usuario_cancela_agenda, :dt_cancela_agenda, :ds_cancelamento, :cd_pre_internacao_integra, :cd_seq_integra, :dt_integra )
         ");
 
+        // Dou bind nas variaveis
         $insert->bindValue('cd_prestador', 					$d['CD_PRESTADOR'] , 'integer');
         $insert->bindValue('cd_pre_internacao', 			$d['CD_PRE_INTERNACAO'] , 'integer');
         $insert->bindValue('dt_pedido', 					$d['DT_HOJE'] , 'date');
@@ -367,17 +394,29 @@ class AgendamentosTable extends Table
         $insert->bindValue('cd_seq_integra', 			    NULL , 'integer');
         $insert->bindValue('dt_integra',	                NULL , 'date');
 
+        // Caso de erro no intset, funcao retorna falso
         if (!$insert->execute())  return 'Erro ao cadastrar Agendamento';
+        // Executo funcao que cadastra cirurgias
         $this->addCirurgia($d);
+        // Executo funcao que cadastra OPME
         $this->addOPME($d);
+        // Executo funcao que Salva alerta
+        $this->addAlerta($d);
+        // Funcao retorna verdadeiro
         return true ;
 
     }
 
+    /**
+     *  Funcao que adidiona cirurgias
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     */
     public function addCirurgia(&$d){
 
+        // Pego umas instancia do banco
         $db = ConnectionManager::get('default');
 
+        // Caso código nao esteja vazio
         if(!empty($d['CD_CIRURGIA'])) {
 
             //Carrego o código da sequence
@@ -412,9 +451,11 @@ class AgendamentosTable extends Table
             if (!$insert->execute()) return 'Erro ao cadastrar Prestador Cirurgia Principal.';
 
         } else {
+            // Caso de vazio retorno falso/mensagem, de erro
             return 'Cirurgia Principal não selecionada.';
         }
 
+        // Caso código nao esteja vazio
         if(!empty($d['CD_CIRURGIA_EXTRA'])) {
 
             // Loop no Array de cirurgias adidionais
@@ -452,26 +493,84 @@ class AgendamentosTable extends Table
                 if (!$insert->execute()) return 'Erro ao cadastrar Cirurgia Principal.';
             }
         }
+        // Funcao executou tudo, retorna verdadeiro
         return true;
     }
 
+    /**
+     *  Funcao que adidiona OPME ao agedamento
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     */
     public function addOPME(&$d){
-
+        // Pego instancia do DB
         $db = ConnectionManager::get('default');
 
+        // Preparo a query de insert
         $insert = $db->prepare("INSERT INTO it_material_pre_internacao@DBLINK_SOULPRD
             (CD_PRODUTO , CD_PRE_INTERNACAO, NR_QUANTIDADE, DS_PRODUTO , CD_FORNECEDOR , CD_UNI_PRO , CD_IT_MAT_PRE_INTERN_INTEGRA, CD_SEQ_INTEGRA , DT_INTEGRA , CD_IT_MATERIAL_PRE_INTERNACAO)
             VALUES (:cod, :cd_pre_internacao, 1, :opme, null, null, null, null, null, :cd_pre_internacao)
         ");
 
+        // Dou bind nos valores
         $insert->bindValue('cd_pre_internacao', $d['CD_PRE_INTERNACAO'] , 'integer');
         $insert->bindValue('opme',              $d['SEM_OPME']==1 ? 'SEM OPME' : 'OPME' , 'string');
         $insert->bindValue('cod',               $d['SEM_OPME']==1 ? 3750 : 3749        , 'integer');
 
+        // Executo a query , em caso de erro a função retorna o erro em String
         if(!$insert->execute()) return false;
+
+        //Senao funcaio retorna verdadeiro
         return true;
+
     }
 
+    /**
+     *  Funcao que adidiona Alerta ao agendamento
+     *  $d = Variável com os dados do POST / usar $this->request->data
+     */
+    public function addAlerta(&$d) {
+
+        // Pego umas instancia do banco
+        $db = ConnectionManager::get('default');
+
+        //Carrego o código da sequence
+        $a = $db->query('SELECT  SEQ_DOCTOR_MENSAGEM.NEXTVAL FROM DUAL')->fetch('assoc');
+        $CD_MENSAGEM = $a['NEXTVAL'];
+
+        //Preparo a Consulta
+        $insert = $db->prepare("insert into DP_ALERTAS
+        (CD_MENSAGEM, CD_PRE_AGENDAMENTO, CD_PRESTADOR, STATUS, SN_LIDO, DT_MENSAGEM) values
+        (:cd_mensagem, :cd_pre_internacao, :cd_prestador, 'S' , 'N' , :data)");
+
+        //Bind nos values
+        $insert->bindValue('cd_mensagem',       $CD_MENSAGEM , 'integer');
+        $insert->bindValue('cd_pre_internacao', $d['CD_PRE_INTERNACAO'] , 'integer');
+        $insert->bindValue('cd_prestador',      $d['CD_PRESTADOR'], 'string');
+        $insert->bindValue(':data',             $d['DT_HOJE'], 'datetime');
+
+        // Executo a query , em caso de erro a função retorna o erro em String
+        if(!$insert->execute()) return false;
+        return true;
+
+    }
+
+    /**
+     *  Funcao que trata os erros na Entity
+     *  $d =  passar $entity->errors()
+     */
+    public function trataErros($d) {
+        $erros='';
+        // Loop no array e gero Lista com erros
+        foreach ($d as $key => $field) {
+            //$erros .= empty($erros) ? '<p>Os seguintes erros foram encontrados:</p>' : '';
+            $erros .= '<ul>';
+            foreach ($field as $value) {
+                $erros .= '<li>'.$key.' // '.$value. "<br></li>" ;
+            }
+            $erros .= '</ul>';
+        }
+        return $erros;
+    }
 
     /* Funçao que agregas informações sobre status de Agendamentos. quantidades, cor usada e ícone */
     public function contaStatus() {

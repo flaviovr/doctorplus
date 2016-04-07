@@ -1,6 +1,5 @@
 <?php
 $this->assign('title', 'Agendamentos');
-//debug($agendamentos);
 ?>
 
 <ol class="breadcrumb bg-info">
@@ -90,7 +89,7 @@ $this->assign('title', 'Agendamentos');
 						<h4 class="media-heading"><?= ucwords(mb_strtolower($agendamento->NM_PACIENTE));?></h4>
 						<p class='tituloMsg'>
 	                        <i class="fa fa-stethoscope fa-fw"></i> <?= $agendamento->DS_PROCEDIMENTO.' - '.ucfirst(strtolower($agendamento->DS_CIRURGIA));?> <br>
-	                        <i class="fa fa-clock-o fa-fw"></i> <?= $agendamento->DT_CIRURGIA ?>, <?= $agendamento->HR_AVISO_CIR?>
+	                        <i class="fa fa-clock-o fa-fw"></i> <?= $agendamento->DT_SUG_CIR ?>, <?= $agendamento->HR_AVISO_CIR?>
 	                    </p>
 					</div>
 				</div>

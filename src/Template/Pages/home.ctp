@@ -2,8 +2,6 @@
 $this->assign('title', 'Selecione a opção desejada');
 ?>
 
-
-
 <ol class="breadcrumb bg-info">
   <li class="active"><span class='fa fa-home'></span> Início</li>
 </ol>
@@ -27,22 +25,6 @@ $this->assign('title', 'Selecione a opção desejada');
 		</a>
 	</div>
 
-	<!-- <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-		<a class='wraper' href='consultas'>
-			<div class="menuItem">
-				<div class='innerItem'>
-					<i class='fa fa-heartbeat iconMenuItem'></i>
-					<p class='titleMenuItem text-center'>Consultas<p>
-					<ul class='hidden-xs'>
-						<li>Marcação de Consultas</li>
-						<li>Reagendamento</li>
-						<li>Lista de Especialidades</li>
-					</ul>
-				</div>
-			</div>
-		</a>
-	</div> -->
-
 	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 		<a class='wraper' href='<?=$this->Url->build(['controller' => 'internados']);?>'>
 			<div class="menuItem">
@@ -58,22 +40,6 @@ $this->assign('title', 'Selecione a opção desejada');
 			</div>
 		</a>
 	</div>
-
-	<!-- <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-		<a class='wraper' href='especialidades'>
-			<div class="menuItem">
-				<div class='innerItem'>
-					<i class='fa fa-list-alt iconMenuItem'></i>
-					<p class='titleMenuItem text-center'>Especialidades<p>
-					<ul class='hidden-xs'>
-						<li>Marcação de Consultas</li>
-						<li>Reagendamento</li>
-						<li>Lista de Especialidades</li>
-					</ul>
-				</div>
-			</div>
-		</a>
-	</div> -->
 
 	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 		<a class='wraper' href="<?=$this->Url->build(['controller' => 'medicos', 'action' => 'perfil' , $userAuth['ID'] ]);?>">

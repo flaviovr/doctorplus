@@ -6,7 +6,7 @@ return [
     'checkboxFormGroup' => '{{label}}',
     'checkboxWrapper' => '<div class="checkbox">{{label}}</div>',
     'dateWidget' => '{day}}{{month}}{{year}}{{hour}}{{minute}}{{second}}{{meridian}}',
-    'error' => '<div class="help-block">{{content}}</div>',
+    'error' => '<div class="help-block" style="display:none" >{{content}}</div>',
     'errorList' => '<ul>{{content}}</ul>',
     'errorItem' => '<li>{{text}}</li>',
     'file' => '<input type="file" name="{{name}}"{{attrs}}>',
