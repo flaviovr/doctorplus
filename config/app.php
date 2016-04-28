@@ -189,7 +189,7 @@ return [
             'port' => 587,
             'timeout' => 30,
             'username' => 'flavio.motta@cssj.com.br',
-            'password' => 'Ella24Fitzgerald',
+            'password' => '',
             'tls' => true,
         ],
     ],
