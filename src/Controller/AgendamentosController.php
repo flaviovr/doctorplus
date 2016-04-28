@@ -16,7 +16,6 @@ class AgendamentosController extends AppController
         ]
     ];
 
-
 	public function initialize() {
         parent::initialize();
 		//Inclui component Flash
@@ -30,8 +29,22 @@ class AgendamentosController extends AppController
 		if(intval($id)>0) {
 			//Caso um ID seja passado, Carrego o Registro referente ao ID incluindo suas tabelas relacionadas { Planos, Convenios }
 			$agendamento = $this->Agendamentos->get($id, [ 'contain' => ['Convenios', 'Planos'] ]);
+
+			$query = $this->Agendamentos->findById($id)
+				->contain([
+					'Convenios',
+					'Planos' => function($q){
+						return $q->where(['Planos.CONVENIO_ID' => 'Agendamentos.CONVENIO_ID']);
+					}]
+				);
+
+				debug($query);
+			$agendamento = $query->execute();
+
+
 			// Defino a variável na view
 			$this->set(compact('agendamento'));
+			//$this
 		} else {
 			// Caso ID não seja passado, redireciono para index
 			return $this->redirect(['controller'=>'agendamentos', 'action'=>'index']);
@@ -186,11 +199,5 @@ class AgendamentosController extends AppController
 		//Defino a variavel na view
 		$this->set('dados',$dados);
 	}
-
-	public function view($id = null) {}
-
-	public function edit($id = null){}
-
-	public function delete($id){}
 
 }

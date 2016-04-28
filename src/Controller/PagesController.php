@@ -81,18 +81,18 @@ class PagesController extends AppController
                     ->viewVars([
                         'data'=> $data->nice(),
                         'texto'=> $msg,
-                        'user' => $this->Auth->user('nome_usuario')
-                        ]);
+                        'user' => $this->Auth->user('NOME_USUARIO')
+                    ]);
 
                 // Caso envie o e-mail
                 if($email->send()) {
                     // Exibe mensagem de sucesso
-                    $this->Flash->success(__('Sua sugestão foi enviada com sucesso.'));
+                    $this->Flash->success('Sua sugestão foi enviada com sucesso.');
                     // Esvazio o campo de Mensagem
                     $msg = '';
                 } else {
                     // Exibe mensagem de Erro ao enviar e-mail
-                    $this->Flash->error(__('Erro ao enviar sua solicitação, tente novamente.'));
+                    $this->Flash->error('Erro ao enviar sua solicitação, tente novamente.');
                 }
             }
 

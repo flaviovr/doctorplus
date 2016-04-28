@@ -1,5 +1,6 @@
 <?php
 $this->assign('title', 'Meu Perfil');
+$esp = explode(',',$medico['ESPECIALIDADES']);
 ?>
 
 <ol class="breadcrumb bg-info">
@@ -20,7 +21,7 @@ $this->assign('title', 'Meu Perfil');
 	<ul>
 		<?php
 		$esp = explode(',',$medico['ESPECIALIDADES']);
-		foreach ($esp as $value) echo "<li>".ucfirst(strtolower($value))."</li>";
+		foreach ($esp as $value) echo "<li>".ucwords(strtolower(substr($value , stripos($value,'-')+1 )))."</li>";
 		?>
 	</ul>
 

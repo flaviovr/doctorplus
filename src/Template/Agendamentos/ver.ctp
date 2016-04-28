@@ -1,6 +1,7 @@
 <?php
 $this->assign('title', 'Detalhes do Agendamento');
-$this->Form->templates('agenda_form');
+//$this->Form->templates('agenda_form');
+debug($agendamento);
 ?>
 
 <ol class="breadcrumb bg-info">
@@ -84,11 +85,13 @@ $this->Form->templates('agenda_form');
 				</div>
 
 				<div class="col-sm-4  form-group">
-					<?= $this->Form->input('CONVENIO_ID', [ 'options' => $convenios, 'type' => 'select', 'label' => 'Convênio:', 'class'=>'form-control cascade', 'data-destino'=>'[name=PLANO_ID]', 'data-url'=>'getPlano/' , 'empty'=>'Selecione'])?>
+					<label>Convênio:</label>
+					<p class="form-control-static"><?php echo h($agendamento['convenio']['NOME']);?></p>
 				</div>
 
 				<div class="col-sm-4 form-group">
-					<?= $this->Form->input('PLANO_ID', [ 'options' => $planos, 'type' => 'select', 'label' => 'Plano:', 'class'=>'form-control', 'empty'=>'Selecione'  ]) ?>
+					<label>Convênio:</label>
+					<p class="form-control-static"><?php echo h($agendamento['plano']['NOME']);?></p>
 				</div>
 
 				<div class="col-sm-4  form-group">

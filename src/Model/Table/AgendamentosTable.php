@@ -7,6 +7,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
 use Cake\Filesystem\Folder;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 class AgendamentosTable extends Table
 {
@@ -133,10 +134,7 @@ class AgendamentosTable extends Table
         ]);
 
         //Validações de CIRURGIA
-        $validator->add('CD_CIRURGIA',
-        [
-            'notBlank' => [ 'rule' => 'notBlank', 'message' => 'Selecione a Cirurgia Principal.']
-        ]);
+        $validator->requirePresence('CD_CIRURGIA', true , 'Você precisa selecionar o Procedimento Principal');
 
         //Validações de Especialidades
         $validator->add('ANESTESIA',
@@ -158,9 +156,49 @@ class AgendamentosTable extends Table
             'data' => [ 'rule' =>  [ 'datetime' , 'dmy' ] ,'message' => 'Data em formato inválido']
         ]);
 
+        // $validator->add('LAUDO',
+        // [
+        //     'extension' => [ 'rule' => ['extension', ['pdf']] , 'message' => 'Arquivo precisa estar no formato PDF'],
+        // ]);
+
         $validator->add('LAUDO',
         [
-            'extension' => [ 'rule' => ['extension', ['pdf']] , 'message' => 'Arquivo precisa estar no formato PDF'],
+            'checkUpload' => [
+                'rule' => [$this ,'checkUpload'],
+                'pass' => [
+                    'options' => [
+                        'ext' => ['pdf','doc','docx'],
+                        'size'=> 1024*1024*2
+                    ]
+                ],
+                'message' => 'Erro ao fazer upload'
+            ]
+        ]);
+        $validator->add('OPME',
+        [
+            'checkUpload' => [
+                'rule' => [$this ,'checkUpload'],
+                'pass' => [
+                    'options' => [
+                        'ext' => ['pdf','doc','docx'],
+                        'size'=> 1024*1024*2
+                    ]
+                ],
+                'message' => 'Erro ao fazer upload'
+            ]
+        ]);
+        $validator->add('PEDIDO',
+        [
+            'checkUpload' => [
+                'rule' => [$this ,'checkUpload'],
+                'pass' => [
+                    'options' => [
+                        'ext' => ['pdf','doc','docx'],
+                        'size'=> 1024*1024*2
+                    ]
+                ],
+                'message' => 'Erro ao fazer upload'
+            ]
         ]);
 
         return $validator;
@@ -321,7 +359,6 @@ class AgendamentosTable extends Table
         // Caso nao haja erros, funcao retorna verdadeiro
         return true;
     }
-
 
     /**
      *  Salva os dados do Agendamento
@@ -572,7 +609,10 @@ class AgendamentosTable extends Table
         return $erros;
     }
 
-    /* Funçao que agregas informações sobre status de Agendamentos. quantidades, cor usada e ícone */
+    /**
+    * Funçao que agregas informações sobre status de Agendamentos.
+    * quantidades, cor usada e ícone
+    */
     public function contaStatus() {
         /* Crio conexão e faco uma consulta que busca os totais de cata STATUS_CHR*/
         $db = ConnectionManager::get('default');
@@ -596,7 +636,10 @@ class AgendamentosTable extends Table
         return $d;
     }
 
-    /* Função alterna formato da data se usado fdata('08/01/1983') retorna 1983-08-01 se usa fdata('1983-08-01') retorna 08/01/1983  use time = true se for utilizar datas com horario */
+    /**
+    *  Função alterna formato da data se usado fdata('08/01/1983') retorna 1983-08-01
+    *  se usa fdata('1983-08-01') retorna 08/01/1983  use time = true se for utilizar datas com horario
+    **/
     public function fdata( $data, $sep = '/', $time = false ){
 
         if($time) {
@@ -618,6 +661,34 @@ class AgendamentosTable extends Table
     }
 
     // Funcoes de Validação
+
+    /**
+    *   Checa campos do tipo upload
+    **/
+    public function checkUpload($check, $options, array $context){
+        $erros =[
+        1=>"Arquivo excedeu o limite máximo de tamanho permitido.",
+        2=>"Arquivo excedeu o limite máximo de tamanho permitido.",
+        3=>"Upload interrompido.",
+        4=>"O envio do arquivo é obrigatório",
+        6=>"Pasta temporária não foi encontrada",
+        7=>'Falha ao salvar em disco',
+        8=>'Erro ao fazer upload'];
+        //debug($check);
+        if(is_array($check)){
+            foreach ($check as $value) {
+                // Em caso de erro no upload retorno o erro do PHP
+                if ($value['error'] != 0 ) return $erros[$value['error']];
+                // pego a extensao do arquivo enviado
+                $extensao = strtolower(substr( strrchr($value['name'], '.'), 1));
+                // Testo se esta dentro as extensoes permitidas , extensoes permitidas sao passadas pelo parametro $options['ext']
+                if (array_search($extensao, $options['ext']) === false) return "Por favor, envie arquivos com as seguintes extensões: ".Text::toList($options['ext'],'e');
+                // Testo se esta dentro do tamanho permitido , tamanho permitido é passado pelo parametro $options['size']
+                if ($options['size'] < $value['size']) return  "O arquivo enviado é muito grande, envie arquivos de até 2Mb.";
+            }
+        }
+        return true;
+    }
 
     //Valida se nome digitado possui nome e sobreno e se os nomes possuem mais de dois caracteres
     public function nomeComposto($check){

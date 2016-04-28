@@ -1,5 +1,6 @@
 <?php
 $this->assign('title', 'Alertas');
+$this->assign('title', 'Meus Alertas');
 ?>
 
 <ol class='breadcrumb'>

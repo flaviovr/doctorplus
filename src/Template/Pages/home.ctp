@@ -15,11 +15,11 @@ $this->assign('title', 'Selecione a opção desejada');
 				<div class='innerItem'>
 					<i class='fa fa-calendar-o iconMenuItem'></i>
 					<p class='titleMenuItem text-center'>Agendamento<p>
-					<ul class='hidden-xs'>
+					<!-- <ul class='hidden-xs'>
 						<li>Marcação de Consultas</li>
 						<li>Reagendamento</li>
 						<li>Lista de Especialidades</li>
-					</ul>
+					</ul> -->
 				</div>
 			</div>
 		</a>
@@ -31,11 +31,11 @@ $this->assign('title', 'Selecione a opção desejada');
 				<div class='innerItem'>
 					<i class='fa fa-bed iconMenuItem'></i>
 					<p class='titleMenuItem text-center'>Internações<p>
-					<ul class='hidden-xs'>
+					<!-- <ul class='hidden-xs'>
 						<li>Marcação de Consultas</li>
 						<li>Reagendamento</li>
 						<li>Lista de Especialidades</li>
-					</ul>
+					</ul> -->
 				</div>
 			</div>
 		</a>

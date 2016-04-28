@@ -1,5 +1,7 @@
 <?php
 $this->assign('title', 'Agendamentos');
+$this->assign('title', 'Listagem de Agendamentos');
+
 ?>
 
 <ol class="breadcrumb bg-info">
@@ -83,12 +85,12 @@ $this->assign('title', 'Agendamentos');
 				<div class="media marcacao">
 					<div class="media-left text-<?= $statusData[$agendamento->STATUS_CHR]['cor'];?> ">
 						<i class="fa <?= $statusData[$agendamento->STATUS_CHR]['icon'];?>  fa-4x"></i>
-						<p class='text-center'><?= $agendamento->CD_AVISO;?></p>
+						<p class='text-center'><?= $agendamento->AVISO_ID;?></p>
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading"><?= ucwords(mb_strtolower($agendamento->NM_PACIENTE));?></h4>
+						<h4><?= ucwords(mb_strtolower($agendamento->NM_PACIENTE));?></h4>
 						<p class='tituloMsg'>
-	                        <i class="fa fa-stethoscope fa-fw"></i> <?= $agendamento->DS_PROCEDIMENTO.' - '.ucfirst(strtolower($agendamento->DS_CIRURGIA));?> <br>
+	                        <i class="fa fa-stethoscope fa-fw"></i> <?= $agendamento->DS_PROCEDIMENTO.' - '.ucfirst(strtolower($agendamento->DS_CIRURGIA));?>
 	                        <i class="fa fa-clock-o fa-fw"></i> <?= $agendamento->DT_SUG_CIR ?>, <?= $agendamento->HR_AVISO_CIR?>
 	                    </p>
 					</div>
@@ -96,7 +98,7 @@ $this->assign('title', 'Agendamentos');
 			</div>
 			<?php }?>
 			<?php if($agendamentos->isEmpty()){
-				echo "<div class='col-lg-12 text-muted text-center'><h3><i class='fa-exclamation-circle fa '></i> Nenhum registro encontrado!</h3</div>";
+				echo "<div class='col-lg-12 text-muted text-center'><h3><i class='fa-exclamation-circle fa '></i> Nenhum registro encontrado!</h3></div>";
 			}?>
 		</div>
 	</div>

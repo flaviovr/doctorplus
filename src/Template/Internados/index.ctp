@@ -1,5 +1,7 @@
 <?php
 $this->assign('title', 'Internações');
+$this->assign('title', 'Listagem de Internados');
+
 ?>
 
 <ol class='breadcrumb'>

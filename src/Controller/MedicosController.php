@@ -23,11 +23,11 @@ class MedicosController extends AppController
         $this->set('medicos', $this->Medicos->find('all'));
     }
 
-    public function perfil($id)
+    public function perfil($id = null)
     {
         //Passo os dados do usuario ($id) para uma variavel e defino na view
-        $medico = $this->Medicos->get($id);
-        $this->set(compact('medico'));
+        $medico = $this->Medicos->get($this->Auth->user('ID'));
+        //$this->set(compact('medico'));
     }
 
     /*
@@ -95,7 +95,7 @@ class MedicosController extends AppController
 
             // Tenta identificar o usuario com a funcao de autenticçao
             $medico = $this->Auth->identify();
-            
+
             //Caso encontre o usuário seja identificado
             if ($medico) {
                 // Define o usuario como o usuario autenticado

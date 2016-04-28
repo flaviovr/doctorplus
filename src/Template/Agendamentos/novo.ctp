@@ -327,7 +327,7 @@ $this->Form->templates(['error' => '<div class="help-block" style="display:none"
 				   <div class="input-group">
 					   <span class="input-group-btn">
 						   <span class="btn btn-primary btn-file">
-							   Procurar&hellip; <?= $this->Form->input('OPME', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+							   Procurar&hellip; <?= $this->Form->input('OPME[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 						   </span>
 					   </span>
 					   <input type="text" class="form-control" readonly>
@@ -341,7 +341,7 @@ $this->Form->templates(['error' => '<div class="help-block" style="display:none"
 					   <span class="input-group-btn">
 
 						   <span class="btn btn-primary btn-file">
-							   Procurar&hellip; <?= $this->Form->input('PEDIDO', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
+							   Procurar&hellip; <?= $this->Form->input('PEDIDO[]', [ 'label'=> false,'type' => 'file', 'multiple']) ?>
 						   </span>
 					   </span>
 					   <input type="text" class="form-control" readonly>

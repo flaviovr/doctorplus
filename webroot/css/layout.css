@@ -4,7 +4,7 @@
 
 html, body{height: 100%;min-height: 100%;}
 
-body { font-family: 'Roboto Condensed'; background: url('../img/bgp.png') center -30px; font-family: 'Roboto Condensed'; padding-top: 70px;
+body { font-family: 'Roboto Condensed'; background: url('../img/bg.png') center -30px; font-family: 'Roboto Condensed'; padding-top: 70px;
     -webkit-backface-visibility: hidden;
     -webkit-transform: translateZ(0px);
     webkit-font-smoothing: antialiased;
