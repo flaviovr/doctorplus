@@ -11,10 +11,11 @@ body { font-family: 'Roboto Condensed'; background: url('../img/bg.png') center 
     -webkit-transform-style: preserve-3d;
 }
 
-body > .container {background:#fff; padding-top: 30px; position:relative;min-height:100%;height:auto !important;height:100%; padding-bottom: 50px;}
+body > .container {background:#fff; padding-top: 30px; position:relative;min-height:100%;height:auto !important;height:100%; padding-bottom: 50px;box-shadow: 0px 0px 25px 3px #ccc;}
+a, a:hover, a:active, a:focus, a:visited {text-decoration: none;}
 
 
-h1 {background: #1D71B8; color:#fff; padding: 10px 15px;  margin-bottom: 0px; border: 1px solid #165890; border-bottom: none; font-weight: 300;}
+h1 {background: #1D71B8; color:#fff; padding: 10px 15px; font-size: 30px; margin-bottom: 0px; border: 1px solid #165890; border-bottom: none; font-weight: 300;}
 h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
 
 
@@ -38,7 +39,7 @@ h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
 
 .menuItem > .innerItem {  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width:90%;}
 
-.error > .form-control {border-color: rgb(248,153,129);}
+.error > .form-control {border-color: #f99981;}
 
 .innerItem > .iconMenuItem { font-size: 38px;  color: #26B3E8; text-align: center; display: block; margin: 10px auto 0px auto;
   -webkit-transition: all .4s ease-in-out;
@@ -71,6 +72,32 @@ h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
 
 
 
+/* Ítens de LISTA */
+.list-item { padding: 8px 10px; font-size: 17px; display: block; height: 65px; margin: 5px 0px 10px 0px; border-bottom: 1px solid #efefef; color:#1D71B8;}
+.list-item.inativo { color: #ccc;}
+
+.list-item-linha { margin: 0px; height: 25px; line-height: 25px; overflow: hidden;}
+
+.list-item-assets { margin: 0px; height: 20px; line-height: 20px; overflow: hidden;}
+.list-item.inativo  .list-item-asset {color: #ccc;}
+
+.list-item-asset {font-size: 15px; font-weight: 300;color: #666666; margin-right: 5px;}
+.list-item-asset i {color:#ccc;}
+.list-item-asset:last-child {margin-right: 0px;}
+
+.list-item-icon { float: left; font-size: 12px; margin: 0 8px 0 0; height:45px;}
+.list-item-icon i {font-size: 32px;}
+.list-item-icon span {display: block; text-align:center;}
+
+.list-item:hover {color:#fff; background: #26B3E8; border-bottom: 1px solid #459bb5; border-right: 1px solid #459bb5; }
+.list-item:hover .list-item-linha {color: #fff;}
+.list-item:hover .list-item-asset {color: #d2f1fa;}
+.list-item:hover .list-item-asset i {color: #d2f1fa;}
+.list-item:hover .list-item-icon {color: #fff;}
+
+
+
+.list-group-item b { width: 110px; display: inline-block;}
 
 
 /* Correção na altura do NavBar */
@@ -130,6 +157,7 @@ h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
 .statuses { display: inline-block; font-size: 16px; font-weight: normal; line-height: 20px; padding: 5px 8px;}
 .statuses .badge { background: #fff; color: #aaa;}
 
+table {font-size: 13px;}
 
 /* ALERTAS */
 .alerta{ border-bottom: 1px dotted #efefef; padding: 10px 0px; max-height: 50px; height: 50px;}
@@ -144,9 +172,8 @@ h1 > i { border-right: 1px solid #fff; padding-right: 15px; margin-right: 10px;}
 .label-default { background: #aaa;}
 .label-extra { background: #777;}
 
-fieldset {
-    border-bottom: 1px solid #efefef; padding-bottom: 20px;
-}
+fieldset { border-bottom: 1px solid #efefef; padding-bottom: 20px; }
+fieldset:last-child { border-bottom: none; }
 
 /* FORMAT FILE INPUT*/
 
@@ -169,5 +196,6 @@ fieldset {
     cursor: inherit;
     display: block;
 }
-
+.obs {overflow-y: auto; max-height: 327px; height: 327px;}
+.ok {font-size: 13px; font-weight: 300;}
 /*.navbar {background-image: linear-gradient(to bottom,#26B3E8 0, #1D71B8 100%); color: #fff;}*/

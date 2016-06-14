@@ -41,6 +41,17 @@ $this->assign('title', 'Selecione a opção desejada');
 		</a>
 	</div>
 
+    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+		<a class='wraper' href="<?=$this->Url->build(['controller' => 'medicos', 'action' => 'alertas' ]);?>">
+			<div class="menuItem">
+				<div class='innerItem'>
+					<i class='fa fa-bell iconMenuItem'></i>
+					<p class='titleMenuItem text-center'>Alertas<p>
+				</div>
+			</div>
+		</a>
+	</div>
+
 	<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 		<a class='wraper' href="<?=$this->Url->build(['controller' => 'medicos', 'action' => 'perfil' , $userAuth['ID'] ]);?>">
 			<div class="menuItem">

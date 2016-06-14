@@ -10,7 +10,7 @@ class AgendamentosController extends AppController
 
 	/* definições da paginação */
 	public $paginate = [
-        'limit' => 12,
+        'limit' => 20,
         'order' => [
             'Agendamentos.DT_CIRURGIA' => 'desc'
         ]
@@ -25,26 +25,28 @@ class AgendamentosController extends AppController
 
 	//Action que exibe detalhes do agendamento
 	public function ver($id = null) {
+
+		$db = ConnectionManager::get('default');
+
 		// Verifico se foi passado um ID para ser exibido
 		if(intval($id)>0) {
 			//Caso um ID seja passado, Carrego o Registro referente ao ID incluindo suas tabelas relacionadas { Planos, Convenios }
-			$agendamento = $this->Agendamentos->get($id, [ 'contain' => ['Convenios', 'Planos'] ]);
+			$agendamento = $this->Agendamentos->get($id, [ 'contain' => ['Convenios', 'Planos' => function($q){
+						return $q->where(['Planos.CONVENIO_ID = Agendamentos.CONVENIO_ID' ]);
+					}] ]);
 
-			$query = $this->Agendamentos->findById($id)
-				->contain([
-					'Convenios',
-					'Planos' => function($q){
-						return $q->where(['Planos.CONVENIO_ID' => 'Agendamentos.CONVENIO_ID']);
-					}]
-				);
-
-				debug($query);
-			$agendamento = $query->execute();
-
-
+			// Carregos os ítens da guia caso seja Pendente ou Confirmada
+			$guias = array();
+			if($agendamento->STATUS_CHR=='P' || $agendamento->STATUS_CHR=='C'){
+				$data1 = $db->query("select a.TP_GUIA TIPO,  CD_GUIA, 'GUIA DE ' ||DECODE(a.tp_guia,'O','OPME','I','INTERNAÇÃO','C','CONSULTA','P','PROCEDIMENTO','R','PRORROGAÇÃO',a.tp_guia) || a.ds_justificativa justificativa, a.NR_GUIA, a.CD_SENHA, DECODE(a.TP_SITUACAO,'N','Negada', 'P','Pendente', 'A','Autorizada', 'G','Em Negociação', 'C','Entre em contato', 'S','Entre em Contato', a.TP_SITUACAO) AS Situacao FROM dbamv.guia@DBLINK_SOULPRD a WHERE a.cd_aviso_cirurgia = ".$agendamento->AVISO_ID)->fetchAll();
+				foreach ($data1 as $guia) {
+					$guias[$guia['JUSTIFICATIVA']]['dados'] = $guia;
+					$guias[$guia['JUSTIFICATIVA']]['items'] = $db->query('select pf.ds_pro_fat, QT_AUTORIZADO, QT_AUTORIZADA_CONVENIO, ig.cd_pro_fat from dbamv.it_guia@DBLINK_SOULPRD ig left join dbamv.guia@DBLINK_SOULPRD g on g.cd_guia = ig.cd_guia left join dbamv.pro_fat@DBLINK_SOULPRD pf on pf.cd_pro_fat = ig.cd_pro_fat where g.cd_guia = '.$guia['CD_GUIA'])->fetchAll();
+				}
+			}
 			// Defino a variável na view
-			$this->set(compact('agendamento'));
-			//$this
+			$this->set(compact(['guias','agendamento']));
+			$this->set('statusData',$this->Agendamentos->contaStatus());
 		} else {
 			// Caso ID não seja passado, redireciono para index
 			return $this->redirect(['controller'=>'agendamentos', 'action'=>'index']);
@@ -56,6 +58,7 @@ class AgendamentosController extends AppController
 		//Gero e Formato data atual para busca padrao
 		$dataAtual = new Time('today');
 		$dataAtual = $dataAtual->format('d/m/Y');
+
 
 		// Defino Status padrão da busca
 		$statusAgenda = 'C';
@@ -83,8 +86,9 @@ class AgendamentosController extends AppController
 		// Se os filtros para busca forem preenchidos, incluir o where para cada item
 		if (!empty($statusAgenda)) $agendamentos = $agendamentos->where(['STATUS_CHR ='=> h($statusAgenda)]);
 		if (!empty($nomePaciente)) $agendamentos = $agendamentos->where(['NM_PACIENTE like'=> strtoupper('%'.h($nomePaciente).'%')]);
-		if (!empty($dataAtual)) $agendamentos = $agendamentos->where(['DT_SUG_CIR ='=> $dataAtual]);
+		if (!empty($dataAtual)) $agendamentos = $agendamentos->where(["to_char(DT_SUG_CIR,'dd/mm/YYYY') ="=> $dataAtual]);
 
+		//debug($agendamentos);
 
 		// Defino as variáveis da view.
 		$this->set('statusData',$this->Agendamentos->contaStatus());
@@ -112,6 +116,7 @@ class AgendamentosController extends AppController
 
 		if($this->request->is('post'))
 		{
+
 			//Atribuo o request a variavel $d
 			$d = $this->request->data;
 
@@ -121,29 +126,37 @@ class AgendamentosController extends AppController
 			//Executo Função do Model que trata erros para exibição
 			$erros = $this->Agendamentos->trataErros($agendamento->errors());
 
-			//Caso nenhum erro de validação for encontrado
-			if( empty($agendamento->errors()) ) {
+			if($this->Agendamentos->validaDuplicado($d)){
 
-				// Executo Função do Model que Formata os dados para salvar
-				 $this->Agendamentos->preparaDados($d);
+				//Caso nenhum erro de validação for encontrado
+				if( empty($agendamento->errors())) {
 
-				// SAlvo dados - funcao retorna erros como string
-				 $ok = $this->Agendamentos->salvaDados($d);
+						// Executo Função do Model que Formata os dados para salvar
+						 $this->Agendamentos->preparaDados($d);
 
-				//Faço Upload dos arquivos de LAUDO
-				$this->Agendamentos->upload($d, 'LAUDO');
+						// SAlvo dados - funcao retorna erros como string
+						 $ok = $this->Agendamentos->salvaDados($d);
 
-				if($ok === true) {
-					// Caso salve sem erros, exibo mensagem e redireciono para principal
-					$this->Flash->success('Agendamento marcado com sucesso!');
-		        	return $this->redirect(['action' => 'index']);
+						//Faço Upload dos arquivos de LAUDO
+						$this->Agendamentos->upload($d, 'LAUDO');
+						$this->Agendamentos->upload($d, 'OPME');
+						$this->Agendamentos->upload($d, 'PEDIDO');
+
+						if($ok === true) {
+							// Caso salve sem erros, exibo mensagem e redireciono para principal
+							$this->Flash->success('Agendamento marcado com sucesso!');
+							return $this->redirect(['action' => 'index']);
+						} else {
+							// Caso existam erros a Funcao Salvar Dados, exibo os erros
+							$this->Flash->error($ok);
+						}
 				} else {
-					// Caso existam erros a Funcao Salvar Dados, exibo os erros
-					$this->Flash->error($ok);
+					// Caso existam erros de validação, exibo os erros
+					$this->Flash->error($erros);
 				}
 			} else {
-				// Caso existam erros de validação, exibo os erros
-				$this->Flash->error($erros);
+				// Caso existam erros a Funcao Salvar Dados, exibo os erros
+				$this->Flash->error('Já existem um agendamento com o mesmo Procedimento/Paciente nesse dia.');
 			}
 			// Carrego os dados de Planos caso Convenio tenha sido selecionado
 			$planos = $this->Agendamentos->Planos->find('list')->where(['CONVENIO_ID'=>$this->request->data('CONVENIO_ID')])->toArray();

@@ -12,7 +12,7 @@ $this->assign('title', 'Listagem de Agendamentos');
 <h1 class="roundTop">
 	<i class='fa fa-calendar-o'></i>
 	Agendamentos
-	<a href="<?php echo $this->Url->build(["controller" => "Agendamentos","action" => "novo"]);?>" class='btn btn-default pull-right'> <i class='fa fa-plus-circle'></i> Novo</a>
+	<a href="<?=$this->Url->build(["controller" => "Agendamentos","action" => "novo"]);?>" class='btn btn-default pull-right'> <i class='fa fa-plus-circle'></i> Adicionar</a>
 </h1>
 
 <div class="row">
@@ -81,18 +81,20 @@ $this->assign('title', 'Listagem de Agendamentos');
 	<div class='col-lg-12'>
 		<div class="row">
 			<?php foreach ($agendamentos as $agendamento){  ?>
-			<div class="col-xs-12 col-sm-6">
-				<a href="<?php echo $this->Url->Build(['controller'=>'Agendamentos', 'action'=>'ver', $agendamento->ID]);?>" class="list-item round">
-					<p class='list-item-icon text-center text-<?= $statusData[$agendamento->STATUS_CHR]['cor'];?>'>
-						<i class="fa <?= $statusData[$agendamento->STATUS_CHR]['icon'];?> "></i>
-						<span><?php echo $agendamento->AVISO_ID ?? '---';?></span>
-					</p>
-					<p class="list-item-linha"><?= ucwords(mb_strtolower($agendamento->NM_PACIENTE));?></p>
-					<p class="list-item-assets">
-						<span class="list-item-asset"><i class="fa fa-clock-o fa-fw"></i> <?= $agendamento->DT_SUG_CIR ?></span>
-						<span class="list-item-asset"><i class="fa fa-stethoscope fa-fw"></i> <?= /*$agendamento->DS_PROCEDIMENTO.' - '.*/ucfirst(strtolower($agendamento->DS_CIRURGIA));?></span>
-					</p>
-				</a>
+			<div class="col-xs-6">
+				<div class="media marcacao">
+					<div class="media-left text-<?= $statusData[$agendamento->STATUS_CHR]['cor'];?> ">
+						<i class="fa <?= $statusData[$agendamento->STATUS_CHR]['icon'];?>  fa-4x"></i>
+						<p class='text-center'><?= $agendamento->AVISO_ID;?></p>
+					</div>
+					<div class="media-body">
+						<h4><?= ucwords(mb_strtolower($agendamento->NM_PACIENTE));?></h4>
+						<p class='tituloMsg'>
+	                        <i class="fa fa-stethoscope fa-fw"></i> <?= $agendamento->DS_PROCEDIMENTO.' - '.ucfirst(strtolower($agendamento->DS_CIRURGIA));?>
+	                        <i class="fa fa-clock-o fa-fw"></i> <?= $agendamento->DT_SUG_CIR ?>, <?= $agendamento->HR_AVISO_CIR?>
+	                    </p>
+					</div>
+				</div>
 			</div>
 			<?php }?>
 			<?php if($agendamentos->isEmpty()){

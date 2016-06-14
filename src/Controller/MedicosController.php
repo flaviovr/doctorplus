@@ -27,7 +27,7 @@ class MedicosController extends AppController
     {
         //Passo os dados do usuario ($id) para uma variavel e defino na view
         $medico = $this->Medicos->get($this->Auth->user('ID'));
-        //$this->set(compact('medico'));
+        $this->set(compact('medico'));
     }
 
     /*

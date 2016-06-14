@@ -254,14 +254,14 @@ class AgendamentosTable extends Table
 
         //ADICIONO LISTA DE EQUIPAMENTOS -  Se algum equipamento foi Selecionado Imprimo o título
         $d['EQUIPAMENTOS_TXT'] = '';
-        $d['EQUIPAMENTOS_TXT'] .= $d['VIDEO']!== 'Não' ? (empty($a) ? '' : " - ") . "Vídeo Cirúrgico: " . $d['VIDEO'] : '';
-        $d['EQUIPAMENTOS_TXT'] .= $d['MICROSCOPIO']!== 'Não' ? (empty($a) ? '' : " - ") . "Microscópio: " . $d['MICROSCOPIO'] : '';
-        $d['EQUIPAMENTOS_TXT'] .= $d['CEC']!== 'Não' ? (empty($a) ? '' : " - ") . "CEC: ". $d['CEC'] : '';
+        $d['EQUIPAMENTOS_TXT'] .= $d['VIDEO']!== 'Não' ? (empty($d['EQUIPAMENTOS_TXT']) ? '' : " - ") . "Vídeo Cirúrgico: " . $d['VIDEO'] : '';
+        $d['EQUIPAMENTOS_TXT'] .= $d['MICROSCOPIO']!== 'Não' ? (empty($d['EQUIPAMENTOS_TXT']) ? '' : " - ") . "Microscópio: " . $d['MICROSCOPIO'] : '';
+        $d['EQUIPAMENTOS_TXT'] .= $d['CEC']!== 'Não' ? (empty($d['EQUIPAMENTOS_TXT']) ? '' : " - ") . "CEC: ". $d['CEC'] : '';
 
         // lista de equipamentos no checkbox
-        if( in_array(1, $d['EQUIPAMENTOS']) || !empty($a) ) {
+        if( in_array(1, $d['EQUIPAMENTOS'])) {
             // Loop nos Valores e gero string
-            foreach ($d['EQUIPAMENTOS'] as $key => $value) $d['EQUIPAMENTOS_TXT'] .= $value == 1 ? (empty($a) ? '' : " - ") .str_replace('_', ' ', $key) : '';
+            foreach ($d['EQUIPAMENTOS'] as $key => $value) $d['EQUIPAMENTOS_TXT'] .= $value == 1 ? (empty($d['EQUIPAMENTOS_TXT']) ? '' : " - ") .str_replace('_', ' ', $key) : '';
             $d['EQUIPAMENTOS_TXT'] =  'Equipamentos: ' . $d['EQUIPAMENTOS_TXT'] ;
         }
 
@@ -269,7 +269,7 @@ class AgendamentosTable extends Table
         if(in_array(1, $d['EQUIPAMENTOSC'])) {
             // Loop nos Valores e gero string
             $d['EQUIPAMENTOSC_TXT'] ='';
-            foreach ($d['EQUIPAMENTOSC'] as $key => $value) $d['EQUIPAMENTOSC_TXT'] .= $value == 1 ? (empty($a) ? '' : " - ") .str_replace('_', ' ', $key) : '';
+            foreach ($d['EQUIPAMENTOSC'] as $key => $value) $d['EQUIPAMENTOSC_TXT'] .= $value == 1 ? (empty($d['EQUIPAMENTOSC_TXT']) ? '' : " - ") .str_replace('_', ' ', $key) : '';
             $d['EQUIPAMENTOSC_TXT'] =  'Equipamentos Críticos: ' . $d['EQUIPAMENTOSC_TXT'] ;
         }
 
@@ -283,9 +283,9 @@ class AgendamentosTable extends Table
      */
     public function geraOBS(&$d){
 
-        $obs = "Doctor+ - Agendado as " . $d['DT_HOJE']->format('d/m/Y H:m') . PHP_EOL;
+        $obs = "Doctor+ - Agendado as " . $d['DT_HOJE']->format('d/m/Y H:i') . PHP_EOL;
         $obs .= ucwords(strtolower($d['NM_PACIENTE'])) . " | Data de Nascimento: " . $d['DT_NASCIMENTO'] .PHP_EOL;
-        $obs .= "Horário Preferencial: " . $d['DT_DURACAO_TXT'] . PHP_EOL;
+        $obs .= "Duração: " . $d['DT_DURACAO'] . ':00h' . PHP_EOL;
         $obs .= "Telefone: " . $d['FONE_TXT'] . PHP_EOL;
         $obs .= "Celular: " . $d['CELULAR_TXT'] . PHP_EOL;
         $obs .= "Matrícula do Convênio: " . $d['CD_MATRICULA'] . PHP_EOL;
@@ -310,8 +310,8 @@ class AgendamentosTable extends Table
         $obs .= !empty($d['SEM_OPME_TXT']) ? $d['SEM_OPME_TXT'] . PHP_EOL : '';
         $obs .= !empty($d['MEDICACAO_TXT']) ? $d['MEDICACAO_TXT'] . PHP_EOL : '';
 
-        $obs .= !empty($d['EQUIPAMENTOS_TXT']) ? $d['EQUIPAMENTOS_TXT'] : '';
-        $obs .= !empty($d['EQUIPAMENTOSC_TXT']) ? $d['EQUIPAMENTOSC_TXT'] : '';
+        $obs .= !empty($d['EQUIPAMENTOS_TXT']) ? $d['EQUIPAMENTOS_TXT'] . PHP_EOL : '';
+        $obs .= !empty($d['EQUIPAMENTOSC_TXT']) ? $d['EQUIPAMENTOSC_TXT'] . PHP_EOL : '';
 
         $obs .= !empty($d['SEM_LAUDO_TXT']) ? $d['SEM_LAUDO_TXT'] . PHP_EOL : '';
 
@@ -382,7 +382,7 @@ class AgendamentosTable extends Table
         // Dou bind nas variaveis
         $insert->bindValue('cd_prestador', 					$d['CD_PRESTADOR'] , 'integer');
         $insert->bindValue('cd_pre_internacao', 			$d['CD_PRE_INTERNACAO'] , 'integer');
-        $insert->bindValue('dt_pedido', 					$d['DT_HOJE'] , 'date');
+        $insert->bindValue('dt_pedido', 					$d['DT_HOJE']->format('Y-m-d H:i')  , 'date');
         $insert->bindValue('nm_paciente', 					$d['NM_PACIENTE_TXT'] , 'string');
         $insert->bindValue('nr_fone_movel_paciente', 		$d['CELULAR_TXT'] , 'string');
 
@@ -592,6 +592,21 @@ class AgendamentosTable extends Table
     }
 
     /**
+     *  Funcao que valida se esta cadastrando em duplicidade
+     *  $d =  passar $entity->errors()
+     */
+    public function validaDuplicado($d)
+    {
+        $data =  new Time( $this->fdata($d['DT_CIRURGIA'], '/', true) );
+        $da = $this->fdata($d['DT_CIRURGIA'], false);
+        $t = $this->find('all')
+            ->where(["to_char(DT_SUG_CIR,'dd/mm/YYYY') "=> $data->format('d/m/Y')])
+            ->andWhere(['CD_CIRURGIA ='=> $d['CD_CIRURGIA']])
+            ->andWhere(['UPPER(NM_PACIENTE) ='=> strtoupper($d['NM_PACIENTE']) ]);
+        return $t->count()>0 ? false : true;
+    }
+
+    /**
      *  Funcao que trata os erros na Entity
      *  $d =  passar $entity->errors()
      */
@@ -640,7 +655,7 @@ class AgendamentosTable extends Table
     *  Função alterna formato da data se usado fdata('08/01/1983') retorna 1983-08-01
     *  se usa fdata('1983-08-01') retorna 08/01/1983  use time = true se for utilizar datas com horario
     **/
-    public function fdata( $data, $sep = '/', $time = false ){
+    public function fdata( $data,  $time = false ){
 
         if($time) {
             $hora = substr($data,10);
